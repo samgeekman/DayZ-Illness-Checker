@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DayZ Illness Checker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="panel symptom-panel" aria-labelledby="symptom-heading">
+        <div class="panel-title-row">
+          <h1 class="panel-title">Which DayZ illness do I have?</h1>
+          <img class="panel-logo" src="icon.webp" alt="DayZ illness logo" />
+        </div>
+        <div class="section-head">
+          <div class="symptom-headline">
+            <h2 id="symptom-heading">Select your symptoms</h2>
+            <button id="clearBtn" class="clear-link" type="button">Clear</button>
+          </div>
+          <div class="symptom-brand">
+            <p class="panel-byline">
+              By
+              <a href="https://samsobjectfinder.com/" target="_blank" rel="noopener noreferrer">samgeekman</a>, credit
+           
+            <a href="https://x.com/ItsCueps/status/1668798127946727424" target="_blank" rel="noopener noreferrer"
+                >Uncuepa</a> for the icons.
+              
+            </p>
+          </div>
+        </div>
+        <div id="symptomGrid" class="symptom-grid" role="list"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="diagnosis-heading">
+        <div class="section-head">
+          <h2 id="diagnosis-heading">Diagnosis</h2>
+        </div>
+        <div id="results" class="results">
+          <p class="placeholder">Pick at least one symptom to start.</p>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="all-illnesses-heading">
+        <div class="section-head">
+          <h2 id="all-illnesses-heading">All illnesses</h2>
+          <button id="allIllnessesToggle" class="ghost-btn" type="button" aria-expanded="false">
+            Expand
+          </button>
+        </div>
+        <div id="allIllnessesWrap" class="all-illnesses-wrap" hidden>
+          <div id="allIllnessesGrid" class="results all-illnesses-grid"></div>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="reverse-heading" hidden>
+        <div class="section-head">
+          <h2 id="reverse-heading">Disease to Symptoms</h2>
+        </div>
+        <div id="reverseGrid" class="disease-grid"></div>
+      </section>
+    </main>
+
+    <template id="resultCardTemplate">
+      <article class="result-card">
+        <div class="result-top">
+          <div class="result-title">
+            <svg class="disease-icon" viewBox="0 0 24 24" aria-hidden="true"></svg>
+            <h3></h3>
+          </div>
+          <span class="score-pill"></span>
+        </div>
+        <div class="stage-wrap"></div>
+        <div class="matched-wrap">
+          <p class="label matched-label">Matched symptoms</p>
+          <ul class="chip-list matched"></ul>
+        </div>
+        <div class="treatment-wrap">
+          <p class="label">Treatment</p>
+          <ul class="chip-list treatment"></ul>
+        </div>
+        <div class="prevention-wrap">
+          <div class="meta-row">
+            <p class="label">Prevention</p>
+          </div>
+          <div class="prevention-row">
+            <ul class="chip-list prevention-list"></ul>
+            <div class="code-col">
+              <button class="code-proof-btn" type="button" title="View code proof" aria-label="View code proof">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m8 9-4 3 4 3" />
+                  <path d="m16 9 4 3-4 3" />
+                  <path d="m14 5-4 14" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <div id="codeModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="codeModalTitle">
+      <div class="modal-backdrop" data-close-modal="true"></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h3 id="codeModalTitle">Code Evidence</h3>
+          <button id="closeCodeModal" class="modal-close" type="button" aria-label="Close code evidence">×</button>
+        </div>
+        <div id="codeModalBody" class="modal-body"></div>
+      </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,631 @@
+{
+  "symptoms": {
+    "contamination_stage3": [
+      {
+        "symptom_id": "vomiting",
+        "symptom_label": "Vomiting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Contamination3.c\r\nLINE: 32\r\n26\t\r\n27\t\t}\r\n28\t\r\n29\t\toverride protected void OnActivate(PlayerBase player)\r\n30\t\t{\r\n31\t\t\tplayer.IncreaseDiseaseCount();\r\n32\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);\r\n33\t\t}\r\n34\t\r\n35\t\toverride protected void OnDeactivate(PlayerBase player)\r\n36\t\t{\r\n37\t\t\tplayer.DecreaseDiseaseCount();\r\n38\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "unconsciousness",
+        "symptom_label": "Unconsciousness",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Contamination3.c\r\nLINE: 49\r\n43\t\t}\r\n44\t\r\n45\t\toverride protected void OnTick(PlayerBase player, float deltaT)\r\n46\t\t{\r\n47\t\t\tif(GetAttachedTime() > 4 && (!player.GetSymptomManager().GetCurrentPrimaryActiveSymptom() || (player.GetSymptomManager().GetCurrentPrimaryActiveSymptom() &&  player.GetSymptomManager().GetCurrentPrimaryActiveSymptom().GetType() != SymptomIDs.SYMPTOM_VOMIT)) )\r\n48\t\t\t{\r\n49\t\t\t\tplayer.AddHealth(\"\",\"Shock\", -100);\r\n50\t\t\t}\r\n51\t\t\t\r\n52\t\t\tif (player.IsUnconscious())\r\n53\t\t\t{\r\n54\t\t\t\tplayer.AddHealth(\"\",\"\",DAMAGE_PER_SEC * deltaT);\r\n55\t\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "health_loss",
+        "symptom_label": "Health loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Contamination3.c\r\nLINE: 54\r\n48\t\t\t{\r\n49\t\t\t\tplayer.AddHealth(\"\",\"Shock\", -100);\r\n50\t\t\t}\r\n51\t\t\t\r\n52\t\t\tif (player.IsUnconscious())\r\n53\t\t\t{\r\n54\t\t\t\tplayer.AddHealth(\"\",\"\",DAMAGE_PER_SEC * deltaT);\r\n55\t\t\t}\r\n56\t\r\n57\t\t}\r\n58\t};"
+        ]
+      }
+    ],
+    "pneumonia_stage": [
+      {
+        "symptom_id": "gasping",
+        "symptom_label": "Gasping / Heavy Breathing",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Pneumonia.c\r\nLINE: 68\r\n62\t\t\tplayer.AddHealth(-healthLoss);\r\n63\t\t\t\r\n64\t\t\tfloat heavyBreathChance = player.GetSingleAgentCountNormalized(eAgents.INFLUENZA);\r\n65\t\t\t\r\n66\t\t\tif ( Math.RandomFloat01() < heavyBreathChance / Math.RandomInt(1,15) )\r\n67\t\t\t{\r\n68\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_GASP);\r\n69\t\t\t}\r\n70\t\t}\r\n71\t};"
+        ]
+      },
+      {
+        "symptom_id": "health_loss",
+        "symptom_label": "Health loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Pneumonia.c\r\nLINE: 60\r\n54\t\t{\r\n55\t\t\treturn (player.GetSingleAgentCount(eAgents.INFLUENZA) <= AGENT_THRESHOLD_DEACTIVATE);\r\n56\t\t}\r\n57\t\r\n58\t\toverride protected void OnTick(PlayerBase player, float deltaT)\r\n59\t\t{\r\n60\t\t\tfloat healthLoss = HEALTH_LOSS_PNEUMONIA * deltaT;\r\n61\t\t\t\r\n62\t\t\tplayer.AddHealth(-healthLoss);\r\n63\t\t\t\r\n64\t\t\tfloat heavyBreathChance = player.GetSingleAgentCountNormalized(eAgents.INFLUENZA);\r\n65\t\t\t\r\n66\t\t\tif ( Math.RandomFloat01() < heavyBreathChance / Math.RandomInt(1,15) )"
+        ]
+      },
+      {
+        "symptom_id": "stamina_exhaustion",
+        "symptom_label": "Stamina Loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Pneumonia.c\r\nLINE: 39\r\n33\t\t}\r\n34\t\r\n35\t\toverride protected void OnActivate(PlayerBase player)\r\n36\t\t{\r\n37\t\t\tplayer.IncreaseDiseaseCount();\r\n38\t\r\n39\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.DISEASE_PNEUMONIA);\r\n40\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.DISEASE_PNEUMONIA);\r\n41\t\t}\r\n42\t\r\n43\t\toverride protected void OnDeactivate(PlayerBase player)\r\n44\t\t{\r\n45\t\t\tplayer.DecreaseDiseaseCount();"
+        ]
+      },
+      {
+        "symptom_id": "coughing",
+        "symptom_label": "Coughing",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Influenza.c\r\nLINE: 31\r\n25\t\t{\r\n26\t\t\treturn (\"Activate threshold: \"+AGENT_THRESHOLD_ACTIVATE + \"| \" +\"Deativate threshold: \"+AGENT_THRESHOLD_DEACTIVATE);\r\n27\t\t}\r\n28\t\t\r\n29\t\toverride protected bool ActivateCondition(PlayerBase player)\r\n30\t\t{\r\n31\t\t\tif (player.GetSingleAgentCount(eAgents.INFLUENZA) >= AGENT_THRESHOLD_ACTIVATE)\r\n32\t\t\t\treturn true;\r\n33\t\r\n34\t\t\treturn false;\r\n35\t\t}\r\n36\t\r\n37\t\toverride protected void OnActivate(PlayerBase player)",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Influenza.c\r\nLINE: 66\r\n60\t\t\tfloat coughRandomDivider = Math.RandomInt(COUGH_RND_DIVIDER_NORMAL_MIN, COUGH_RND_DIVIDER_NORMAL_MAX);\r\n61\t\t\tif (m_ModifiersManager.IsModifierActive(eModifiers.MDF_PAINKILLERS) || m_ModifiersManager.IsModifierActive(eModifiers.MDF_MORPHINE))\r\n62\t\t\t\tcoughRandomDivider = Math.RandomInt(COUGH_RND_DIVIDER_SUPPRESSED_MIN, COUGH_RND_DIVIDER_SUPPRESSED_MAX);\r\n63\t\r\n64\t\t\tif (Math.RandomFloat01() < chanceOfCough / coughRandomDivider)\r\n65\t\t\t{\r\n66\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_COUGH);\r\n67\t\t\t}\r\n68\t\t}\r\n69\t}",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Pneumonia.c\r\nLINE: 29\r\n23\t\t{\r\n24\t\t\treturn (\"Activate threshold: \"+AGENT_THRESHOLD_ACTIVATE + \"| \" +\"Deativate threshold: \"+AGENT_THRESHOLD_DEACTIVATE);\r\n25\t\t}\r\n26\t\t\r\n27\t\toverride protected bool ActivateCondition(PlayerBase player)\r\n28\t\t{\r\n29\t\t\tif (player.GetSingleAgentCount(eAgents.INFLUENZA) >= AGENT_THRESHOLD_ACTIVATE) \r\n30\t\t\t\treturn true;\r\n31\t\r\n32\t\t\treturn false;\r\n33\t\t}\r\n34\t\r\n35\t\toverride protected void OnActivate(PlayerBase player)"
+        ]
+      },
+      {
+        "symptom_id": "sneezing",
+        "symptom_label": "Sneezing",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\CommonCold.c\r\nLINE: 31\r\n25\t\t{\r\n26\t\t\treturn (\"Activate threshold: \"+AGENT_THRESHOLD_ACTIVATE + \"| \" +\"Deativate threshold: \"+AGENT_THRESHOLD_DEACTIVATE);\r\n27\t\t}\r\n28\t\t\r\n29\t\toverride bool ActivateCondition(PlayerBase player)\r\n30\t\t{\r\n31\t\t\tif (player.GetSingleAgentCount(eAgents.INFLUENZA) >= AGENT_THRESHOLD_ACTIVATE) \r\n32\t\t\t\treturn true;\r\n33\t\r\n34\t\t\treturn false;\r\n35\t\t}\r\n36\t\r\n37\t\toverride protected void OnActivate(PlayerBase player)",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Pneumonia.c\r\nLINE: 29\r\n23\t\t{\r\n24\t\t\treturn (\"Activate threshold: \"+AGENT_THRESHOLD_ACTIVATE + \"| \" +\"Deativate threshold: \"+AGENT_THRESHOLD_DEACTIVATE);\r\n25\t\t}\r\n26\t\t\r\n27\t\toverride protected bool ActivateCondition(PlayerBase player)\r\n28\t\t{\r\n29\t\t\tif (player.GetSingleAgentCount(eAgents.INFLUENZA) >= AGENT_THRESHOLD_ACTIVATE) \r\n30\t\t\t\treturn true;\r\n31\t\r\n32\t\t\treturn false;\r\n33\t\t}\r\n34\t\r\n35\t\toverride protected void OnActivate(PlayerBase player)"
+        ]
+      },
+      {
+        "symptom_id": "fever_blur",
+        "symptom_label": "Blurry Vision",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 21\r\n15\t\t\tm_TickIntervalInactive \t= DEFAULT_TICK_TIME_INACTIVE;\r\n16\t\t\tm_TickIntervalActive \t= DEFAULT_TICK_TIME_ACTIVE_SHORT;\r\n17\t\t\tm_SyncID\t\t\t\t= eModifierSyncIDs.MODIFIER_SYNC_FEVER;\r\n18\t\t}\r\n19\t\toverride bool ActivateCondition(PlayerBase player)\r\n20\t\t{\r\n21\t\t\treturn (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHOLERA) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_INFLUENZA) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION2));\r\n22\t\t}\r\n23\t\r\n24\t\toverride void OnActivate(PlayerBase player)\r\n25\t\t{\r\n26\t\t\tif( player.m_NotifiersManager ) \r\n27\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 29\r\n23\t\r\n24\t\toverride void OnActivate(PlayerBase player)\r\n25\t\t{\r\n26\t\t\tif( player.m_NotifiersManager ) \r\n27\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);\r\n28\t\t\t\r\n29\t\t\tplayer.GetSymptomManager().QueueUpSecondarySymptom(SymptomIDs.SYMPTOM_FEVERBLUR);\r\n30\t\t}\r\n31\t\r\n32\t\toverride void OnReconnect(PlayerBase player)\r\n33\t\t{\r\n34\t\t\tthis.OnActivate(player);\r\n35\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "hot_symptom",
+        "symptom_label": "Fever",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 63\r\n57\t\t\r\n58\t\t\tif ( m_Time >= m_NextEvent )\r\n59\t\t\t{\r\n60\t\t\t\tm_Time = 0;\r\n61\t\t\t\tm_NextEvent = Math.RandomFloatInclusive( EVENT_INTERVAL_MIN, EVENT_INTERVAL_MAX );\r\n62\t\t\t\t\r\n63\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_HOT);\r\n64\t\t\t}\r\n65\t\t}\r\n66\t};"
+        ]
+      }
+    ],
+    "heavy_metal_phase2": [
+      {
+        "symptom_id": "light_pain",
+        "symptom_label": "Mild Grunting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\HeavyMetal.c\r\nLINE: 136\r\n130\t\t\t}\r\n131\t\t\t\r\n132\t\t\tif (m_Time >= m_NextEvent)\r\n133\t\t\t{\r\n134\t\t\t\tif (player.GetSingleAgentCount(eAgents.HEAVYMETAL) >= SYMPTOMFALLOFF_THRESHOLD1)\r\n135\t\t\t\t{\r\n136\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_LIGHT);\r\n137\t\t\t\t\tm_Time = 0;\r\n138\t\t\t\r\n139\t\t\t\t\tm_NextEvent = Math.RandomFloatInclusive(PAIN_EVENT_INTERVAL_MIN, PAIN_EVENT_INTERVAL_MAX);\r\n140\t\t\t\t}\r\n141\t\t\t}\r\n142"
+        ]
+      },
+      {
+        "symptom_id": "deafness",
+        "symptom_label": "Deafness",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\HeavyMetal.c\r\nLINE: 146\r\n140\t\t\t\t}\r\n141\t\t\t}\r\n142\t\t\t\r\n143\t\t\tfloat chanceOfDeafness = player.GetSingleAgentCountNormalized(eAgents.HEAVYMETAL);\r\n144\t\t\tif (Math.RandomFloat01() < chanceOfDeafness / Math.RandomInt(5, 10))\r\n145\t\t\t{\r\n146\t\t\t\tplayer.GetSymptomManager().QueueUpSecondarySymptom(SymptomIDs.SYMPTOM_DEAFNESS_COMPLETE);\r\n147\t\t\t\tm_Time = 0;\r\n148\t\t\t\tm_DeafnessTime = 0;\r\n149\t\t\t\tm_IsDeaf = true;\r\n150\t\t\t\t\r\n151\t\t\t\tm_NextEvent = Math.RandomFloatInclusive(PAIN_EVENT_INTERVAL_MIN, PAIN_EVENT_INTERVAL_MAX);\r\n152\t\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "dehydration",
+        "symptom_label": "Water Loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\HeavyMetal.c\r\nLINE: 162\r\n156\t\t\t\tplayer.GetSymptomManager().RemoveSecondarySymptom(SymptomIDs.SYMPTOM_DEAFNESS_COMPLETE);\r\n157\t\t\t\tm_IsDeaf = false;\r\n158\t\t\t}\r\n159\t\t\t\r\n160\t\t\tif (player.GetSingleAgentCount(eAgents.HEAVYMETAL) <= SYMPTOMFALLOFF_THRESHOLD3 && eAgents.HEAVYMETAL >= SYMPTOMFALLOFF_THRESHOLD1) \r\n161\t\t\t{\r\n162\t\t\t\tfloat waterLoss = (deltaT * (WATER_LOSS_HEAVYMETAL_MAX * Math.Max(WATER_LOSS_HEAVYMETAL_MIN, player.GetSingleAgentCountNormalized(eAgents.HEAVYMETAL))));\r\n163\t\t\t\tplayer.GetStatWater().Add(-waterLoss);\r\n164\t\t\t}\r\n165\t\t\t\r\n166\t\t\tif (player.GetSingleAgentCount(eAgents.HEAVYMETAL) <= SYMPTOMFALLOFF_THRESHOLD3) \r\n167\t\t\t{\r\n168\t\t\t\tplayer.m_AgentPool.AddAgent(eAgents.HEAVYMETAL, -0.5);"
+        ]
+      }
+    ],
+    "hemolytic_reaction": [
+      {
+        "symptom_id": "blood_depletes",
+        "symptom_label": "Blood Depletes",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\HemolyticReaction.c\r\nLINE: 53\r\n47\t\t\t\treturn false;\r\n48\t\t\t}\r\n49\t\t}\r\n50\t\r\n51\t\toverride void OnTick(PlayerBase player, float deltaT)\r\n52\t\t{\r\n53\t\t\tplayer.AddHealth(\"\",\"Blood\",-PlayerConstants.HEMOLYTIC_BLOOD_DRAIN_PER_SEC * deltaT);\r\n54\t\t}\r\n55\t\t\r\n56\t\tfloat CalculateRunTime()\r\n57\t\t{\r\n58\t\t\tfloat time = PlayerConstants.HEMOLYTIC_BLOODLOSS_AMOUNT / PlayerConstants.SALINE_BLOOD_REGEN_PER_SEC;\r\n59\t\t\treturn time;"
+        ]
+      },
+      {
+        "symptom_id": "unconsciousness",
+        "symptom_label": "Unconsciousness",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\HemolyticReaction.c\r\nLINE: 53\r\n47\t\t\t\treturn false;\r\n48\t\t\t}\r\n49\t\t}\r\n50\t\r\n51\t\toverride void OnTick(PlayerBase player, float deltaT)\r\n52\t\t{\r\n53\t\t\tplayer.AddHealth(\"\",\"Blood\",-PlayerConstants.HEMOLYTIC_BLOOD_DRAIN_PER_SEC * deltaT);\r\n54\t\t}\r\n55\t\t\r\n56\t\tfloat CalculateRunTime()\r\n57\t\t{\r\n58\t\t\tfloat time = PlayerConstants.HEMOLYTIC_BLOODLOSS_AMOUNT / PlayerConstants.SALINE_BLOOD_REGEN_PER_SEC;\r\n59\t\t\treturn time;",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\3_Game\\PlayerConstants.c\r\nLINE: 161\r\n155\t\tstatic const float CONSCIOUS_THRESHOLD\t\t\t\t\t= 50.0;\t\t//player regains consciousness when he gets above this threshold\r\n156\t\t\r\n157\t\tstatic const float SHOCK_REFILL_CONSCIOUS_SPEED\t\t\t\t= 5;\t\t//shock refill speed when the player is conscious\r\n158\t\tstatic const float SHOCK_REFILl_UNCONSCIOUS_SPEED\t\t\t= 1;\t\t//shock refill speed when the player is unconscious\r\n159\t\tstatic const float SHOCK_REFILL_UNCON_CRITICAL_BLOOD_MLTP\t= 0.8;\t\t//shock refill speed multiplier when the player is unconscious and has critical blood level\r\n160\t\t\r\n161\t\tstatic const float SHOCK_DAMAGE_BLOOD_THRESHOLD_HIGH\t= 3000;\t\t// we start dealing shock damage over time when we get at this value or lower\r\n162\t\tstatic const float SHOCK_DAMAGE_BLOOD_THRESHOLD_LOW\t\t= 2500; \t// the closer we get to this value, the higher the over time shock damage we deal\r\n163\t\t\r\n164\t\tstatic const float SHOCK_DAMAGE_HIGH\t\t\t\t\t= 5.5; \t\t// shock damage per second when the blood is near the upper blood threshold\r\n165\t\tstatic const float SHOCK_DAMAGE_LOW\t\t\t\t\t\t= 6.25; \t// shock damage per second when the blood is near the lower blood threshold\r\n166\t\t\r\n167\t\tstatic const float SHOCK_REFILL_COOLDOWN_AFTER_HIT \t\t= 1000; \t// duration of cooldown (ms) during which shock regeneration is paused",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\3_Game\\PlayerConstants.c\r\nLINE: 154\r\n148\t\tstatic const float HEALTH_REGEN_MIN\t\t\t\t\t\t= 0.005;\t//health regen rate at BLOOD_THRESHOLD_FATAL blood level\r\n149\t\tstatic const float HEALTH_REGEN_MAX\t\t\t\t\t\t= 0.03;\t\t//health regen rate at MAXIMUM blood level\r\n150\t\t\r\n151\t\tstatic const float LEG_HEALTH_REGEN\t\t\t\t\t\t= 1;\t\t//Leg health regen when leg is NOT BROKEN\r\n152\t\tstatic const float LEG_HEALTH_REGEN_BROKEN\t\t\t\t= 0.18;\t\t//Leg health regen when BROKEN OR SPLINTED\r\n153\t\t\r\n154\t\tstatic const float UNCONSCIOUS_THRESHOLD\t\t\t\t= 25.0;\t\t//player goes unconscious when we get under this threshold\r\n155\t\tstatic const float CONSCIOUS_THRESHOLD\t\t\t\t\t= 50.0;\t\t//player regains consciousness when he gets above this threshold\r\n156\t\t\r\n157\t\tstatic const float SHOCK_REFILL_CONSCIOUS_SPEED\t\t\t\t= 5;\t\t//shock refill speed when the player is conscious\r\n158\t\tstatic const float SHOCK_REFILl_UNCONSCIOUS_SPEED\t\t\t= 1;\t\t//shock refill speed when the player is unconscious\r\n159\t\tstatic const float SHOCK_REFILL_UNCON_CRITICAL_BLOOD_MLTP\t= 0.8;\t\t//shock refill speed multiplier when the player is unconscious and has critical blood level\r\n160"
+        ]
+      }
+    ],
+    "heavy_metal_phase1": [
+      {
+        "symptom_id": "hands_shake",
+        "symptom_label": "Shakey Hands",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\HeavyMetal.c\r\nLINE: 82\r\n76\t\t\t}\r\n77\t\t\t\r\n78\t\t\tif (player.GetSingleAgentCount(eAgents.HEAVYMETAL) <= SYMPTOMFALLOFF_THRESHOLD3) \r\n79\t\t\t{\r\n80\t\t\t\tif ( m_Time >= m_NextEvent )\r\n81\t\t\t\t{\r\n82\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_HAND_SHIVER);\r\n83\t\t\t\t\tm_Time = 0;\r\n84\t\t\t\r\n85\t\t\t\t\tm_NextEvent = Math.RandomFloatInclusive(SHIVER_EVENT_INTERVAL_MIN, SHIVER_EVENT_INTERVAL_MAX);\r\n86\t\t\t\t}\r\n87\t\t\t}\r\n88\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "dehydration",
+        "symptom_label": "Water Loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\HeavyMetal.c\r\nLINE: 67\r\n61\t\t}\r\n62\t\r\n63\t\toverride protected void OnTick(PlayerBase player, float deltaT)\r\n64\t\t{\r\n65\t\t\tif (player.GetSingleAgentCount(eAgents.HEAVYMETAL) <= SYMPTOMFALLOFF_THRESHOLD3) \r\n66\t\t\t{\r\n67\t\t\t\tfloat waterLoss = (deltaT * (WATER_LOSS_HEAVYMETAL_MAX * Math.Max(WATER_LOSS_HEAVYMETAL_MIN, player.GetSingleAgentCountNormalized(eAgents.HEAVYMETAL))));\r\n68\t\t\t\tplayer.GetStatWater().Add(-waterLoss);\r\n69\t\t\t}\r\n70\t\t\t\r\n71\t\t\tm_Time += deltaT;\r\n72\t\t\t\r\n73\t\t\tif (player.GetSingleAgentCount(eAgents.HEAVYMETAL) <= SYMPTOMFALLOFF_THRESHOLD2)"
+        ]
+      }
+    ],
+    "cholera": [
+      {
+        "symptom_id": "vomiting",
+        "symptom_label": "Vomiting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Cholera.c\r\nLINE: 74\r\n68\t\t\tfloat stomachVolume = player.m_PlayerStomach.GetStomachVolume();\r\n69\t\t\tif (stomachVolume >= STOMACH_MIN_VOLUME)\r\n70\t\t\t{\r\n71\t\t\t\tint roll = Math.RandomInt( 0, 100 );\r\n72\t\t\t\tif( roll < ( CHANCE_OF_VOMIT + ( CHANCE_OF_VOMIT_AGENT * player.GetSingleAgentCountNormalized( eAgents.CHOLERA ) ) ) )\r\n73\t\t\t\t{\r\n74\t\t\t\t\tSymptomBase symptom = player.GetSymptomManager().QueueUpPrimarySymptom( SymptomIDs.SYMPTOM_VOMIT );\r\n75\t\t\t\t\tif (symptom)\r\n76\t\t\t\t\t{\r\n77\t\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 65.0;\r\n78\t\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n79\t\t\t\t\t\tsymptom.SetDuration(Math.RandomIntInclusive(4.0, 8.0));\r\n80"
+        ]
+      },
+      {
+        "symptom_id": "dehydration",
+        "symptom_label": "Water Loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Cholera.c\r\nLINE: 65\r\n59\t\t{\r\n60\t\t\treturn (player.GetSingleAgentCount(eAgents.CHOLERA) <= AGENT_THRESHOLD_DEACTIVATE);\r\n61\t\t}\r\n62\t\r\n63\t\toverride protected void OnTick(PlayerBase player, float deltaT)\r\n64\t\t{\r\n65\t\t\tfloat waterLoss = ( deltaT * ( WATER_LOSS_CHOLERA * Math.Max( WATER_LOSS_CHOLERA_MIN, player.GetSingleAgentCountNormalized( eAgents.CHOLERA ) ) ) );\r\n66\t\t\tplayer.GetStatWater().Add(-waterLoss);\r\n67\t\r\n68\t\t\tfloat stomachVolume = player.m_PlayerStomach.GetStomachVolume();\r\n69\t\t\tif (stomachVolume >= STOMACH_MIN_VOLUME)\r\n70\t\t\t{\r\n71\t\t\t\tint roll = Math.RandomInt( 0, 100 );"
+        ]
+      },
+      {
+        "symptom_id": "energy_loss",
+        "symptom_label": "Food Depletes",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Cholera.c\r\nLINE: 83\r\n77\t\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 65.0;\r\n78\t\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n79\t\t\t\t\t\tsymptom.SetDuration(Math.RandomIntInclusive(4.0, 8.0));\r\n80\t\r\n81\t\t\t\t\t\tif (m_Player.GetStatWater().Get() > (WATER_DRAIN_FROM_VOMIT))\r\n82\t\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n83\t\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > (ENERGY_DRAIN_FROM_VOMIT))\r\n84\t\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n85\t\t\t\t\t\r\n86\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n87\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n88\t\t\t\t\t\t\t\r\n89\t\t\t\t\t\tm_Exhaustion = true;"
+        ]
+      },
+      {
+        "symptom_id": "stamina_exhaustion",
+        "symptom_label": "Stamina Loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Cholera.c\r\nLINE: 86\r\n80\t\r\n81\t\t\t\t\t\tif (m_Player.GetStatWater().Get() > (WATER_DRAIN_FROM_VOMIT))\r\n82\t\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n83\t\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > (ENERGY_DRAIN_FROM_VOMIT))\r\n84\t\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n85\t\t\t\t\t\r\n86\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n87\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n88\t\t\t\t\t\t\t\r\n89\t\t\t\t\t\tm_Exhaustion = true;\r\n90\t\t\t\t\t\tm_ExhaustionTimer = 0;\r\n91\t\t\t\t\t}\r\n92\t\t\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "fever_blur",
+        "symptom_label": "Blurry Vision",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 21\r\n15\t\t\tm_TickIntervalInactive \t= DEFAULT_TICK_TIME_INACTIVE;\r\n16\t\t\tm_TickIntervalActive \t= DEFAULT_TICK_TIME_ACTIVE_SHORT;\r\n17\t\t\tm_SyncID\t\t\t\t= eModifierSyncIDs.MODIFIER_SYNC_FEVER;\r\n18\t\t}\r\n19\t\toverride bool ActivateCondition(PlayerBase player)\r\n20\t\t{\r\n21\t\t\treturn (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHOLERA) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_INFLUENZA) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION2));\r\n22\t\t}\r\n23\t\r\n24\t\toverride void OnActivate(PlayerBase player)\r\n25\t\t{\r\n26\t\t\tif( player.m_NotifiersManager ) \r\n27\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 29\r\n23\t\r\n24\t\toverride void OnActivate(PlayerBase player)\r\n25\t\t{\r\n26\t\t\tif( player.m_NotifiersManager ) \r\n27\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);\r\n28\t\t\t\r\n29\t\t\tplayer.GetSymptomManager().QueueUpSecondarySymptom(SymptomIDs.SYMPTOM_FEVERBLUR);\r\n30\t\t}\r\n31\t\r\n32\t\toverride void OnReconnect(PlayerBase player)\r\n33\t\t{\r\n34\t\t\tthis.OnActivate(player);\r\n35\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "hot_symptom",
+        "symptom_label": "Fever",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 63\r\n57\t\t\r\n58\t\t\tif ( m_Time >= m_NextEvent )\r\n59\t\t\t{\r\n60\t\t\t\tm_Time = 0;\r\n61\t\t\t\tm_NextEvent = Math.RandomFloatInclusive( EVENT_INTERVAL_MIN, EVENT_INTERVAL_MAX );\r\n62\t\t\t\t\r\n63\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_HOT);\r\n64\t\t\t}\r\n65\t\t}\r\n66\t};"
+        ]
+      }
+    ],
+    "influenza_stage": [
+      {
+        "symptom_id": "coughing",
+        "symptom_label": "Coughing",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Influenza.c\r\nLINE: 66\r\n60\t\t\tfloat coughRandomDivider = Math.RandomInt(COUGH_RND_DIVIDER_NORMAL_MIN, COUGH_RND_DIVIDER_NORMAL_MAX);\r\n61\t\t\tif (m_ModifiersManager.IsModifierActive(eModifiers.MDF_PAINKILLERS) || m_ModifiersManager.IsModifierActive(eModifiers.MDF_MORPHINE))\r\n62\t\t\t\tcoughRandomDivider = Math.RandomInt(COUGH_RND_DIVIDER_SUPPRESSED_MIN, COUGH_RND_DIVIDER_SUPPRESSED_MAX);\r\n63\t\r\n64\t\t\tif (Math.RandomFloat01() < chanceOfCough / coughRandomDivider)\r\n65\t\t\t{\r\n66\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_COUGH);\r\n67\t\t\t}\r\n68\t\t}\r\n69\t}"
+        ]
+      },
+      {
+        "symptom_id": "sneezing",
+        "symptom_label": "Sneezing",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Influenza.c\r\nLINE: 31\r\n25\t\t{\r\n26\t\t\treturn (\"Activate threshold: \"+AGENT_THRESHOLD_ACTIVATE + \"| \" +\"Deativate threshold: \"+AGENT_THRESHOLD_DEACTIVATE);\r\n27\t\t}\r\n28\t\t\r\n29\t\toverride protected bool ActivateCondition(PlayerBase player)\r\n30\t\t{\r\n31\t\t\tif (player.GetSingleAgentCount(eAgents.INFLUENZA) >= AGENT_THRESHOLD_ACTIVATE)\r\n32\t\t\t\treturn true;\r\n33\t\r\n34\t\t\treturn false;\r\n35\t\t}\r\n36\t\r\n37\t\toverride protected void OnActivate(PlayerBase player)",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\CommonCold.c\r\nLINE: 31\r\n25\t\t{\r\n26\t\t\treturn (\"Activate threshold: \"+AGENT_THRESHOLD_ACTIVATE + \"| \" +\"Deativate threshold: \"+AGENT_THRESHOLD_DEACTIVATE);\r\n27\t\t}\r\n28\t\t\r\n29\t\toverride bool ActivateCondition(PlayerBase player)\r\n30\t\t{\r\n31\t\t\tif (player.GetSingleAgentCount(eAgents.INFLUENZA) >= AGENT_THRESHOLD_ACTIVATE) \r\n32\t\t\t\treturn true;\r\n33\t\r\n34\t\t\treturn false;\r\n35\t\t}\r\n36\t\r\n37\t\toverride protected void OnActivate(PlayerBase player)"
+        ]
+      },
+      {
+        "symptom_id": "fever_blur",
+        "symptom_label": "Blurry Vision",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 21\r\n15\t\t\tm_TickIntervalInactive \t= DEFAULT_TICK_TIME_INACTIVE;\r\n16\t\t\tm_TickIntervalActive \t= DEFAULT_TICK_TIME_ACTIVE_SHORT;\r\n17\t\t\tm_SyncID\t\t\t\t= eModifierSyncIDs.MODIFIER_SYNC_FEVER;\r\n18\t\t}\r\n19\t\toverride bool ActivateCondition(PlayerBase player)\r\n20\t\t{\r\n21\t\t\treturn (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHOLERA) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_INFLUENZA) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION2));\r\n22\t\t}\r\n23\t\r\n24\t\toverride void OnActivate(PlayerBase player)\r\n25\t\t{\r\n26\t\t\tif( player.m_NotifiersManager ) \r\n27\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 29\r\n23\t\r\n24\t\toverride void OnActivate(PlayerBase player)\r\n25\t\t{\r\n26\t\t\tif( player.m_NotifiersManager ) \r\n27\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);\r\n28\t\t\t\r\n29\t\t\tplayer.GetSymptomManager().QueueUpSecondarySymptom(SymptomIDs.SYMPTOM_FEVERBLUR);\r\n30\t\t}\r\n31\t\r\n32\t\toverride void OnReconnect(PlayerBase player)\r\n33\t\t{\r\n34\t\t\tthis.OnActivate(player);\r\n35\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "hot_symptom",
+        "symptom_label": "Fever",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 63\r\n57\t\t\r\n58\t\t\tif ( m_Time >= m_NextEvent )\r\n59\t\t\t{\r\n60\t\t\t\tm_Time = 0;\r\n61\t\t\t\tm_NextEvent = Math.RandomFloatInclusive( EVENT_INTERVAL_MIN, EVENT_INTERVAL_MAX );\r\n62\t\t\t\t\r\n63\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_HOT);\r\n64\t\t\t}\r\n65\t\t}\r\n66\t};"
+        ]
+      }
+    ],
+    "heavy_metal_phase3": [
+      {
+        "symptom_id": "health_loss",
+        "symptom_label": "Health loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\HeavyMetal.c\r\nLINE: 221\r\n215\t\t\tplayer.GetSymptomManager().RemoveSecondarySymptom(SymptomIDs.SYMPTOM_DEAFNESS_COMPLETE);\r\n216\t\t\tplayer.GetSymptomManager().RemoveSecondarySymptom(SymptomIDs.SYMPTOM_HMP_SEVERE);\r\n217\t\t}\r\n218\t\r\n219\t\toverride protected void OnTick(PlayerBase player, float deltaT)\r\n220\t\t{\t\r\n221\t\t\tfloat healthLoss = (deltaT * (HEALTH_LOSS_HEAVYMETAL_MAX * Math.Max(HEALTH_LOSS_HEAVYMETAL_MIN, player.GetSingleAgentCountNormalized(eAgents.HEAVYMETAL))));\r\n222\t\t\tplayer.AddHealth(-healthLoss);\r\n223\t\t\t\t\r\n224\t\t\tm_Time += deltaT;\r\n225\t\t\t\r\n226\t\t\tif (m_Time >= m_NextEvent)\r\n227\t\t\t{"
+        ]
+      },
+      {
+        "symptom_id": "deafness",
+        "symptom_label": "Deafness",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\HeavyMetal.c\r\nLINE: 207\r\n201\t\t}\r\n202\t\t\r\n203\t\toverride protected void OnActivate(PlayerBase player)\r\n204\t\t{\r\n205\t\t\tsuper.OnActivate(player);\r\n206\t\t\t\r\n207\t\t\tplayer.GetSymptomManager().QueueUpSecondarySymptom(SymptomIDs.SYMPTOM_DEAFNESS_COMPLETE);\r\n208\t\t\tplayer.GetSymptomManager().QueueUpSecondarySymptom(SymptomIDs.SYMPTOM_HMP_SEVERE);\r\n209\t\t}\r\n210\t\t\r\n211\t\toverride protected void OnDeactivate(PlayerBase player)\r\n212\t\t{\r\n213\t\t\tsuper.OnDeactivate(player);"
+        ]
+      },
+      {
+        "symptom_id": "vomiting",
+        "symptom_label": "Vomiting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\HeavyMetal.c\r\nLINE: 228\r\n222\t\t\tplayer.AddHealth(-healthLoss);\r\n223\t\t\t\t\r\n224\t\t\tm_Time += deltaT;\r\n225\t\t\t\r\n226\t\t\tif (m_Time >= m_NextEvent)\r\n227\t\t\t{\r\n228\t\t\t\tSymptomBase symptom = player.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);\r\n229\t\t\t\tif (symptom)\r\n230\t\t\t\t{\r\n231\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 30.0; //percentage of stomach\r\n232\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\t\t\t\r\n233\t\t\t\t}\r\n234"
+        ]
+      }
+    ],
+    "contamination_stage2": [
+      {
+        "symptom_id": "coughing",
+        "symptom_label": "Coughing",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Contamination2.c\r\nLINE: 64\r\n58\t\t\tm_Time1 += deltaT;\r\n59\t\t\tm_Time2 += deltaT;\r\n60\t\t\t\r\n61\t\t\r\n62\t\t\tif ( m_Time1 >= m_NextEvent1 )\r\n63\t\t\t{\r\n64\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_COUGH);\r\n65\t\t\t\tm_Time1 = 0;\r\n66\t\t\t\tm_NextEvent1 = Math.RandomFloatInclusive( EVENT_1_INTERVAL_MIN, EVENT_1_INTERVAL_MAX );\r\n67\t\t\t}\r\n68\t\t\tif ( m_Time2 >= m_NextEvent2 )\r\n69\t\t\t{\r\n70\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);"
+        ]
+      },
+      {
+        "symptom_id": "vomiting",
+        "symptom_label": "Vomiting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Contamination2.c\r\nLINE: 70\r\n64\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_COUGH);\r\n65\t\t\t\tm_Time1 = 0;\r\n66\t\t\t\tm_NextEvent1 = Math.RandomFloatInclusive( EVENT_1_INTERVAL_MIN, EVENT_1_INTERVAL_MAX );\r\n67\t\t\t}\r\n68\t\t\tif ( m_Time2 >= m_NextEvent2 )\r\n69\t\t\t{\r\n70\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);\r\n71\t\t\t\tm_Time2 = 0;\r\n72\t\t\t\tm_NextEvent2 = Math.RandomFloatInclusive( EVENT_2_INTERVAL_MIN, EVENT_2_INTERVAL_MAX );\r\n73\t\t\t}\r\n74\t\r\n75\t\t}\r\n76\t};"
+        ]
+      }
+    ],
+    "food_poisoning": [
+      {
+        "symptom_id": "vomiting",
+        "symptom_label": "Vomiting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Poisoning.c\r\nLINE: 73\r\n67\t\t\tfloat invertedAgentCountValue = Math.InverseLerp(0, agentMax, agentCount);\r\n68\t\t\tfloat chance = Math.Lerp(VOMIT_OCCURRENCES_MIN, VOMIT_OCCURRENCES_MAX, invertedAgentCountValue);\r\n69\t\t\tchance = (chance / 300) * deltaT;\r\n70\t\t\t\r\n71\t\t\tif (Math.RandomFloat01() < chance)\r\n72\t\t\t{\r\n73\t\t\t\tSymptomBase symptom = player.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);\r\n74\t\t\t\tif (symptom)\r\n75\t\t\t\t{\r\n76\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 30.0 * invertedAgentCountValue;\r\n77\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n78\t\t\t\t\tsymptom.SetDuration(Math.Max(3.0, 10 * invertedAgentCountValue));\r\n79\t\t\t\t\t//player.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 100.0 * invertedAgentCountValue);"
+        ]
+      },
+      {
+        "symptom_id": "dehydration",
+        "symptom_label": "Water Loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Poisoning.c\r\nLINE: 81\r\n75\t\t\t\t{\r\n76\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 30.0 * invertedAgentCountValue;\r\n77\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n78\t\t\t\t\tsymptom.SetDuration(Math.Max(3.0, 10 * invertedAgentCountValue));\r\n79\t\t\t\t\t//player.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 100.0 * invertedAgentCountValue);\r\n80\t\t\t\t\tplayer.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 60);\r\n81\t\t\t\t\tif (m_Player.GetStatWater().Get() > (WATER_DRAIN_FROM_VOMIT)) \r\n82\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n83\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > (ENERGY_DRAIN_FROM_VOMIT))\r\n84\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n85\t\t\t\t\t\r\n86\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n87\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);"
+        ]
+      },
+      {
+        "symptom_id": "energy_loss",
+        "symptom_label": "Food Depletes",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Poisoning.c\r\nLINE: 83\r\n77\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n78\t\t\t\t\tsymptom.SetDuration(Math.Max(3.0, 10 * invertedAgentCountValue));\r\n79\t\t\t\t\t//player.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 100.0 * invertedAgentCountValue);\r\n80\t\t\t\t\tplayer.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 60);\r\n81\t\t\t\t\tif (m_Player.GetStatWater().Get() > (WATER_DRAIN_FROM_VOMIT)) \r\n82\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n83\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > (ENERGY_DRAIN_FROM_VOMIT))\r\n84\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n85\t\t\t\t\t\r\n86\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n87\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n88\t\t\t\t\t\t\r\n89\t\t\t\t\tm_Exhaustion = true;"
+        ]
+      },
+      {
+        "symptom_id": "stamina_exhaustion",
+        "symptom_label": "Stamina Loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Poisoning.c\r\nLINE: 86\r\n80\t\t\t\t\tplayer.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 60);\r\n81\t\t\t\t\tif (m_Player.GetStatWater().Get() > (WATER_DRAIN_FROM_VOMIT)) \r\n82\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n83\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > (ENERGY_DRAIN_FROM_VOMIT))\r\n84\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n85\t\t\t\t\t\r\n86\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n87\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n88\t\t\t\t\t\t\r\n89\t\t\t\t\tm_Exhaustion = true;\r\n90\t\t\t\t\tm_ExhaustionTimer = 0;\r\n91\t\t\t\t}\r\n92\t\t\t}"
+        ]
+      }
+    ],
+    "salmonella": [
+      {
+        "symptom_id": "vomiting",
+        "symptom_label": "Vomiting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Salmonella.c\r\nLINE: 76\r\n70\t\t\tif (stomach_volume >= STOMACH_MIN_VOLUME)\r\n71\t\t\t{\r\n72\t\t\t\tint roll = Math.RandomInt(0, 100);\r\n73\t\t\t\tint chanceOfVomit = CHANCE_OF_VOMIT + (CHANCE_OF_VOMIT_AGENT * player.GetSingleAgentCountNormalized(eAgents.SALMONELLA));\r\n74\t\t\t\tif (roll < chanceOfVomit)\r\n75\t\t\t\t{\r\n76\t\t\t\t\tSymptomBase symptom = player.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);\r\n77\t\t\t\t\t\r\n78\t\t\t\t\tif (symptom)\r\n79\t\t\t\t\t{\r\n80\t\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 50.0;\r\n81\t\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n82\t\t\t\t\t\tsymptom.SetDuration(5);"
+        ]
+      },
+      {
+        "symptom_id": "dehydration",
+        "symptom_label": "Water Loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Salmonella.c\r\nLINE: 85\r\n79\t\t\t\t\t{\r\n80\t\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 50.0;\r\n81\t\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n82\t\t\t\t\t\tsymptom.SetDuration(5);\r\n83\t\t\t\t\t\tplayer.m_AgentPool.ReduceAgent(eAgents.SALMONELLA, 30.0);\r\n84\t\r\n85\t\t\t\t\t\tif (m_Player.GetStatWater().Get() > WATER_DRAIN_FROM_VOMIT)\r\n86\t\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n87\t\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > ENERGY_DRAIN_FROM_VOMIT)\r\n88\t\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n89\t\t\t\t\t\t\r\n90\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n91\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);"
+        ]
+      },
+      {
+        "symptom_id": "energy_loss",
+        "symptom_label": "Food Depletes",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Salmonella.c\r\nLINE: 87\r\n81\t\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n82\t\t\t\t\t\tsymptom.SetDuration(5);\r\n83\t\t\t\t\t\tplayer.m_AgentPool.ReduceAgent(eAgents.SALMONELLA, 30.0);\r\n84\t\r\n85\t\t\t\t\t\tif (m_Player.GetStatWater().Get() > WATER_DRAIN_FROM_VOMIT)\r\n86\t\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n87\t\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > ENERGY_DRAIN_FROM_VOMIT)\r\n88\t\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n89\t\t\t\t\t\t\r\n90\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n91\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n92\t\t\t\t\t\t\r\n93\t\t\t\t\t\tm_Exhaustion = true;"
+        ]
+      },
+      {
+        "symptom_id": "light_pain",
+        "symptom_label": "Mild Grunting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Salmonella.c\r\nLINE: 105\r\n99\t\t\tm_Time += deltaT;\r\n100\t\t\r\n101\t\t\tif (m_Time >= m_NextEvent)\r\n102\t\t\t{\r\n103\t\t\t\tm_Time = 0;\r\n104\t\t\t\tm_NextEvent = Math.RandomFloatInclusive(EVENT_INTERVAL_MIN, EVENT_INTERVAL_MAX);\r\n105\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_LIGHT);\r\n106\t\t\t}\r\n107\t\t\t\r\n108\t\t\tif (m_Exhaustion)\r\n109\t\t\t{\r\n110\t\t\t\tm_ExhaustionTimer += deltaT;\r\n111\t\t\t\tif (m_ExhaustionTimer >= 45)"
+        ]
+      },
+      {
+        "symptom_id": "stamina_exhaustion",
+        "symptom_label": "Stamina Loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Salmonella.c\r\nLINE: 90\r\n84\t\r\n85\t\t\t\t\t\tif (m_Player.GetStatWater().Get() > WATER_DRAIN_FROM_VOMIT)\r\n86\t\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n87\t\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > ENERGY_DRAIN_FROM_VOMIT)\r\n88\t\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n89\t\t\t\t\t\t\r\n90\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n91\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n92\t\t\t\t\t\t\r\n93\t\t\t\t\t\tm_Exhaustion = true;\r\n94\t\t\t\t\t\tm_ExhaustionTimer = 0;\r\n95\t\t\t\t\t}\r\n96\t\t\t\t}"
+        ]
+      }
+    ],
+    "kuru_brain_disease": [
+      {
+        "symptom_id": "laughter",
+        "symptom_label": "Laughter Episodes",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\BrainDisease.c\r\nLINE: 53\r\n47\t\t{\r\n48\t\t\tm_Time += deltaT;\r\n49\t\t\tfloat brainAgents = player.GetSingleAgentCountNormalized(eAgents.BRAIN) / 8.0;\r\n50\t\t\tfloat chanceOfLaughter = Math.RandomFloat01();\r\n51\t\r\n52\t\t\tif (chanceOfLaughter < brainAgents)\r\n53\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_LAUGHTER);\r\n54\t\t\t\r\n55\t\t\tif (m_Time >= m_ShakeTime)\r\n56\t\t\t{\r\n57\t\t\t\tDayZPlayerSyncJunctures.SendKuruRequest(player, brainAgents);\r\n58\t\t\t\tm_ShakeTime = m_Time + Math.RandomFloat(SHAKE_INTERVAL_MIN, SHAKE_INTERVAL_MAX);\r\n59\t\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "tremors",
+        "symptom_label": "Tremors when aiming",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\BrainDisease.c\r\nLINE: 57\r\n51\t\r\n52\t\t\tif (chanceOfLaughter < brainAgents)\r\n53\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_LAUGHTER);\r\n54\t\t\t\r\n55\t\t\tif (m_Time >= m_ShakeTime)\r\n56\t\t\t{\r\n57\t\t\t\tDayZPlayerSyncJunctures.SendKuruRequest(player, brainAgents);\r\n58\t\t\t\tm_ShakeTime = m_Time + Math.RandomFloat(SHAKE_INTERVAL_MIN, SHAKE_INTERVAL_MAX);\r\n59\t\t\t}\r\n60\t\t\t\r\n61\t\t}\r\n62\t}"
+        ]
+      }
+    ],
+    "wound_infection_stage1": [
+      {
+        "symptom_id": "light_pain",
+        "symptom_label": "Mild Grunting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\WoundInfection.c\r\nLINE: 68\r\n62\t\toverride protected void OnTick(PlayerBase player, float deltaT)\r\n63\t\t{\r\n64\t\t\tm_Time += deltaT;\r\n65\t\t\t\r\n66\t\t\tif (m_Time >= m_NextEvent)\r\n67\t\t\t{\r\n68\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_LIGHT);\r\n69\t\t\t\tm_Time = 0;\r\n70\t\t\t\tm_NextEvent = Math.RandomFloatInclusive(PAIN_EVENT_INTERVAL_MIN, PAIN_EVENT_INTERVAL_MAX);\r\n71\t\t\t}\r\n72\t\t}\r\n73\t}"
+        ]
+      },
+      {
+        "symptom_id": "stamina_exhaustion",
+        "symptom_label": "Stamina Loss",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fatigue.c\r\nLINE: 22\r\n16\t\t\tm_TickIntervalInactive \t= DEFAULT_TICK_TIME_INACTIVE_LONG;\r\n17\t\t\tm_TickIntervalActive \t= DEFAULT_TICK_TIME_ACTIVE;\r\n18\t\t}\r\n19\t\t\r\n20\t\toverride bool ActivateCondition(PlayerBase player)\r\n21\t\t{\r\n22\t\t\treturn (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION1) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION2));\r\n23\t\t}\r\n24\t\r\n25\t\toverride void OnActivate(PlayerBase player)\r\n26\t\t{\r\n27\t\t\tif (player.m_NotifiersManager) \r\n28\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fatigue.c\r\nLINE: 30\r\n24\t\r\n25\t\toverride void OnActivate(PlayerBase player)\r\n26\t\t{\r\n27\t\t\tif (player.m_NotifiersManager) \r\n28\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);\r\n29\t\r\n30\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.FATIGUE);\r\n31\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.FATIGUE);\r\n32\t\t}\r\n33\t\r\n34\t\toverride void OnReconnect(PlayerBase player)\r\n35\t\t{\r\n36\t\t\tOnActivate(player);"
+        ]
+      }
+    ],
+    "contamination_stage1": [
+      {
+        "symptom_id": "coughing",
+        "symptom_label": "Coughing",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Contamination.c\r\nLINE: 33\r\n27\t\t{\r\n28\t\t\treturn ( player.GetSingleAgentCount(eAgents.CHEMICAL_POISON) >= AGENT_THRESHOLD_ACTIVATE && player.GetSingleAgentCount(eAgents.CHEMICAL_POISON) < AGENT_THRESHOLD_DEACTIVATE );\r\n29\t\t}\r\n30\t\r\n31\t\toverride protected void OnActivate(PlayerBase player)\r\n32\t\t{\r\n33\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_COUGH);\t\r\n34\t\t}\r\n35\t\r\n36\t\toverride protected bool DeactivateCondition(PlayerBase player)\r\n37\t\t{\r\n38\t\t\treturn !ActivateCondition(player);\r\n39\t\t}"
+        ]
+      }
+    ],
+    "influenza_common_cold": [
+      {
+        "symptom_id": "sneezing",
+        "symptom_label": "Sneezing",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\CommonCold.c\r\nLINE: 67\r\n61\t\t\tfloat randomDivider = Math.RandomInt(SNEEZE_RND_DIVIDER_NORMAL_MIN, SNEEZE_RND_DIVIDER_NORMAL_MAX);\r\n62\t\t\tif (m_ModifiersManager.IsModifierActive(eModifiers.MDF_PAINKILLERS) || m_ModifiersManager.IsModifierActive(eModifiers.MDF_MORPHINE))\r\n63\t\t\t\trandomDivider = Math.RandomInt(SNEEZE_RND_DIVIDER_SUPPRESSED_MIN, SNEEZE_RND_DIVIDER_SUPPRESSED_MAX);\r\n64\t\t\t\r\n65\t\t\tif (Math.RandomFloat01() < chanceOfSneeze / randomDivider)\r\n66\t\t\t{\r\n67\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_SNEEZE);\r\n68\t\t\t}\r\n69\t\t}\r\n70\t}"
+        ]
+      }
+    ],
+    "wound_infection_stage2": [
+      {
+        "symptom_id": "heavy_pain",
+        "symptom_label": "Severe Grunting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\WoundInfection2.c\r\nLINE: 86\r\n80\t\t\t\tif( player.IsAntibioticsActive() )\r\n81\t\t\t\t{\r\n82\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_LIGHT);\r\n83\t\t\t\t}\r\n84\t\t\t\telse\r\n85\t\t\t\t{\r\n86\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_HEAVY);\r\n87\t\t\t\t\tfloat damage = m_Time * (DAMAGE_PER_SEC + player.GetHealthRegenSpeed());\r\n88\t\t\t\t\tplayer.AddHealth(\"\",\"\", -damage);\r\n89\t\t\t\t}\r\n90\t\t\t\t\r\n91\t\t\t\tm_Time = 0;\r\n92\t\t\t\tm_NextEvent = Math.RandomFloatInclusive( PAIN_EVENT_INTERVAL_MIN, PAIN_EVENT_INTERVAL_MAX );"
+        ]
+      },
+      {
+        "symptom_id": "light_pain",
+        "symptom_label": "Mild Grunting",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\WoundInfection2.c\r\nLINE: 82\r\n76\t\t\tm_Time += deltaT;\r\n77\t\t\r\n78\t\t\tif ( m_Time >= m_NextEvent )\r\n79\t\t\t{\r\n80\t\t\t\tif( player.IsAntibioticsActive() )\r\n81\t\t\t\t{\r\n82\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_LIGHT);\r\n83\t\t\t\t}\r\n84\t\t\t\telse\r\n85\t\t\t\t{\r\n86\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_HEAVY);\r\n87\t\t\t\t\tfloat damage = m_Time * (DAMAGE_PER_SEC + player.GetHealthRegenSpeed());\r\n88\t\t\t\t\tplayer.AddHealth(\"\",\"\", -damage);"
+        ]
+      },
+      {
+        "symptom_id": "hands_shake",
+        "symptom_label": "Shakey Hands",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\WoundInfection2.c\r\nLINE: 47\r\n41\t\r\n42\t\toverride protected void OnActivate(PlayerBase player)\r\n43\t\t{\r\n44\t\t\tplayer.IncreaseDiseaseCount();\r\n45\t\t\tm_NextEvent = Math.RandomFloatInclusive( PAIN_EVENT_INTERVAL_MIN, PAIN_EVENT_INTERVAL_MAX );\r\n46\t\t\t\r\n47\t\t\tSymptomBase shivers = player.GetSymptomManager().QueueUpSecondarySymptomEx(SymptomIDs.SYMPTOM_HAND_SHIVER);\r\n48\t\t\t\tif ( shivers )\r\n49\t\t\t\t{\r\n50\t\t\t\t\tCachedObjectsParams.PARAM1_INT.param1 = 3;\r\n51\t\t\t\t\tshivers.SetParam(CachedObjectsParams.PARAM1_INT);\r\n52\t\t\t\t}\r\n53"
+        ]
+      },
+      {
+        "symptom_id": "health_loss",
+        "symptom_label": "Health loss",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\WoundInfection2.c\r\nLINE: 87\r\n81\t\t\t\t{\r\n82\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_LIGHT);\r\n83\t\t\t\t}\r\n84\t\t\t\telse\r\n85\t\t\t\t{\r\n86\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_HEAVY);\r\n87\t\t\t\t\tfloat damage = m_Time * (DAMAGE_PER_SEC + player.GetHealthRegenSpeed());\r\n88\t\t\t\t\tplayer.AddHealth(\"\",\"\", -damage);\r\n89\t\t\t\t}\r\n90\t\t\t\t\r\n91\t\t\t\tm_Time = 0;\r\n92\t\t\t\tm_NextEvent = Math.RandomFloatInclusive( PAIN_EVENT_INTERVAL_MIN, PAIN_EVENT_INTERVAL_MAX );\r\n93\t\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "stamina_exhaustion",
+        "symptom_label": "Stamina Loss",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fatigue.c\r\nLINE: 22\r\n16\t\t\tm_TickIntervalInactive \t= DEFAULT_TICK_TIME_INACTIVE_LONG;\r\n17\t\t\tm_TickIntervalActive \t= DEFAULT_TICK_TIME_ACTIVE;\r\n18\t\t}\r\n19\t\t\r\n20\t\toverride bool ActivateCondition(PlayerBase player)\r\n21\t\t{\r\n22\t\t\treturn (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION1) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION2));\r\n23\t\t}\r\n24\t\r\n25\t\toverride void OnActivate(PlayerBase player)\r\n26\t\t{\r\n27\t\t\tif (player.m_NotifiersManager) \r\n28\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fatigue.c\r\nLINE: 30\r\n24\t\r\n25\t\toverride void OnActivate(PlayerBase player)\r\n26\t\t{\r\n27\t\t\tif (player.m_NotifiersManager) \r\n28\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);\r\n29\t\r\n30\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.FATIGUE);\r\n31\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.FATIGUE);\r\n32\t\t}\r\n33\t\r\n34\t\toverride void OnReconnect(PlayerBase player)\r\n35\t\t{\r\n36\t\t\tOnActivate(player);"
+        ]
+      },
+      {
+        "symptom_id": "fever_blur",
+        "symptom_label": "Blurry Vision",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 21\r\n15\t\t\tm_TickIntervalInactive \t= DEFAULT_TICK_TIME_INACTIVE;\r\n16\t\t\tm_TickIntervalActive \t= DEFAULT_TICK_TIME_ACTIVE_SHORT;\r\n17\t\t\tm_SyncID\t\t\t\t= eModifierSyncIDs.MODIFIER_SYNC_FEVER;\r\n18\t\t}\r\n19\t\toverride bool ActivateCondition(PlayerBase player)\r\n20\t\t{\r\n21\t\t\treturn (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHOLERA) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_INFLUENZA) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION2));\r\n22\t\t}\r\n23\t\r\n24\t\toverride void OnActivate(PlayerBase player)\r\n25\t\t{\r\n26\t\t\tif( player.m_NotifiersManager ) \r\n27\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);",
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 29\r\n23\t\r\n24\t\toverride void OnActivate(PlayerBase player)\r\n25\t\t{\r\n26\t\t\tif( player.m_NotifiersManager ) \r\n27\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);\r\n28\t\t\t\r\n29\t\t\tplayer.GetSymptomManager().QueueUpSecondarySymptom(SymptomIDs.SYMPTOM_FEVERBLUR);\r\n30\t\t}\r\n31\t\r\n32\t\toverride void OnReconnect(PlayerBase player)\r\n33\t\t{\r\n34\t\t\tthis.OnActivate(player);\r\n35\t\t}"
+        ]
+      },
+      {
+        "symptom_id": "hot_symptom",
+        "symptom_label": "Fever",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 63\r\n57\t\t\r\n58\t\t\tif ( m_Time >= m_NextEvent )\r\n59\t\t\t{\r\n60\t\t\t\tm_Time = 0;\r\n61\t\t\t\tm_NextEvent = Math.RandomFloatInclusive( EVENT_INTERVAL_MIN, EVENT_INTERVAL_MAX );\r\n62\t\t\t\t\r\n63\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_HOT);\r\n64\t\t\t}\r\n65\t\t}\r\n66\t};"
+        ]
+      },
+      {
+        "symptom_id": "dehydration",
+        "symptom_label": "Water Loss",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Fever.c\r\nLINE: 53\r\n47\t\t{\r\n48\t\t\treturn !ActivateCondition(player);\r\n49\t\t}\r\n50\t\r\n51\t\toverride void OnTick(PlayerBase player, float deltaT)\r\n52\t\t{\r\n53\t\t\tfloat water_loss = deltaT * PlayerConstants.WATER_LOSS_FEVER;\r\n54\t\t\tplayer.GetStatWater().Add(-water_loss);\r\n55\t\t\t\r\n56\t\t\tm_Time += deltaT;\r\n57\t\t\r\n58\t\t\tif ( m_Time >= m_NextEvent )\r\n59\t\t\t{"
+        ]
+      }
+    ],
+    "broken_leg": [
+      {
+        "symptom_id": "unconsciousness",
+        "symptom_label": "Unconn",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\3_Game\\PlayerConstants.c\n216\tstatic const float UNCONSCIOUS_THRESHOLD = 25.0;\n304\tstatic const float BROKEN_LEGS_INITIAL_SHOCK = 20;\n305\tstatic const float BROKEN_LEGS_LOW_SHOCK_WALK = 4;\n306\tstatic const float BROKEN_LEGS_MID_SHOCK_WALK = 6;\n307\tstatic const float BROKEN_LEGS_HIGH_SHOCK_WALK = 8;\nFILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ManBase\\PlayerBase.c\n3651\t\t\t\tm_ShockHandler.SetShock(PlayerConstants.BROKEN_LEGS_INITIAL_SHOCK);"
+        ]
+      }
+    ]
+  },
+  "treatment": {
+    "cholera": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\TetracyclineAntibiotics.c\nLINE: 8\n2\t{\n3\t\toverride void OnConsume(float amount, PlayerBase consumer)\n4\t\t{\n5\t\t\tif (consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_ANTIBIOTICS)) //effectively resets the timer\n6\t\t\t\tconsumer.GetModifiersManager().DeactivateModifier(eModifiers.MDF_ANTIBIOTICS);\n7\t\n8\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_ANTIBIOTICS);\n9\t\t}\n10\t\t\n11\t\toverride void SetActions()\n12\t\t{\n13\t\t\tsuper.SetActions();\n14\t\t\t",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\Recipes\\Recipes\\PurifyWater.c\nLINE: 75\n69\t\t\treturn ingredients[1].GetQuantity() > 0 && !ingredients[1].GetIsFrozen();\n70\t\t}\n71\t\n72\t\toverride void Do(ItemBase ingredients[], PlayerBase player,array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion\n73\t\t{\n74\t\t\tItemBase ingredient2 = ingredients[1];\n75\t\t\tingredient2.RemoveAllAgentsExcept(eAgents.HEAVYMETAL);\n76\t\t}\n77\t};",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\Bottle_Base\\FilteringBottle.c\nLINE: 63\n57\t\t{\n58\t\t\treturn true;\n59\t\t}\n60\t\t\n61\t\toverride int FilterAgents(int agentsIn)\n62\t\t{\n63\t\t\tint agentsOut = agentsIn & (~eAgents.HEAVYMETAL) & (~eAgents.CHOLERA);\n64\t\t\t\n65\t\t\treturn agentsOut;\n66\t\t}\n67\t\t\n68\t\toverride void OnConsume(float amount, PlayerBase consumer)\n69\t\t{"
+    ],
+    "heavy_metal_phase1": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\ChelatingTablets.c\nLINE: 18\n12\t\t{\n13\t\t\tif (consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHELATION)) //effectively resets the timer\n14\t\t\t{\n15\t\t\t\tconsumer.GetModifiersManager().DeactivateModifier(eModifiers.MDF_CHELATION);\n16\t\t\t}\n17\t\n18\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_CHELATION);\n19\t\t}\n20\t\t\n21\t\toverride void SetActions()\n22\t\t{\n23\t\t\tsuper.SetActions();\n24\t\t\t",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\Recipes\\Recipes\\ChelateWater.c\nLINE: 74\n68\t\t{\n69\t\t\treturn ingredients[1].GetQuantity() > 0 && !ingredients[1].GetIsFrozen();\n70\t\t}\n71\t\n72\t\toverride void Do(ItemBase ingredients[], PlayerBase player,array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion\n73\t\t{\n74\t\t\tingredients[1].RemoveAllAgents();\n75\t\t}\n76\t};",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\Bottle_Base\\FilteringBottle.c\nLINE: 63\n57\t\t{\n58\t\t\treturn true;\n59\t\t}\n60\t\t\n61\t\toverride int FilterAgents(int agentsIn)\n62\t\t{\n63\t\t\tint agentsOut = agentsIn & (~eAgents.HEAVYMETAL) & (~eAgents.CHOLERA);\n64\t\t\t\n65\t\t\treturn agentsOut;\n66\t\t}\n67\t\t\n68\t\toverride void OnConsume(float amount, PlayerBase consumer)\n69\t\t{"
+    ],
+    "influenza_stage": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\TetracyclineAntibiotics.c\nLINE: 8\n2\t{\n3\t\toverride void OnConsume(float amount, PlayerBase consumer)\n4\t\t{\n5\t\t\tif (consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_ANTIBIOTICS)) //effectively resets the timer\n6\t\t\t\tconsumer.GetModifiersManager().DeactivateModifier(eModifiers.MDF_ANTIBIOTICS);\n7\t\n8\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_ANTIBIOTICS);\n9\t\t}\n10\t\t\n11\t\toverride void SetActions()\n12\t\t{\n13\t\t\tsuper.SetActions();\n14\t\t\t",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\TransmissionAgents\\Agents\\InfluenzaAgent.c\nLINE: 126\n120\t\t\t\n121\t\t\treturn super.GetPotencyEx(player);\n122\t\t}\n123\t\t\n124\t\toverride float GetDieOffSpeedEx(PlayerBase player)\n125\t\t{\n126\t\t\tif (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_ANTIBIOTICS))\n127\t\t\t\treturn GetDieOffSpeed() * 3;\n128\t\t\telse if (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_IMMUNITYBOOST))\n129\t\t\t\treturn GetDieOffSpeed() * 2;\n130\t\n131\t\t\treturn super.GetDieOffSpeedEx(player);\n132\t\t}"
+    ],
+    "contamination_stage2": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\conditions\\AreaExposure.c\nLINE: 144\n138\t\t\t}\n139\t\t}\n140\t\n141\t\tfloat TransmitAgents(PlayerBase player, float count)\n142\t\t{\n143\t\t\tPluginTransmissionAgents plugin = PluginTransmissionAgents.Cast(GetPlugin(PluginTransmissionAgents));\n144\t\t\treturn plugin.TransmitAgentsEx(null, player, AGT_AIRBOURNE_CHEMICAL, count, eAgents.CHEMICAL_POISON);\n145\t\t}\n146\t\t\n147\t\t\n148\t};",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Plugins\\PluginBase\\PluginTransmissionAgents.c\nLINE: 364\n358\t\t\t\t\tfloat prot_level_target = Math.Max(prot_level_mask_target, prot_level_headgear_target);//find the bigger of the 2, TODO: should be improved\n359\t\t\t\t\tfloat prot_level_source = Math.Max(prot_level_mask_source, prot_level_headgear_source);//find the bigger of the 2, TODO: should be improved\n360\t\t\t\t\tfloat prot_level_combined = 1 - (1 - prot_level_target) * (1 - prot_level_source);\n361\t\t\t\t\tInjectAgentsWithPlayer( target, sourceAgents , prot_level_combined, 1, InjectTypes.PLAYER_AIR_PLAYER );\n362\t\t\t\t\tbreak;\n363\t\t\t\tcase AGT_AIRBOURNE_CHEMICAL:\n364\t\t\t\t\tfloat prot_level_mask_target2 = GetProtectionLevel(DEF_CHEMICAL,InventorySlots.MASK, Man.Cast( target ));\n365\t\n366\t\t\t\t\tcount = InjectAgentWithPlayerDose( target, agents , prot_level_mask_target2, dose_size, InjectTypes.PLAYER_AIR_PLAYER );\n367\t\t\t\t\tbreak;\n368\t\t\t\tdefault:\n369\t\t\t\t\tbreak;\n370\t\t\t}"
+    ],
+    "food_poisoning": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\CharcoalTablets.c\nLINE: 13\n7\t\t\tAddAction(ActionForceConsumeSingle);\n8\t\t\tAddAction(ActionEatTabletFromWrapper);\n9\t\t}\n10\t\t\n11\t\toverride void OnConsume(float amount, PlayerBase consumer)\n12\t\t{\n13\t\t\tif (!consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHARCOAL))\n14\t\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_CHARCOAL);\n15\t\t\t\n16\t\t}\n17\t}",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\TransmissionAgents\\Agents\\FoodPoisonAgent.c\nLINE: 31\n25\t\t{\n26\t\t\treturn player.GetStomach().GetVolumeContainingAgent01(eAgents.FOOD_POISON);\n27\t\t}\n28\t\t\n29\t\toverride float GetDieOffSpeedEx(PlayerBase player)\n30\t\t{\n31\t\t\tif (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHARCOAL))\n32\t\t\t\treturn 0.5;\n33\t\t\t\n34\t\t\tif (player.m_AgentPool.GetSingleAgentCount(eAgents.FOOD_POISON) <= PoisoningMdfr.AGENT_THRESHOLD_DEACTIVATE)\n35\t\t\t\treturn 0.3;\n36\t\n37\t\t\treturn 0.0;"
+    ],
+    "pneumonia_stage": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\TetracyclineAntibiotics.c\nLINE: 8\n2\t{\n3\t\toverride void OnConsume(float amount, PlayerBase consumer)\n4\t\t{\n5\t\t\tif (consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_ANTIBIOTICS)) //effectively resets the timer\n6\t\t\t\tconsumer.GetModifiersManager().DeactivateModifier(eModifiers.MDF_ANTIBIOTICS);\n7\t\n8\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_ANTIBIOTICS);\n9\t\t}\n10\t\t\n11\t\toverride void SetActions()\n12\t\t{\n13\t\t\tsuper.SetActions();\n14\t\t\t",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\TransmissionAgents\\Agents\\InfluenzaAgent.c\nLINE: 126\n120\t\t\t\n121\t\t\treturn super.GetPotencyEx(player);\n122\t\t}\n123\t\t\n124\t\toverride float GetDieOffSpeedEx(PlayerBase player)\n125\t\t{\n126\t\t\tif (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_ANTIBIOTICS))\n127\t\t\t\treturn GetDieOffSpeed() * 3;\n128\t\t\telse if (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_IMMUNITYBOOST))\n129\t\t\t\treturn GetDieOffSpeed() * 2;\n130\t\n131\t\t\treturn super.GetDieOffSpeedEx(player);\n132\t\t}"
+    ],
+    "wound_infection_stage1": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\UserActionsComponent\\Actions\\SingleUse\\Medical\\ActionDisinfectSelf.c\nLINE: 58\n52\t\t{\n53\t\t\t\n54\t\t\tif( action_data.m_Player.GetModifiersManager().IsModifierActive(eModifiers.MDF_DISINFECTION))//effectively resets the timer\n55\t\t\t{\n56\t\t\t\taction_data.m_Player.GetModifiersManager().DeactivateModifier( eModifiers.MDF_DISINFECTION );\n57\t\t\t}\n58\t\t\taction_data.m_Player.GetModifiersManager().ActivateModifier( eModifiers.MDF_DISINFECTION );\n59\t\n60\t\t\tApply(action_data);\n61\t\t}\n62\t\n63\t\t\n64\t};",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\DisinfectMdfr.c\nLINE: 70\n64\t\t\telse\n65\t\t\t{\n66\t\t\t\treturn false;\n67\t\t\t}\n68\t\t}\n69\t\n70\t\toverride void OnTick(PlayerBase player, float deltaT)\n71\t\t{\n72\t\t\tif(player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION2))\n73\t\t\t{\n74\t\t\t\tplayer.m_AgentPool.AddAgent(eAgents.WOUND_AGENT, -m_PluginTransmissionAgents.GetAgentInvasibility(eAgents.WOUND_AGENT) * deltaT);\n75\t\t\t}\n76\t\t\telse",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\TetracyclineAntibiotics.c\nLINE: 8\n2\t{\n3\t\toverride void OnConsume(float amount, PlayerBase consumer)\n4\t\t{\n5\t\t\tif (consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_ANTIBIOTICS)) //effectively resets the timer\n6\t\t\t\tconsumer.GetModifiersManager().DeactivateModifier(eModifiers.MDF_ANTIBIOTICS);\n7\t\n8\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_ANTIBIOTICS);\n9\t\t}\n10\t\t\n11\t\toverride void SetActions()\n12\t\t{\n13\t\t\tsuper.SetActions();\n14\t\t\t"
+    ],
+    "heavy_metal_phase2": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\ChelatingTablets.c\nLINE: 18\n12\t\t{\n13\t\t\tif (consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHELATION)) //effectively resets the timer\n14\t\t\t{\n15\t\t\t\tconsumer.GetModifiersManager().DeactivateModifier(eModifiers.MDF_CHELATION);\n16\t\t\t}\n17\t\n18\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_CHELATION);\n19\t\t}\n20\t\t\n21\t\toverride void SetActions()\n22\t\t{\n23\t\t\tsuper.SetActions();\n24\t\t\t",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\Recipes\\Recipes\\ChelateWater.c\nLINE: 74\n68\t\t{\n69\t\t\treturn ingredients[1].GetQuantity() > 0 && !ingredients[1].GetIsFrozen();\n70\t\t}\n71\t\n72\t\toverride void Do(ItemBase ingredients[], PlayerBase player,array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion\n73\t\t{\n74\t\t\tingredients[1].RemoveAllAgents();\n75\t\t}\n76\t};",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\Bottle_Base\\FilteringBottle.c\nLINE: 63\n57\t\t{\n58\t\t\treturn true;\n59\t\t}\n60\t\t\n61\t\toverride int FilterAgents(int agentsIn)\n62\t\t{\n63\t\t\tint agentsOut = agentsIn & (~eAgents.HEAVYMETAL) & (~eAgents.CHOLERA);\n64\t\t\t\n65\t\t\treturn agentsOut;\n66\t\t}\n67\t\t\n68\t\toverride void OnConsume(float amount, PlayerBase consumer)\n69\t\t{"
+    ],
+    "contamination_stage1": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\conditions\\AreaExposure.c\nLINE: 144\n138\t\t\t}\n139\t\t}\n140\t\n141\t\tfloat TransmitAgents(PlayerBase player, float count)\n142\t\t{\n143\t\t\tPluginTransmissionAgents plugin = PluginTransmissionAgents.Cast(GetPlugin(PluginTransmissionAgents));\n144\t\t\treturn plugin.TransmitAgentsEx(null, player, AGT_AIRBOURNE_CHEMICAL, count, eAgents.CHEMICAL_POISON);\n145\t\t}\n146\t\t\n147\t\t\n148\t};",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Plugins\\PluginBase\\PluginTransmissionAgents.c\nLINE: 364\n358\t\t\t\t\tfloat prot_level_target = Math.Max(prot_level_mask_target, prot_level_headgear_target);//find the bigger of the 2, TODO: should be improved\n359\t\t\t\t\tfloat prot_level_source = Math.Max(prot_level_mask_source, prot_level_headgear_source);//find the bigger of the 2, TODO: should be improved\n360\t\t\t\t\tfloat prot_level_combined = 1 - (1 - prot_level_target) * (1 - prot_level_source);\n361\t\t\t\t\tInjectAgentsWithPlayer( target, sourceAgents , prot_level_combined, 1, InjectTypes.PLAYER_AIR_PLAYER );\n362\t\t\t\t\tbreak;\n363\t\t\t\tcase AGT_AIRBOURNE_CHEMICAL:\n364\t\t\t\t\tfloat prot_level_mask_target2 = GetProtectionLevel(DEF_CHEMICAL,InventorySlots.MASK, Man.Cast( target ));\n365\t\n366\t\t\t\t\tcount = InjectAgentWithPlayerDose( target, agents , prot_level_mask_target2, dose_size, InjectTypes.PLAYER_AIR_PLAYER );\n367\t\t\t\t\tbreak;\n368\t\t\t\tdefault:\n369\t\t\t\t\tbreak;\n370\t\t\t}"
+    ],
+    "salmonella": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\CharcoalTablets.c\nLINE: 13\n7\t\t\tAddAction(ActionForceConsumeSingle);\n8\t\t\tAddAction(ActionEatTabletFromWrapper);\n9\t\t}\n10\t\t\n11\t\toverride void OnConsume(float amount, PlayerBase consumer)\n12\t\t{\n13\t\t\tif (!consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHARCOAL))\n14\t\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_CHARCOAL);\n15\t\t\t\n16\t\t}\n17\t}",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\CharcoalMdfr.c\nLINE: 85\n79\t\t}\n80\t\n81\t\toverride void OnTick(PlayerBase player, float deltaT)\n82\t\t{\n83\t\t\tif ( GetAttachedTime() > ( CHARCOAL_LIFETIME - CHARCOAL_EFFECT_TIME ) )\n84\t\t\t{\t\t\n85\t\t\t\tplayer.m_AgentPool.AddAgent(eAgents.SALMONELLA, -m_Killrate * deltaT);\n86\t\t\t}\n87\t\t}\n88\t};",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\UserActionsComponent\\Actions\\Interact\\ActionWashHandsWellOne.c\nLINE: 41\n35\t\t\tsuper.OnEndServer(action_data);\n36\t\t\t\n37\t\t\tif (action_data.m_State == UA_FINISHED)\n38\t\t\t{\n39\t\t\t\tPluginLifespan moduleLifespan = PluginLifespan.Cast(GetPlugin(PluginLifespan));\n40\t\t\t\tmoduleLifespan.UpdateBloodyHandsVisibility(action_data.m_Player, false);\n41\t\t\t\taction_data.m_Player.ClearBloodyHandsPenaltyChancePerAgent(eAgents.SALMONELLA);\n42\t\t\t}\n43\t\t}\t\n44\t}"
+    ],
+    "influenza_common_cold": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\TetracyclineAntibiotics.c\nLINE: 8\n2\t{\n3\t\toverride void OnConsume(float amount, PlayerBase consumer)\n4\t\t{\n5\t\t\tif (consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_ANTIBIOTICS)) //effectively resets the timer\n6\t\t\t\tconsumer.GetModifiersManager().DeactivateModifier(eModifiers.MDF_ANTIBIOTICS);\n7\t\n8\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_ANTIBIOTICS);\n9\t\t}\n10\t\t\n11\t\toverride void SetActions()\n12\t\t{\n13\t\t\tsuper.SetActions();\n14\t\t\t",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\TransmissionAgents\\Agents\\InfluenzaAgent.c\nLINE: 126\n120\t\t\t\n121\t\t\treturn super.GetPotencyEx(player);\n122\t\t}\n123\t\t\n124\t\toverride float GetDieOffSpeedEx(PlayerBase player)\n125\t\t{\n126\t\t\tif (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_ANTIBIOTICS))\n127\t\t\t\treturn GetDieOffSpeed() * 3;\n128\t\t\telse if (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_IMMUNITYBOOST))\n129\t\t\t\treturn GetDieOffSpeed() * 2;\n130\t\n131\t\t\treturn super.GetDieOffSpeedEx(player);\n132\t\t}"
+    ],
+    "wound_infection_stage2": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\UserActionsComponent\\Actions\\SingleUse\\Medical\\ActionDisinfectSelf.c\nLINE: 58\n52\t\t{\n53\t\t\t\n54\t\t\tif( action_data.m_Player.GetModifiersManager().IsModifierActive(eModifiers.MDF_DISINFECTION))//effectively resets the timer\n55\t\t\t{\n56\t\t\t\taction_data.m_Player.GetModifiersManager().DeactivateModifier( eModifiers.MDF_DISINFECTION );\n57\t\t\t}\n58\t\t\taction_data.m_Player.GetModifiersManager().ActivateModifier( eModifiers.MDF_DISINFECTION );\n59\t\n60\t\t\tApply(action_data);\n61\t\t}\n62\t\n63\t\t\n64\t};",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\DisinfectMdfr.c\nLINE: 70\n64\t\t\telse\n65\t\t\t{\n66\t\t\t\treturn false;\n67\t\t\t}\n68\t\t}\n69\t\n70\t\toverride void OnTick(PlayerBase player, float deltaT)\n71\t\t{\n72\t\t\tif(player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION2))\n73\t\t\t{\n74\t\t\t\tplayer.m_AgentPool.AddAgent(eAgents.WOUND_AGENT, -m_PluginTransmissionAgents.GetAgentInvasibility(eAgents.WOUND_AGENT) * deltaT);\n75\t\t\t}\n76\t\t\telse",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\TetracyclineAntibiotics.c\nLINE: 8\n2\t{\n3\t\toverride void OnConsume(float amount, PlayerBase consumer)\n4\t\t{\n5\t\t\tif (consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_ANTIBIOTICS)) //effectively resets the timer\n6\t\t\t\tconsumer.GetModifiersManager().DeactivateModifier(eModifiers.MDF_ANTIBIOTICS);\n7\t\n8\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_ANTIBIOTICS);\n9\t\t}\n10\t\t\n11\t\toverride void SetActions()\n12\t\t{\n13\t\t\tsuper.SetActions();\n14\t\t\t"
+    ],
+    "kuru_brain_disease": [
+      "MODEL_NOTES: No direct medicinal cure found in scripts"
+    ],
+    "contamination_stage3": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\conditions\\AreaExposure.c\nLINE: 144\n138\t\t\t}\n139\t\t}\n140\t\n141\t\tfloat TransmitAgents(PlayerBase player, float count)\n142\t\t{\n143\t\t\tPluginTransmissionAgents plugin = PluginTransmissionAgents.Cast(GetPlugin(PluginTransmissionAgents));\n144\t\t\treturn plugin.TransmitAgentsEx(null, player, AGT_AIRBOURNE_CHEMICAL, count, eAgents.CHEMICAL_POISON);\n145\t\t}\n146\t\t\n147\t\t\n148\t};",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Plugins\\PluginBase\\PluginTransmissionAgents.c\nLINE: 364\n358\t\t\t\t\tfloat prot_level_target = Math.Max(prot_level_mask_target, prot_level_headgear_target);//find the bigger of the 2, TODO: should be improved\n359\t\t\t\t\tfloat prot_level_source = Math.Max(prot_level_mask_source, prot_level_headgear_source);//find the bigger of the 2, TODO: should be improved\n360\t\t\t\t\tfloat prot_level_combined = 1 - (1 - prot_level_target) * (1 - prot_level_source);\n361\t\t\t\t\tInjectAgentsWithPlayer( target, sourceAgents , prot_level_combined, 1, InjectTypes.PLAYER_AIR_PLAYER );\n362\t\t\t\t\tbreak;\n363\t\t\t\tcase AGT_AIRBOURNE_CHEMICAL:\n364\t\t\t\t\tfloat prot_level_mask_target2 = GetProtectionLevel(DEF_CHEMICAL,InventorySlots.MASK, Man.Cast( target ));\n365\t\n366\t\t\t\t\tcount = InjectAgentWithPlayerDose( target, agents , prot_level_mask_target2, dose_size, InjectTypes.PLAYER_AIR_PLAYER );\n367\t\t\t\t\tbreak;\n368\t\t\t\tdefault:\n369\t\t\t\t\tbreak;\n370\t\t\t}"
+    ],
+    "heavy_metal_phase3": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\ChelatingTablets.c\nLINE: 18\n12\t\t{\n13\t\t\tif (consumer.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHELATION)) //effectively resets the timer\n14\t\t\t{\n15\t\t\t\tconsumer.GetModifiersManager().DeactivateModifier(eModifiers.MDF_CHELATION);\n16\t\t\t}\n17\t\n18\t\t\tconsumer.GetModifiersManager().ActivateModifier(eModifiers.MDF_CHELATION);\n19\t\t}\n20\t\t\n21\t\toverride void SetActions()\n22\t\t{\n23\t\t\tsuper.SetActions();\n24\t\t\t",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\Recipes\\Recipes\\ChelateWater.c\nLINE: 74\n68\t\t{\n69\t\t\treturn ingredients[1].GetQuantity() > 0 && !ingredients[1].GetIsFrozen();\n70\t\t}\n71\t\n72\t\toverride void Do(ItemBase ingredients[], PlayerBase player,array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion\n73\t\t{\n74\t\t\tingredients[1].RemoveAllAgents();\n75\t\t}\n76\t};",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ItemBase\\Edible_Base\\Bottle_Base\\FilteringBottle.c\nLINE: 63\n57\t\t{\n58\t\t\treturn true;\n59\t\t}\n60\t\t\n61\t\toverride int FilterAgents(int agentsIn)\n62\t\t{\n63\t\t\tint agentsOut = agentsIn & (~eAgents.HEAVYMETAL) & (~eAgents.CHOLERA);\n64\t\t\t\n65\t\t\treturn agentsOut;\n66\t\t}\n67\t\t\n68\t\toverride void OnConsume(float amount, PlayerBase consumer)\n69\t\t{"
+    ],
+    "hemolytic_reaction": [
+      "MODEL_NOTES: No direct medicinal cure in scripts; reaction runs its duration"
+    ],
+    "broken_leg": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\UserActionsComponent\\Actions\\Continuous\\Medical\\ActionSplintSelf.c\n29\toverride void OnFinishProgressServer( ActionData action_data )\n32\t\taction_data.m_Player.ApplySplint();\n35\t\tif (action_data.m_Player.GetBrokenLegs() == eBrokenLegs.BROKEN_LEGS)\n37\t\t\taction_data.m_Player.SetBrokenLegs(eBrokenLegs.BROKEN_LEGS_SPLINT);",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\UserActionsComponent\\Actions\\Continuous\\Medical\\ActionSplintTarget.c\n22\toverride void OnFinishProgressServer( ActionData action_data )\n29\t\tntarget.ApplySplint();\n39\t\tntarget.SetBrokenLegs(eBrokenLegs.BROKEN_LEGS_SPLINT);",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\conditions\\BrokenLegs.c\n32\toverride void OnDeactivate(PlayerBase player)\n35\t\tif ( player.IsWearingSplint() )\n37\t\t\tMiscGameplayFunctions.RemoveSplint(player); //Remove splint when leg is healed"
+    ]
+  },
+  "effects": {
+    "cholera": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\Cholera.c\nLINE: 65\n59\t\t{\n60\t\t\treturn (player.GetSingleAgentCount(eAgents.CHOLERA) <= AGENT_THRESHOLD_DEACTIVATE);\n61\t\t}\n62\t\n63\t\toverride protected void OnTick(PlayerBase player, float deltaT)\n64\t\t{\n65\t\t\tfloat waterLoss = ( deltaT * ( WATER_LOSS_CHOLERA * Math.Max( WATER_LOSS_CHOLERA_MIN, player.GetSingleAgentCountNormalized( eAgents.CHOLERA ) ) ) );\n66\t\t\tplayer.GetStatWater().Add(-waterLoss);\n67\t\n68\t\t\tfloat stomachVolume = player.m_PlayerStomach.GetStomachVolume();\n69\t\t\tif (stomachVolume >= STOMACH_MIN_VOLUME)\n70\t\t\t{\n71\t\t\t\tint roll = Math.RandomInt( 0, 100 );"
+    ],
+    "heavy_metal_phase1": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\HeavyMetal.c\nLINE: 82\n76\t\t\t}\n77\t\t\t\n78\t\t\tif (player.GetSingleAgentCount(eAgents.HEAVYMETAL) <= SYMPTOMFALLOFF_THRESHOLD3) \n79\t\t\t{\n80\t\t\t\tif ( m_Time >= m_NextEvent )\n81\t\t\t\t{\n82\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_HAND_SHIVER);\n83\t\t\t\t\tm_Time = 0;\n84\t\t\t\n85\t\t\t\t\tm_NextEvent = Math.RandomFloatInclusive(SHIVER_EVENT_INTERVAL_MIN, SHIVER_EVENT_INTERVAL_MAX);\n86\t\t\t\t}\n87\t\t\t}\n88\t\t}"
+    ],
+    "influenza_stage": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\Influenza.c\nLINE: 66\n60\t\t\tfloat coughRandomDivider = Math.RandomInt(COUGH_RND_DIVIDER_NORMAL_MIN, COUGH_RND_DIVIDER_NORMAL_MAX);\n61\t\t\tif (m_ModifiersManager.IsModifierActive(eModifiers.MDF_PAINKILLERS) || m_ModifiersManager.IsModifierActive(eModifiers.MDF_MORPHINE))\n62\t\t\t\tcoughRandomDivider = Math.RandomInt(COUGH_RND_DIVIDER_SUPPRESSED_MIN, COUGH_RND_DIVIDER_SUPPRESSED_MAX);\n63\t\n64\t\t\tif (Math.RandomFloat01() < chanceOfCough / coughRandomDivider)\n65\t\t\t{\n66\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_COUGH);\n67\t\t\t}\n68\t\t}\n69\t}"
+    ],
+    "contamination_stage2": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\Contamination2.c\nLINE: 64\n58\t\t\tm_Time1 += deltaT;\n59\t\t\tm_Time2 += deltaT;\n60\t\t\t\n61\t\t\n62\t\t\tif ( m_Time1 >= m_NextEvent1 )\n63\t\t\t{\n64\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_COUGH);\n65\t\t\t\tm_Time1 = 0;\n66\t\t\t\tm_NextEvent1 = Math.RandomFloatInclusive( EVENT_1_INTERVAL_MIN, EVENT_1_INTERVAL_MAX );\n67\t\t\t}\n68\t\t\tif ( m_Time2 >= m_NextEvent2 )\n69\t\t\t{\n70\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);"
+    ],
+    "food_poisoning": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\conditions\\Poisoning.c\nLINE: 73\n67\t\t\tfloat invertedAgentCountValue = Math.InverseLerp(0, agentMax, agentCount);\n68\t\t\tfloat chance = Math.Lerp(VOMIT_OCCURRENCES_MIN, VOMIT_OCCURRENCES_MAX, invertedAgentCountValue);\n69\t\t\tchance = (chance / 300) * deltaT;\n70\t\t\t\n71\t\t\tif (Math.RandomFloat01() < chance)\n72\t\t\t{\n73\t\t\t\tSymptomBase symptom = player.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);\n74\t\t\t\tif (symptom)\n75\t\t\t\t{\n76\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 30.0 * invertedAgentCountValue;\n77\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\n78\t\t\t\t\tsymptom.SetDuration(Math.Max(3.0, 10 * invertedAgentCountValue));\n79\t\t\t\t\t//player.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 100.0 * invertedAgentCountValue);"
+    ],
+    "pneumonia_stage": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\Pneumonia.c\nLINE: 60\n54\t\t{\n55\t\t\treturn (player.GetSingleAgentCount(eAgents.INFLUENZA) <= AGENT_THRESHOLD_DEACTIVATE);\n56\t\t}\n57\t\n58\t\toverride protected void OnTick(PlayerBase player, float deltaT)\n59\t\t{\n60\t\t\tfloat healthLoss = HEALTH_LOSS_PNEUMONIA * deltaT;\n61\t\t\t\n62\t\t\tplayer.AddHealth(-healthLoss);\n63\t\t\t\n64\t\t\tfloat heavyBreathChance = player.GetSingleAgentCountNormalized(eAgents.INFLUENZA);\n65\t\t\t\n66\t\t\tif ( Math.RandomFloat01() < heavyBreathChance / Math.RandomInt(1,15) )"
+    ],
+    "wound_infection_stage1": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\WoundInfection.c\nLINE: 68\n62\t\toverride protected void OnTick(PlayerBase player, float deltaT)\n63\t\t{\n64\t\t\tm_Time += deltaT;\n65\t\t\t\n66\t\t\tif (m_Time >= m_NextEvent)\n67\t\t\t{\n68\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_LIGHT);\n69\t\t\t\tm_Time = 0;\n70\t\t\t\tm_NextEvent = Math.RandomFloatInclusive(PAIN_EVENT_INTERVAL_MIN, PAIN_EVENT_INTERVAL_MAX);\n71\t\t\t}\n72\t\t}\n73\t}",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\conditions\\Fatigue.c\nLINE: 30\n24\t\n25\t\toverride void OnActivate(PlayerBase player)\n26\t\t{\n27\t\t\tif (player.m_NotifiersManager) \n28\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);\n29\t\n30\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.FATIGUE);\n31\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.FATIGUE);\n32\t\t}\n33\t\n34\t\toverride void OnReconnect(PlayerBase player)\n35\t\t{\n36\t\t\tOnActivate(player);"
+    ],
+    "heavy_metal_phase2": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\HeavyMetal.c\nLINE: 146\n140\t\t\t\t}\n141\t\t\t}\n142\t\t\t\n143\t\t\tfloat chanceOfDeafness = player.GetSingleAgentCountNormalized(eAgents.HEAVYMETAL);\n144\t\t\tif (Math.RandomFloat01() < chanceOfDeafness / Math.RandomInt(5, 10))\n145\t\t\t{\n146\t\t\t\tplayer.GetSymptomManager().QueueUpSecondarySymptom(SymptomIDs.SYMPTOM_DEAFNESS_COMPLETE);\n147\t\t\t\tm_Time = 0;\n148\t\t\t\tm_DeafnessTime = 0;\n149\t\t\t\tm_IsDeaf = true;\n150\t\t\t\t\n151\t\t\t\tm_NextEvent = Math.RandomFloatInclusive(PAIN_EVENT_INTERVAL_MIN, PAIN_EVENT_INTERVAL_MAX);\n152\t\t\t}\t"
+    ],
+    "contamination_stage1": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\Contamination.c\nLINE: 33\n27\t\t{\n28\t\t\treturn ( player.GetSingleAgentCount(eAgents.CHEMICAL_POISON) >= AGENT_THRESHOLD_ACTIVATE && player.GetSingleAgentCount(eAgents.CHEMICAL_POISON) < AGENT_THRESHOLD_DEACTIVATE );\n29\t\t}\n30\t\n31\t\toverride protected void OnActivate(PlayerBase player)\n32\t\t{\n33\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_COUGH);\t\n34\t\t}\n35\t\n36\t\toverride protected bool DeactivateCondition(PlayerBase player)\n37\t\t{\n38\t\t\treturn !ActivateCondition(player);\n39\t\t}"
+    ],
+    "salmonella": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\Salmonella.c\nLINE: 76\n70\t\t\tif (stomach_volume >= STOMACH_MIN_VOLUME)\n71\t\t\t{\n72\t\t\t\tint roll = Math.RandomInt(0, 100);\n73\t\t\t\tint chanceOfVomit = CHANCE_OF_VOMIT + (CHANCE_OF_VOMIT_AGENT * player.GetSingleAgentCountNormalized(eAgents.SALMONELLA));\n74\t\t\t\tif (roll < chanceOfVomit)\n75\t\t\t\t{\n76\t\t\t\t\tSymptomBase symptom = player.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);\n77\t\t\t\t\t\n78\t\t\t\t\tif (symptom)\n79\t\t\t\t\t{\n80\t\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 50.0;\n81\t\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\n82\t\t\t\t\t\tsymptom.SetDuration(5);"
+    ],
+    "influenza_common_cold": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\CommonCold.c\nLINE: 67\n61\t\t\tfloat randomDivider = Math.RandomInt(SNEEZE_RND_DIVIDER_NORMAL_MIN, SNEEZE_RND_DIVIDER_NORMAL_MAX);\n62\t\t\tif (m_ModifiersManager.IsModifierActive(eModifiers.MDF_PAINKILLERS) || m_ModifiersManager.IsModifierActive(eModifiers.MDF_MORPHINE))\n63\t\t\t\trandomDivider = Math.RandomInt(SNEEZE_RND_DIVIDER_SUPPRESSED_MIN, SNEEZE_RND_DIVIDER_SUPPRESSED_MAX);\n64\t\t\t\n65\t\t\tif (Math.RandomFloat01() < chanceOfSneeze / randomDivider)\n66\t\t\t{\n67\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_SNEEZE);\n68\t\t\t}\n69\t\t}\n70\t}"
+    ],
+    "wound_infection_stage2": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\WoundInfection2.c\nLINE: 86\n80\t\t\t\tif( player.IsAntibioticsActive() )\n81\t\t\t\t{\n82\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_LIGHT);\n83\t\t\t\t}\n84\t\t\t\telse\n85\t\t\t\t{\n86\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_HEAVY);\n87\t\t\t\t\tfloat damage = m_Time * (DAMAGE_PER_SEC + player.GetHealthRegenSpeed());\n88\t\t\t\t\tplayer.AddHealth(\"\",\"\", -damage);\n89\t\t\t\t}\n90\t\t\t\t\n91\t\t\t\tm_Time = 0;\n92\t\t\t\tm_NextEvent = Math.RandomFloatInclusive( PAIN_EVENT_INTERVAL_MIN, PAIN_EVENT_INTERVAL_MAX );",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\conditions\\Fever.c\nLINE: 21\n15\t\t\tm_TickIntervalInactive \t= DEFAULT_TICK_TIME_INACTIVE;\n16\t\t\tm_TickIntervalActive \t= DEFAULT_TICK_TIME_ACTIVE_SHORT;\n17\t\t\tm_SyncID\t\t\t\t= eModifierSyncIDs.MODIFIER_SYNC_FEVER;\n18\t\t}\n19\t\toverride bool ActivateCondition(PlayerBase player)\n20\t\t{\n21\t\t\treturn (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_CHOLERA) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_INFLUENZA) || player.GetModifiersManager().IsModifierActive(eModifiers.MDF_WOUND_INFECTION2));\n22\t\t}\n23\t\n24\t\toverride void OnActivate(PlayerBase player)\n25\t\t{\n26\t\t\tif( player.m_NotifiersManager ) \n27\t\t\t\tplayer.m_NotifiersManager.ActivateByType(eNotifiers.NTF_FEVERISH);"
+    ],
+    "kuru_brain_disease": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\BrainDisease.c\nLINE: 53\n47\t\t{\n48\t\t\tm_Time += deltaT;\n49\t\t\tfloat brainAgents = player.GetSingleAgentCountNormalized(eAgents.BRAIN) / 8.0;\n50\t\t\tfloat chanceOfLaughter = Math.RandomFloat01();\n51\t\n52\t\t\tif (chanceOfLaughter < brainAgents)\n53\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_LAUGHTER);\n54\t\t\t\n55\t\t\tif (m_Time >= m_ShakeTime)\n56\t\t\t{\n57\t\t\t\tDayZPlayerSyncJunctures.SendKuruRequest(player, brainAgents);\n58\t\t\t\tm_ShakeTime = m_Time + Math.RandomFloat(SHAKE_INTERVAL_MIN, SHAKE_INTERVAL_MAX);\n59\t\t\t}"
+    ],
+    "contamination_stage3": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\Contamination3.c\nLINE: 49\n43\t\t}\n44\t\n45\t\toverride protected void OnTick(PlayerBase player, float deltaT)\n46\t\t{\n47\t\t\tif(GetAttachedTime() > 4 && (!player.GetSymptomManager().GetCurrentPrimaryActiveSymptom() || (player.GetSymptomManager().GetCurrentPrimaryActiveSymptom() &&  player.GetSymptomManager().GetCurrentPrimaryActiveSymptom().GetType() != SymptomIDs.SYMPTOM_VOMIT)) )\n48\t\t\t{\n49\t\t\t\tplayer.AddHealth(\"\",\"Shock\", -100);\n50\t\t\t}\n51\t\t\t\n52\t\t\tif (player.IsUnconscious())\n53\t\t\t{\n54\t\t\t\tplayer.AddHealth(\"\",\"\",DAMAGE_PER_SEC * deltaT);\n55\t\t\t}"
+    ],
+    "heavy_metal_phase3": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\diseases\\HeavyMetal.c\nLINE: 221\n215\t\t\tplayer.GetSymptomManager().RemoveSecondarySymptom(SymptomIDs.SYMPTOM_DEAFNESS_COMPLETE);\n216\t\t\tplayer.GetSymptomManager().RemoveSecondarySymptom(SymptomIDs.SYMPTOM_HMP_SEVERE);\n217\t\t}\n218\t\n219\t\toverride protected void OnTick(PlayerBase player, float deltaT)\n220\t\t{\t\n221\t\t\tfloat healthLoss = (deltaT * (HEALTH_LOSS_HEAVYMETAL_MAX * Math.Max(HEALTH_LOSS_HEAVYMETAL_MIN, player.GetSingleAgentCountNormalized(eAgents.HEAVYMETAL))));\n222\t\t\tplayer.AddHealth(-healthLoss);\n223\t\t\t\t\n224\t\t\tm_Time += deltaT;\n225\t\t\t\n226\t\t\tif (m_Time >= m_NextEvent)\n227\t\t\t{"
+    ],
+    "hemolytic_reaction": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\conditions\\HemolyticReaction.c\nLINE: 53\n47\t\t\t\treturn false;\n48\t\t\t}\n49\t\t}\n50\t\n51\t\toverride void OnTick(PlayerBase player, float deltaT)\n52\t\t{\n53\t\t\tplayer.AddHealth(\"\",\"Blood\",-PlayerConstants.HEMOLYTIC_BLOOD_DRAIN_PER_SEC * deltaT);\n54\t\t}\n55\t\t\n56\t\tfloat CalculateRunTime()\n57\t\t{\n58\t\t\tfloat time = PlayerConstants.HEMOLYTIC_BLOODLOSS_AMOUNT / PlayerConstants.SALINE_BLOOD_REGEN_PER_SEC;\n59\t\t\treturn time;"
+    ],
+    "broken_leg": [
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\conditions\\BrokenLegs.c\n16\toverride void OnActivate(PlayerBase player)\n19\t\t\tplayer.SetBrokenLegs(-eBrokenLegs.BROKEN_LEGS);\n20\t\t\tplayer.GetNotifiersManager().ActivateByType(eNotifiers.NTF_FRACTURE);\n44\toverride void OnTick(PlayerBase player, float deltaT)\n46\t\t\tplayer.UpdateBrokenLegs(0);",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ManBase\\PlayerBase.c\n3594\tvoid UpdateBrokenLegs(int stateId)\n3618\t\t\t\tm_InjuryHandler.m_ForceInjuryAnimMask = m_InjuryHandler.m_ForceInjuryAnimMask | eInjuryOverrides.BROKEN_LEGS;\n3621\t\t\t\tBrokenLegWalkShock();\n3638\tvoid BrokenLegForceProne(bool forceOverride = false)",
+      "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\3_Game\\Enums\\EBrokenLegs.c\n1\tenum eBrokenLegs\n3\t\tNO_BROKEN_LEGS = 0,\n4\t\tBROKEN_LEGS = 1,\n5\t\tBROKEN_LEGS_SPLINT = 2,"
+    ]
+  }
+}
