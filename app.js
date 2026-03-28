@@ -41,8 +41,8 @@ const symptomImageMap = {
   tremors: "./icons/status/Tremors when aiming.svg",
   energy_loss: "./icons/status/Food Loss.png",
   dehydration: "./icons/status/Water Loss.png",
-  health_loss: "./icons/status/Health loss.png",
-  blood_depletes: "./icons/status/Blood loss.png",
+  health_loss: "./icons/status/Health Loss.png",
+  blood_depletes: "./icons/status/Blood Loss.png",
   hot_symptom: "./icons/status/Fever.png"
 };
 
