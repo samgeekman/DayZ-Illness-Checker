@@ -39,7 +39,6 @@ const symptomImageMap = {
   heavy_pain: "./icons/status/Grunt loud.svg",
   deafness: "./icons/status/deaf.svg",
   tremors: "./icons/status/Tremors when aiming.svg",
-  energy_loss: "./icons/status/Food Loss.png",
   dehydration: "./icons/status/Water Loss.png",
   health_loss: "./icons/status/Health Loss.png",
   blood_depletes: "./icons/status/Blood Loss.png",
@@ -87,6 +86,9 @@ function renderSymptomCard(symptom) {
     img.alt = "";
     img.setAttribute("aria-hidden", "true");
     img.className = "icon icon-image";
+    if (symptom.id === "blood_loss_vision") {
+      img.classList.add("icon-image-preserve-edge");
+    }
     if (iconSrc.toLowerCase().endsWith(".svg")) {
       img.classList.add("icon-image-svg");
     }
@@ -309,10 +311,16 @@ function addChips(listEl, values, symptomLabels) {
 }
 
 function addDiseaseSymptomChips(listEl, illnessSymptomIds, symptomLabels, displayOverrides = {}) {
+  const chipLabelOverrides = {
+    vomiting: "Vomiting + Food/Water Loss"
+  };
   illnessSymptomIds.forEach((symptomId) => {
     const li = document.createElement("li");
     li.textContent = toTitleCase(
-      displayOverrides[symptomId] ?? symptomLabels?.get(symptomId) ?? symptomId
+      displayOverrides[symptomId] ??
+        chipLabelOverrides[symptomId] ??
+        symptomLabels?.get(symptomId) ??
+        symptomId
     );
     if (selectedSymptoms.has(symptomId)) {
       li.classList.add("hit");
@@ -843,6 +851,3 @@ async function init() {
 }
 
 init();
-
-
-

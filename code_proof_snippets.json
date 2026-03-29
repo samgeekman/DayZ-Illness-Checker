@@ -113,7 +113,7 @@
     "hemolytic_reaction": [
       {
         "symptom_id": "blood_depletes",
-        "symptom_label": "Blood Depletes",
+        "symptom_label": "Lower Blood Level",
         "experience_type": "direct",
         "snippets": [
           "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\HemolyticReaction.c\r\nLINE: 53\r\n47\t\t\t\treturn false;\r\n48\t\t\t}\r\n49\t\t}\r\n50\t\r\n51\t\toverride void OnTick(PlayerBase player, float deltaT)\r\n52\t\t{\r\n53\t\t\tplayer.AddHealth(\"\",\"Blood\",-PlayerConstants.HEMOLYTIC_BLOOD_DRAIN_PER_SEC * deltaT);\r\n54\t\t}\r\n55\t\t\r\n56\t\tfloat CalculateRunTime()\r\n57\t\t{\r\n58\t\t\tfloat time = PlayerConstants.HEMOLYTIC_BLOODLOSS_AMOUNT / PlayerConstants.SALINE_BLOOD_REGEN_PER_SEC;\r\n59\t\t\treturn time;"
@@ -133,7 +133,7 @@
     "heavy_metal_phase1": [
       {
         "symptom_id": "hands_shake",
-        "symptom_label": "Shakey Hands",
+        "symptom_label": "Shaky Hands",
         "experience_type": "direct",
         "snippets": [
           "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\HeavyMetal.c\r\nLINE: 82\r\n76\t\t\t}\r\n77\t\t\t\r\n78\t\t\tif (player.GetSingleAgentCount(eAgents.HEAVYMETAL) <= SYMPTOMFALLOFF_THRESHOLD3) \r\n79\t\t\t{\r\n80\t\t\t\tif ( m_Time >= m_NextEvent )\r\n81\t\t\t\t{\r\n82\t\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_HAND_SHIVER);\r\n83\t\t\t\t\tm_Time = 0;\r\n84\t\t\t\r\n85\t\t\t\t\tm_NextEvent = Math.RandomFloatInclusive(SHIVER_EVENT_INTERVAL_MIN, SHIVER_EVENT_INTERVAL_MAX);\r\n86\t\t\t\t}\r\n87\t\t\t}\r\n88\t\t}"
@@ -286,22 +286,6 @@
         ]
       },
       {
-        "symptom_id": "dehydration",
-        "symptom_label": "Water Loss",
-        "experience_type": "direct",
-        "snippets": [
-          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Poisoning.c\r\nLINE: 81\r\n75\t\t\t\t{\r\n76\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 30.0 * invertedAgentCountValue;\r\n77\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n78\t\t\t\t\tsymptom.SetDuration(Math.Max(3.0, 10 * invertedAgentCountValue));\r\n79\t\t\t\t\t//player.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 100.0 * invertedAgentCountValue);\r\n80\t\t\t\t\tplayer.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 60);\r\n81\t\t\t\t\tif (m_Player.GetStatWater().Get() > (WATER_DRAIN_FROM_VOMIT)) \r\n82\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n83\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > (ENERGY_DRAIN_FROM_VOMIT))\r\n84\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n85\t\t\t\t\t\r\n86\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n87\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);"
-        ]
-      },
-      {
-        "symptom_id": "energy_loss",
-        "symptom_label": "Food Depletes",
-        "experience_type": "direct",
-        "snippets": [
-          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\conditions\\Poisoning.c\r\nLINE: 83\r\n77\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n78\t\t\t\t\tsymptom.SetDuration(Math.Max(3.0, 10 * invertedAgentCountValue));\r\n79\t\t\t\t\t//player.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 100.0 * invertedAgentCountValue);\r\n80\t\t\t\t\tplayer.m_AgentPool.ReduceAgent(eAgents.FOOD_POISON, 60);\r\n81\t\t\t\t\tif (m_Player.GetStatWater().Get() > (WATER_DRAIN_FROM_VOMIT)) \r\n82\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n83\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > (ENERGY_DRAIN_FROM_VOMIT))\r\n84\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n85\t\t\t\t\t\r\n86\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n87\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n88\t\t\t\t\t\t\r\n89\t\t\t\t\tm_Exhaustion = true;"
-        ]
-      },
-      {
         "symptom_id": "stamina_exhaustion",
         "symptom_label": "Stamina Loss",
         "experience_type": "direct",
@@ -317,22 +301,6 @@
         "experience_type": "direct",
         "snippets": [
           "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Salmonella.c\r\nLINE: 76\r\n70\t\t\tif (stomach_volume >= STOMACH_MIN_VOLUME)\r\n71\t\t\t{\r\n72\t\t\t\tint roll = Math.RandomInt(0, 100);\r\n73\t\t\t\tint chanceOfVomit = CHANCE_OF_VOMIT + (CHANCE_OF_VOMIT_AGENT * player.GetSingleAgentCountNormalized(eAgents.SALMONELLA));\r\n74\t\t\t\tif (roll < chanceOfVomit)\r\n75\t\t\t\t{\r\n76\t\t\t\t\tSymptomBase symptom = player.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);\r\n77\t\t\t\t\t\r\n78\t\t\t\t\tif (symptom)\r\n79\t\t\t\t\t{\r\n80\t\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 50.0;\r\n81\t\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n82\t\t\t\t\t\tsymptom.SetDuration(5);"
-        ]
-      },
-      {
-        "symptom_id": "dehydration",
-        "symptom_label": "Water Loss",
-        "experience_type": "direct",
-        "snippets": [
-          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Salmonella.c\r\nLINE: 85\r\n79\t\t\t\t\t{\r\n80\t\t\t\t\t\tCachedObjectsParams.PARAM1_FLOAT.param1 = 50.0;\r\n81\t\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n82\t\t\t\t\t\tsymptom.SetDuration(5);\r\n83\t\t\t\t\t\tplayer.m_AgentPool.ReduceAgent(eAgents.SALMONELLA, 30.0);\r\n84\t\r\n85\t\t\t\t\t\tif (m_Player.GetStatWater().Get() > WATER_DRAIN_FROM_VOMIT)\r\n86\t\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n87\t\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > ENERGY_DRAIN_FROM_VOMIT)\r\n88\t\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n89\t\t\t\t\t\t\r\n90\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n91\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);"
-        ]
-      },
-      {
-        "symptom_id": "energy_loss",
-        "symptom_label": "Food Depletes",
-        "experience_type": "direct",
-        "snippets": [
-          "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Salmonella.c\r\nLINE: 87\r\n81\t\t\t\t\t\tsymptom.SetParam(CachedObjectsParams.PARAM1_FLOAT);\r\n82\t\t\t\t\t\tsymptom.SetDuration(5);\r\n83\t\t\t\t\t\tplayer.m_AgentPool.ReduceAgent(eAgents.SALMONELLA, 30.0);\r\n84\t\r\n85\t\t\t\t\t\tif (m_Player.GetStatWater().Get() > WATER_DRAIN_FROM_VOMIT)\r\n86\t\t\t\t\t\t\tm_Player.GetStatWater().Add(-1 * WATER_DRAIN_FROM_VOMIT);\r\n87\t\t\t\t\t\tif (m_Player.GetStatEnergy().Get() > ENERGY_DRAIN_FROM_VOMIT)\r\n88\t\t\t\t\t\t\tm_Player.GetStatEnergy().Add(-1 * ENERGY_DRAIN_FROM_VOMIT);\r\n89\t\t\t\t\t\t\r\n90\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateRecoveryModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n91\t\t\t\t\t\tplayer.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.VOMIT_EXHAUSTION);\r\n92\t\t\t\t\t\t\r\n93\t\t\t\t\t\tm_Exhaustion = true;"
         ]
       },
       {
@@ -435,7 +403,7 @@
       },
       {
         "symptom_id": "hands_shake",
-        "symptom_label": "Shakey Hands",
+        "symptom_label": "Shaky Hands",
         "experience_type": "direct",
         "snippets": [
           "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\WoundInfection2.c\r\nLINE: 47\r\n41\t\r\n42\t\toverride protected void OnActivate(PlayerBase player)\r\n43\t\t{\r\n44\t\t\tplayer.IncreaseDiseaseCount();\r\n45\t\t\tm_NextEvent = Math.RandomFloatInclusive( PAIN_EVENT_INTERVAL_MIN, PAIN_EVENT_INTERVAL_MAX );\r\n46\t\t\t\r\n47\t\t\tSymptomBase shivers = player.GetSymptomManager().QueueUpSecondarySymptomEx(SymptomIDs.SYMPTOM_HAND_SHIVER);\r\n48\t\t\t\tif ( shivers )\r\n49\t\t\t\t{\r\n50\t\t\t\t\tCachedObjectsParams.PARAM1_INT.param1 = 3;\r\n51\t\t\t\t\tshivers.SetParam(CachedObjectsParams.PARAM1_INT);\r\n52\t\t\t\t}\r\n53"
@@ -487,7 +455,7 @@
     "active_bleeding": [
       {
         "symptom_id": "bleeding_indicator",
-        "symptom_label": "Bleeding Indicator",
+        "symptom_label": "Cuts",
         "experience_type": "direct",
         "snippets": [
           "FILE: P:\\\\scripts\\\\4_World\\\\Classes\\\\PlayerNotifiers\\\\Notifiers\\\\BleedingNotfr.c\nLINE: 11\n9\\toverride int GetNotifierType()\n10\\t{\n11\\t\\treturn eNotifiers.NTF_BLEEDISH;\n12\\t}\n13\\n14\\toverride void DisplayBadge()\n15\\t{\n16\\t\\tDisplayElementBadge dis_elm = DisplayElementBadge.Cast(GetVirtualHud().GetElement(eDisplayElements.DELM_BADGE_BLEEDING));"
@@ -504,7 +472,7 @@
       },
       {
         "symptom_id": "blood_depletes",
-        "symptom_label": "Blood Depletes",
+        "symptom_label": "Lower Blood Level",
         "experience_type": "direct",
         "snippets": [
           "FILE: P:\\\\scripts\\\\4_World\\\\Classes\\\\BleedingSources\\\\BleedingSource.c\nLINE: 145\n141\\tfloat blood_per_sec = m_BloodLoss*GetBloodLossMultiplier();\n142\\tbleedingSourceZoneAvg += m_BloodFlowModifier;\n143\\tblood_per_sec = blood_per_sec * m_BloodFlowModifier;\n144\\tblood_per_sec *= GetGame().GetMission().GetWorldData().GetBloodLossMultiplier();\n145\\tplayer.AddHealth(\"\",\"Blood\", blood_per_sec * deltaT);"

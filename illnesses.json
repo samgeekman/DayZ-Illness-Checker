@@ -26,11 +26,6 @@
                          "icon":  "water"
                      },
                      {
-                         "id":  "energy_loss",
-                         "label":  "Food Loss",
-                         "icon":  "bolt"
-                     },
-                     {
                          "id":  "stamina_exhaustion",
                          "label":  "Stamina Loss",
                          "icon":  "bolt"
@@ -47,7 +42,7 @@
                      },
                      {
                          "id":  "hands_shake",
-                         "label":  "Shakey Hands",
+                         "label":  "Shaky Hands",
                          "icon":  "wave"
                      },
                      {
@@ -67,7 +62,7 @@
                      },
                      {
                          "id":  "blood_depletes",
-                         "label":  "Blood Depletes",
+                         "label":  "Lower Blood Level",
                          "icon":  "heart"
                      },
                      {
@@ -91,7 +86,7 @@
                          "icon":  "thermo"
                      },
                      {
-                         "id": "bleeding_indicator", "label": "Bleeding",
+                         "id": "bleeding_indicator", "label": "Cuts",
                          "icon":  "drop"
                      },
                      {
@@ -139,6 +134,9 @@
                                                     "ifAllSymptoms":  [
                                                                           "unconsciousness",
                                                                           "blood_depletes"
+                                                                      ],
+                                                    "ifNoSymptoms":  [
+                                                                          "bleeding_indicator"
                                                                       ],
                                                     "candidateIllnesses":  [
                                                                                "hemolytic_reaction"
@@ -237,8 +235,7 @@
                                                  "priority":  70,
                                                  "ifAnySymptoms":  [
                                                                        "vomiting",
-                                                                       "dehydration",
-                                                                       "energy_loss"
+                                                                       "dehydration"
                                                                    ],
                                                  "candidateIllnesses":  [
                                                                             "cholera",
@@ -344,7 +341,6 @@
                           "symptoms":  [
                                            "vomiting",
                                            "dehydration",
-                                           "energy_loss",
                                            "stamina_exhaustion",
                                            "fever_blur",
                                            "hot_symptom"
@@ -364,8 +360,6 @@
                           "cause":  "SALMONELLA from contaminated food/bloody hands.",
                           "symptoms":  [
                                            "vomiting",
-                                           "dehydration",
-                                           "energy_loss",
                                            "light_pain",
                                            "stamina_exhaustion"
                                        ],
@@ -385,8 +379,6 @@
                           "cause":  "FOOD_POISON from spoiled food.",
                           "symptoms":  [
                                            "vomiting",
-                                           "dehydration",
-                                           "energy_loss",
                                            "stamina_exhaustion"
                                        ],
                           "treatment":  [
@@ -610,7 +602,7 @@
                       },
                       {
                           "id":  "active_bleeding",
-                          "name":  "Active Bleeding",
+                          "name":  "Blood Loss",
                           "chain":  "Blood Loss",
                           "stageRank":  1,
                           "agent":  "BLEEDING_SOURCE",
@@ -629,4 +621,3 @@
                       }
                   ]
 }
-
