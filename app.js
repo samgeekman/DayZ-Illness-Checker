@@ -616,7 +616,6 @@ function openCodeModal(illness) {
   const snippetModel = proof.snippets || {};
   const symptomSnippetEntries = (snippetModel.symptoms && snippetModel.symptoms[illness.id]) || [];
   const treatmentSnippets = (snippetModel.treatment && snippetModel.treatment[illness.id]) || [];
-  const effectSnippets = (snippetModel.effects && snippetModel.effects[illness.id]) || [];
 
   const symptomBlocks = [];
   if (symptomSnippetEntries.length > 0) {
@@ -640,18 +639,15 @@ function openCodeModal(illness) {
   } else if (picture && picture.cures_or_mitigation) {
     treatmentRefs.push(picture.cures_or_mitigation);
   }
-  const effectRefs = [];
-  if (Array.isArray(effectSnippets) && effectSnippets.length > 0) {
-    effectSnippets.forEach((e) => effectRefs.push(e));
-  } else {
-    if (picture && picture.symptoms_and_effects) effectRefs.push(picture.symptoms_and_effects);
-    if (picture && picture.source_refs) effectRefs.push(picture.source_refs);
-  }
+  const treatmentImpactRefs = treatmentRefs.filter((txt) =>
+    /(GetDieOffSpeedEx|m_AntibioticsResistance|AddAgent\(eAgents|RemoveAllAgents|FilterAgents|GetInvasibilityEx|GetPotencyEx|GrowDuringMedicalDrugsAttack)/i.test(txt)
+  );
+  const treatmentMitigationRefs = treatmentRefs.filter((txt) => !treatmentImpactRefs.includes(txt));
 
   codeModalBody.innerHTML = "";
   codeModalBody.appendChild(makeCodeSection("Symptoms", symptomBlocks));
-  codeModalBody.appendChild(makeCodeSection("Treatment / Mitigation", treatmentRefs));
-  codeModalBody.appendChild(makeCodeSection("Effects / Stage Logic", effectRefs));
+  codeModalBody.appendChild(makeCodeSection("Treatment / Mitigation", treatmentMitigationRefs));
+  codeModalBody.appendChild(makeCodeSection("Treatment Impact", treatmentImpactRefs));
   codeModal.classList.remove("hidden");
 }
 
@@ -689,6 +685,10 @@ function highlightCode(text) {
 
   const colorizeCodeChunk = (raw) => {
     let s = esc(raw);
+    s = s.replace(/([\\/._,;:()[\]{}+=-])/g, "$1<wbr>");
+    s = s.replace(/(\+)/g, "$1<wbr>");
+    s = s.replace(/(\|)/g, "$1<wbr>");
+    s = s.replace(/([A-Za-z0-9]{24})(?=[A-Za-z0-9])/g, "$1<wbr>");
     s = s.replace(
       /\b(class|override|void|if|else|return|const|static|float|int|bool|true|false|new|for|while|switch|case|break|continue|protected|private|public|extends)\b/g,
       '<span class="tok-keyword">$1</span>'
@@ -700,8 +700,6 @@ function highlightCode(text) {
   };
 
   const colorize = (raw) => {
-    // Split a line into code/string/comment segments first,
-    // then colorize only code segments to avoid tagging inside HTML spans.
     const segments = [];
     let i = 0;
     let codeStart = 0;
