@@ -58,6 +58,22 @@ const toTitleCase = (str) =>
     .toLowerCase()
     .replace(/\b\w/g, (c) => c.toUpperCase());
 
+const SYMPTOM_FAMILIES = [["hands_shake", "tremors"]];
+
+function getRelatedSymptomIds(symptomId) {
+  const family = SYMPTOM_FAMILIES.find((ids) => ids.includes(symptomId));
+  return family ? [...family] : [symptomId];
+}
+
+function symptomSetHasEquivalent(symptomSet, symptomId) {
+  return getRelatedSymptomIds(symptomId).some((id) => symptomSet.has(id));
+}
+
+function illnessHasEquivalentSymptom(illness, symptomId) {
+  const related = getRelatedSymptomIds(symptomId);
+  return illness.symptoms.some((illnessSymptomId) => related.includes(illnessSymptomId));
+}
+
 function updateExcludeVisibility() {
   symptomGrid.classList.toggle("has-selection", selectedSymptoms.size > 0);
   const data = window.__illnessData;
@@ -155,13 +171,13 @@ function renderSymptomCard(symptom) {
 function rulePasses(rule, activeSymptoms) {
   const passAll =
     !Array.isArray(rule.ifAllSymptoms) ||
-    rule.ifAllSymptoms.every((symptomId) => activeSymptoms.has(symptomId));
+    rule.ifAllSymptoms.every((symptomId) => symptomSetHasEquivalent(activeSymptoms, symptomId));
   const passAny =
     !Array.isArray(rule.ifAnySymptoms) ||
-    rule.ifAnySymptoms.some((symptomId) => activeSymptoms.has(symptomId));
+    rule.ifAnySymptoms.some((symptomId) => symptomSetHasEquivalent(activeSymptoms, symptomId));
   const passNo =
     !Array.isArray(rule.ifNoSymptoms) ||
-    rule.ifNoSymptoms.every((symptomId) => !activeSymptoms.has(symptomId));
+    rule.ifNoSymptoms.every((symptomId) => !symptomSetHasEquivalent(activeSymptoms, symptomId));
   return passAll && passAny && passNo;
 }
 
@@ -173,11 +189,11 @@ function getCandidateIllnesses(data, activeSymptoms) {
     (illness) =>
       !(
         Array.isArray(illness.ruledOutBySymptoms) &&
-        illness.ruledOutBySymptoms.some((symptomId) => activeSymptoms.has(symptomId))
+        illness.ruledOutBySymptoms.some((symptomId) => symptomSetHasEquivalent(activeSymptoms, symptomId))
       )
   );
   const exclusionFilteredIllnesses = ruleFilteredIllnesses.filter(
-    (illness) => !illness.symptoms.some((symptomId) => excludedSymptoms.has(symptomId))
+    (illness) => !illness.symptoms.some((symptomId) => symptomSetHasEquivalent(excludedSymptoms, symptomId))
   );
 
   const exclusiveRuleIllnessIds = new Set(
@@ -188,7 +204,7 @@ function getCandidateIllnesses(data, activeSymptoms) {
   const exclusiveHits = exclusionFilteredIllnesses.filter((illness) => {
     const illnessExclusive =
       Array.isArray(illness.exclusiveSymptoms) &&
-      illness.exclusiveSymptoms.some((symptomId) => activeSymptoms.has(symptomId));
+      illness.exclusiveSymptoms.some((symptomId) => symptomSetHasEquivalent(activeSymptoms, symptomId));
     const ruleExclusive = exclusiveRuleIllnessIds.has(illness.id);
     return illnessExclusive || ruleExclusive;
   });
@@ -225,12 +241,12 @@ function matchIllnesses(data) {
   );
   const scoredMatches = compatibleIllnesses
     .map((illness) => {
-      const matches = illness.symptoms.filter((s) => selectedSymptoms.has(s));
+      const matches = illness.symptoms.filter((s) => symptomSetHasEquivalent(selectedSymptoms, s));
       if (matches.length === 0) return null;
 
       const hasExclusiveMatch =
         Array.isArray(illness.exclusiveSymptoms) &&
-        illness.exclusiveSymptoms.some((symptomId) => selectedSymptoms.has(symptomId));
+        illness.exclusiveSymptoms.some((symptomId) => symptomSetHasEquivalent(selectedSymptoms, symptomId));
       const coverage = matches.length / illness.symptoms.length;
       const specificity = matches.length / picked.length;
       const score = hasExclusiveMatch
@@ -252,7 +268,7 @@ function matchIllnesses(data) {
 }
 
 function illnessSupportsSymptomSet(illness, symptomSet) {
-  return [...symptomSet].every((symptomId) => illness.symptoms.includes(symptomId));
+  return [...symptomSet].every((symptomId) => illnessHasEquivalentSymptom(illness, symptomId));
 }
 
 function updateSymptomAvailability(data) {
@@ -305,7 +321,8 @@ function renderNoMatch() {
 function addChips(listEl, values, symptomLabels) {
   values.forEach((value) => {
     const li = document.createElement("li");
-    li.textContent = toTitleCase(symptomLabels?.get(value) ?? value);
+    const baseLabel = toTitleCase(symptomLabels?.get(value) ?? value);
+    li.textContent = value === "health_loss" ? `⚠️ ${baseLabel}` : baseLabel;
     listEl.appendChild(li);
   });
 }
@@ -316,13 +333,14 @@ function addDiseaseSymptomChips(listEl, illnessSymptomIds, symptomLabels, displa
   };
   illnessSymptomIds.forEach((symptomId) => {
     const li = document.createElement("li");
-    li.textContent = toTitleCase(
+    const baseLabel = toTitleCase(
       displayOverrides[symptomId] ??
         chipLabelOverrides[symptomId] ??
         symptomLabels?.get(symptomId) ??
         symptomId
     );
-    if (selectedSymptoms.has(symptomId)) {
+    li.textContent = symptomId === "health_loss" ? `⚠️ ${baseLabel}` : baseLabel;
+    if (symptomSetHasEquivalent(selectedSymptoms, symptomId)) {
       li.classList.add("hit");
     } else {
       li.classList.add("miss");
@@ -640,6 +658,7 @@ function openCodeModal(illness) {
   const snippetModel = proof.snippets || {};
   const symptomSnippetEntries = (snippetModel.symptoms && snippetModel.symptoms[illness.id]) || [];
   const treatmentSnippets = (snippetModel.treatment && snippetModel.treatment[illness.id]) || [];
+  const effectSnippets = (snippetModel.effects && snippetModel.effects[illness.id]) || [];
 
   const symptomBlocks = [];
   if (symptomSnippetEntries.length > 0) {
@@ -663,15 +682,38 @@ function openCodeModal(illness) {
   } else if (picture && picture.cures_or_mitigation) {
     treatmentRefs.push(picture.cures_or_mitigation);
   }
-  const treatmentImpactRefs = treatmentRefs.filter((txt) =>
-    /(GetDieOffSpeedEx|m_AntibioticsResistance|AddAgent\(eAgents|RemoveAllAgents|FilterAgents|GetInvasibilityEx|GetPotencyEx|GrowDuringMedicalDrugsAttack)/i.test(txt)
-  );
-  const treatmentMitigationRefs = treatmentRefs.filter((txt) => !treatmentImpactRefs.includes(txt));
+  const visibleTreatmentRefs =
+    illness.id === "contamination_stage3"
+      ? treatmentRefs.filter((txt) => !/Contamination2\.c/i.test(txt))
+      : treatmentRefs;
+  const treatmentImpactRefs = [];
+  if (Array.isArray(effectSnippets) && effectSnippets.length > 0) {
+    effectSnippets.forEach((t) => treatmentImpactRefs.push(t));
+  }
+  const hasExplicitImpact = treatmentImpactRefs.length > 0;
+  const fallbackImpactRefs = hasExplicitImpact
+    ? []
+    : visibleTreatmentRefs.filter((txt) =>
+        /(GetDieOffSpeedEx|m_AntibioticsResistance|AddAgent\(eAgents|RemoveAllAgents|FilterAgents|GetInvasibilityEx|GetPotencyEx|GrowDuringMedicalDrugsAttack)/i.test(
+          txt
+        )
+      );
+  fallbackImpactRefs.forEach((txt) => {
+    if (!treatmentImpactRefs.includes(txt)) treatmentImpactRefs.push(txt);
+  });
+  const treatmentMitigationRefs = visibleTreatmentRefs.filter((txt) => !treatmentImpactRefs.includes(txt));
 
   codeModalBody.innerHTML = "";
   codeModalBody.appendChild(makeCodeSection("Symptoms", symptomBlocks));
-  codeModalBody.appendChild(makeCodeSection("Treatment / Mitigation", treatmentMitigationRefs));
-  codeModalBody.appendChild(makeCodeSection("Treatment Impact", treatmentImpactRefs));
+  const hideTreatmentSections = illness.id === "kuru_brain_disease";
+  if (!hideTreatmentSections) {
+    codeModalBody.appendChild(makeCodeSection("Treatment / Mitigation", treatmentMitigationRefs));
+    const hideEmptyImpactForBloodLoss =
+      illness.id === "active_bleeding" && (!treatmentImpactRefs || treatmentImpactRefs.length === 0);
+    if (!hideEmptyImpactForBloodLoss) {
+      codeModalBody.appendChild(makeCodeSection("Treatment Impact", treatmentImpactRefs));
+    }
+  }
   codeModal.classList.remove("hidden");
 }
 

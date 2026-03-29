@@ -24,7 +24,7 @@ food_poisoning,Food Poisoning,stamina_exhaustion,Stamina Loss,direct,Poisoning v
 wound_infection_stage1,Wound Infection Stage 1,light_pain,Mild Grunting,direct,Stage1 queues pain light,".../Modifiers/diseases/WoundInfection.c:68"
 wound_infection_stage1,Wound Infection Stage 1,stamina_exhaustion,Stamina Loss,co_occurring,Fatigue modifier active during wound infection stages 1/2,".../Modifiers/conditions/Fatigue.c:22; .../Modifiers/conditions/Fatigue.c:30"
 wound_infection_stage2,Wound Infection Stage 2,heavy_pain,Severe Grunting,direct,Stage2 queues pain heavy when not on antibiotics,".../Modifiers/diseases/WoundInfection2.c:86"
-wound_infection_stage2,Wound Infection Stage 2,light_pain,Mild Grunting,direct,Stage2 queues pain light when antibiotics active,".../Modifiers/diseases/WoundInfection2.c:82"
+wound_infection_stage2,Wound Infection Stage 2,light_pain,Mild Grunting,direct,Stage2 queues pain light when antibiotics are active,".../Modifiers/diseases/WoundInfection2.c:82"
 wound_infection_stage2,Wound Infection Stage 2,hands_shake,Shaky Hands,direct,Stage2 adds hand shiver secondary symptom,".../Modifiers/diseases/WoundInfection2.c:47"
 wound_infection_stage2,Wound Infection Stage 2,health_loss,Health loss,direct,Stage2 damages health if untreated,".../Modifiers/diseases/WoundInfection2.c:87"
 wound_infection_stage2,Wound Infection Stage 2,stamina_exhaustion,Stamina Loss,co_occurring,Fatigue modifier active during wound infection,".../Modifiers/conditions/Fatigue.c:22; .../Modifiers/conditions/Fatigue.c:30"

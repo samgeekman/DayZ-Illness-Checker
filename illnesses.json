@@ -1,623 +1,616 @@
 {
-    "symptoms":  [
-                     {
-                         "id":  "sneezing",
-                         "label":  "Sneezing",
-                         "icon":  "nose"
-                     },
-                     {
-                         "id":  "coughing",
-                         "label":  "Coughing",
-                         "icon":  "lungs"
-                     },
-                     {
-                         "id":  "gasping",
-                         "label":  "Gasping",
-                         "icon":  "lungs"
-                     },
-                     {
-                         "id":  "vomiting",
-                         "label":  "Vomiting",
-                         "icon":  "stomach"
-                     },
-                     {
-                         "id":  "dehydration",
-                         "label":  "Water Loss",
-                         "icon":  "water"
-                     },
-                     {
-                         "id":  "stamina_exhaustion",
-                         "label":  "Stamina Loss",
-                         "icon":  "bolt"
-                     },
-                     {
-                         "id":  "light_pain",
-                         "label":  "Mild Pain Grunts",
-                         "icon":  "wave"
-                     },
-                     {
-                         "id":  "heavy_pain",
-                         "label":  "Severe Pain Grunts",
-                         "icon":  "wave"
-                     },
-                     {
-                         "id":  "hands_shake",
-                         "label":  "Shaky Hands",
-                         "icon":  "wave"
-                     },
-                     {
-                         "id":  "tremors",
-                         "label":  "Tremors when aiming",
-                         "icon":  "wave"
-                     },
-                     {
-                         "id":  "laughter",
-                         "label":  "Laughing",
-                         "icon":  "smile"
-                     },
-                     {
-                         "id":  "health_loss",
-                         "label":  "Health loss",
-                         "icon":  "heart"
-                     },
-                     {
-                         "id":  "blood_depletes",
-                         "label":  "Lower Blood Level",
-                         "icon":  "heart"
-                     },
-                     {
-                         "id":  "unconsciousness",
-                         "label":  "Uncon",
-                         "icon":  "moon"
-                     },
-                     {
-                         "id":  "deafness",
-                         "label":  "Deafness",
-                         "icon":  "wave"
-                     },
-                     {
-                         "id":  "fever_blur",
-                         "label":  "Blurry Vision",
-                         "icon":  "eye"
-                     },
-                     {
-                         "id":  "hot_symptom",
-                         "label":  "Fever",
-                         "icon":  "thermo"
-                     },
-                     {
-                         "id": "bleeding_indicator", "label": "Cuts",
-                         "icon":  "drop"
-                     },
-                     {
-                         "id": "blood_loss_vision", "label": "Grey Vision",
-                         "icon":  "eye"
-                     }
-                 ],
-    "differential":  {
-                         "exclusiveRules":  [
-                                                {
-                                                    "id":  "kuru_lock",
-                                                    "ifAnySymptoms":  [
-                                                                          "laughter"
-                                                                      ],
-                                                    "candidateIllnesses":  [
-                                                                               "kuru_brain_disease"
-                                                                           ],
-                                                    "certainty":  1
-                                                },
-                                                {
-                                                    "id":  "contam_stage3_lock",
-                                                    "ifAllSymptoms":  [
-                                                                          "vomiting",
-                                                                          "unconsciousness"
-                                                                      ],
-                                                    "candidateIllnesses":  [
-                                                                               "contamination_stage3"
-                                                                           ],
-                                                    "certainty":  1
-                                                },
-                                                {
-                                                    "id":  "heavy3_lock",
-                                                    "ifAllSymptoms":  [
-                                                                          "deafness",
-                                                                          "health_loss",
-                                                                          "stamina_exhaustion"
-                                                                      ],
-                                                    "candidateIllnesses":  [
-                                                                               "heavy_metal_phase3"
-                                                                           ],
-                                                    "certainty":  1
-                                                },
-                                                {
-                                                    "id":  "hemolytic_lock",
-                                                    "ifAllSymptoms":  [
-                                                                          "unconsciousness",
-                                                                          "blood_depletes"
-                                                                      ],
-                                                    "ifNoSymptoms":  [
-                                                                          "bleeding_indicator"
-                                                                      ],
-                                                    "candidateIllnesses":  [
-                                                                               "hemolytic_reaction"
-                                                                           ],
-                                                    "certainty":  1
-                                                }
-                                            ],
-                         "branchRules":  [
-                                             {
-                                                 "id":  "wound_branch",
-                                                 "priority":  90,
-                                                 "ifAnySymptoms":  [
-                                                                       "light_pain",
-                                                                       "heavy_pain"
-                                                                   ],
-                                                 "ifNoSymptoms":  [
-                                                                      "vomiting",
-                                                                      "laughter"
-                                                                  ],
-                                                 "candidateIllnesses":  [
-                                                                            "wound_infection_stage1",
-                                                                            "wound_infection_stage2",
-                                                                            "broken_leg"
-                                                                        ]
-                                             },
-                                             {
-                                                 "id":  "broken_leg_branch",
-                                                 "priority":  88,
-                                                 "ifAnySymptoms":  [
-                                                                       "unconsciousness"
-                                                                   ],
-                                                 "ifNoSymptoms":  [
-                                                                      "vomiting",
-                                                                      "laughter"
-                                                                  ],
-                                                 "candidateIllnesses":  [
-                                                                            "broken_leg"
-                                                                        ]
-                                             },
-                                             {
-                                                 "id":  "resp_chain_branch",
-                                                 "priority":  85,
-                                                 "ifAnySymptoms":  [
-                                                                       "sneezing",
-                                                                       "coughing",
-                                                                       "gasping"
-                                                                   ],
-                                                 "ifNoSymptoms":  [
-                                                                      "vomiting",
-                                                                      "laughter"
-                                                                  ],
-                                                 "candidateIllnesses":  [
-                                                                            "influenza_common_cold",
-                                                                            "influenza_stage",
-                                                                            "pneumonia_stage"
-                                                                        ]
-                                             },
-                                             {
-                                                 "id":  "contamination_branch",
-                                                 "priority":  84,
-                                                 "ifAllSymptoms":  [
-                                                                       "coughing",
-                                                                       "vomiting"
-                                                                   ],
-                                                 "candidateIllnesses":  [
-                                                                            "contamination_stage1",
-                                                                            "contamination_stage2",
-                                                                            "contamination_stage3"
-                                                                        ]
-                                             },
-                                             {
-                                                 "id":  "heavy_metal_branch",
-                                                 "priority":  82,
-                                                 "ifAnySymptoms":  [
-                                                                       "deafness"
-                                                                   ],
-                                                 "candidateIllnesses":  [
-                                                                            "heavy_metal_phase1",
-                                                                            "heavy_metal_phase2",
-                                                                            "heavy_metal_phase3"
-                                                                        ]
-                                             },
-                                             {
-                                                 "id":  "hemolytic_branch",
-                                                 "priority":  81,
-                                                 "ifAnySymptoms":  [
-                                                                       "unconsciousness",
-                                                                       "blood_depletes"
-                                                                   ],
-                                                 "candidateIllnesses":  [
-                                                                            "hemolytic_reaction"
-                                                                        ]
-                                             },
-                                             {
-                                                 "id":  "gi_branch",
-                                                 "priority":  70,
-                                                 "ifAnySymptoms":  [
-                                                                       "vomiting",
-                                                                       "dehydration"
-                                                                   ],
-                                                 "candidateIllnesses":  [
-                                                                            "cholera",
-                                                                            "salmonella",
-                                                                            "food_poisoning",
-                                                                            "heavy_metal_phase1",
-                                                                            "heavy_metal_phase2",
-                                                                            "heavy_metal_phase3",
-                                                                            "contamination_stage2",
-                                                                            "contamination_stage3"
-                                                                        ]
-                                             },
-                                             {
-                                                 "id":  "bleeding_branch",
-                                                 "priority":  89,
-                                                 "ifAnySymptoms":  [
-                                                                       "bleeding_indicator",
-                                                                       "blood_loss_vision",
-                                                                       "blood_depletes"
-                                                                   ],
-                                                 "ifNoSymptoms":  [
-                                                                      "vomiting",
-                                                                      "laughter"
-                                                                  ],
-                                                 "candidateIllnesses":  [
-                                                                            "active_bleeding",
-                                                                            "hemolytic_reaction"
-                                                                        ]
-                                             }
-                                         ]
-                     },
-    "illnesses":  [
-                      {
-                          "id":  "influenza_common_cold",
-                          "name":  "Common Cold",
-                          "chain":  "Influenza",
-                          "stageRank":  1,
-                          "agent":  "INFLUENZA",
-                          "cause":  "",
-                          "symptoms":  [
-                                           "sneezing"
-                                       ],
-                          "treatment":  [
-                                            "Tetracycline",
-                                            "Multivitamins",
-                                            "Keep warm and fed"
-                                        ],
-                          "prevention":  "Avoid prolonged cold exposure and contact with infected players, food or drink."
-                      },
-                      {
-                          "id":  "influenza_stage",
-                          "name":  "Influenza",
-                          "chain":  "Influenza",
-                          "stageRank":  2,
-                          "agent":  "INFLUENZA",
-                          "cause":  "INFLUENZA agent mid stage.",
-                          "symptoms":  [
-                                           "sneezing",
-                                           "coughing",
-                                           "fever_blur",
-                                           "hot_symptom"
-                                       ],
-                          "symptomDisplayOverrides":  {
-                                                          "sneezing":  "Frequent sneezing"
-                                                      },
-                          "treatment":  [
-                                            "Tetracycline",
-                                            "Multivitamins",
-                                            "Keep warm and fed"
-                                        ],
-                          "prevention":  "Limit spread via coughing/sneezing isolation practices."
-                      },
-                      {
-                          "id":  "pneumonia_stage",
-                          "name":  "Pneumonia",
-                          "chain":  "Influenza",
-                          "stageRank":  3,
-                          "agent":  "INFLUENZA",
-                          "cause":  "INFLUENZA severe stage.",
-                          "symptoms":  [
-                                           "sneezing",
-                                           "coughing",
-                                           "gasping",
-                                           "stamina_exhaustion",
-                                           "health_loss",
-                                           "fever_blur",
-                                           "hot_symptom"
-                                       ],
-                          "treatment":  [
-                                            "Tetracycline",
-                                            "Multivitamins",
-                                            "Keep warm and fed"
-                                        ],
-                          "prevention":  "Treat earlier influenza stages quickly."
-                      },
-                      {
-                          "id":  "cholera",
-                          "name":  "Cholera",
-                          "chain":  "Cholera",
-                          "stageRank":  1,
-                          "agent":  "CHOLERA",
-                          "cause":  "CHOLERA activation from contaminated water.",
-                          "symptoms":  [
-                                           "vomiting",
-                                           "dehydration",
-                                           "stamina_exhaustion",
-                                           "fever_blur",
-                                           "hot_symptom"
-                                       ],
-                          "treatment":  [
-                                            "Tetracycline",
-                                            "Multivitamins"
-                                        ],
-                          "prevention":  "Avoid unpurified water sources and dirty containers. Use chlorine tablets, Chelating Tablets or boil water."
-                      },
-                      {
-                          "id":  "salmonella",
-                          "name":  "Salmonella",
-                          "chain":  "Salmonella",
-                          "stageRank":  1,
-                          "agent":  "SALMONELLA",
-                          "cause":  "SALMONELLA from contaminated food/bloody hands.",
-                          "symptoms":  [
-                                           "vomiting",
-                                           "light_pain",
-                                           "stamina_exhaustion"
-                                       ],
-                          "treatment":  [
-                                            "Charcoal",
-                                            "Multivitamin",
-                                            "Keep warm and fed"
-                                        ],
-                          "prevention":  "Wash bloody hands or wear gloves. Avoid raw or contaminated food."
-                      },
-                      {
-                          "id":  "food_poisoning",
-                          "name":  "Food Poisoning",
-                          "chain":  "Food Poisoning",
-                          "stageRank":  1,
-                          "agent":  "FOOD_POISON",
-                          "cause":  "FOOD_POISON from spoiled food.",
-                          "symptoms":  [
-                                           "vomiting",
-                                           "stamina_exhaustion"
-                                       ],
-                          "treatment":  [
-                                            "Charcoal tablets"
-                                        ],
-                          "prevention":  "Avoid rotten, burnt and unknown food - don\u0027t drink gasoline."
-                      },
-                      {
-                          "id":  "wound_infection_stage1",
-                          "name":  "Wound Infection Stage 1",
-                          "chain":  "Wound Infection",
-                          "stageRank":  1,
-                          "agent":  "WOUND_AGENT",
-                          "cause":  "WOUND_AGENT low stage.",
-                          "symptoms":  [
-                                           "light_pain",
-                                           "stamina_exhaustion"
-                                       ],
-                          "treatment":  [
-                                            "Disinfectant Spray",
-                                            "Alcohol Tincture",
-                                            "Iodine",
-                                            "Tetracycline"
-                                        ],
-                          "prevention":  "Use sterilised bandages."
-                      },
-                      {
-                          "id":  "wound_infection_stage2",
-                          "name":  "Wound Infection Stage 2",
-                          "chain":  "Wound Infection",
-                          "stageRank":  2,
-                          "agent":  "WOUND_AGENT",
-                          "cause":  "WOUND_AGENT severe stage.",
-                          "symptoms":  [
-                                           "light_pain",
-                                           "heavy_pain",
-                                           "hands_shake",
-                                           "health_loss",
-                                           "fever_blur",
-                                           "hot_symptom",
-                                           "stamina_exhaustion",
-                                           "dehydration"
-                                       ],
-                          "treatment":  [
-                                            "Tetracycline"
-                                        ],
-                          "prevention":  "Treat stage 1 properly."
-                      },
-                      {
-                          "id":  "broken_leg",
-                          "name":  "Broken Leg",
-                          "chain":  "Broken Leg",
-                          "stageRank":  1,
-                          "agent":  "MDF_BROKEN_LEGS",
-                          "cause":  "Broken legs modifier active from fractured leg state.",
-                          "symptoms":  [
-                                           "unconsciousness"
-                                       ],
-                          "treatment":  [
-                                            "Apply Splint",
-                                            "Limit movement until healed"
-                                        ],
-                          "prevention":  "Avoid high falls and risky impacts."
-                      },
-                      {
-                          "id":  "kuru_brain_disease",
-                          "name":  "Kuru (Brain Disease)",
-                          "chain":  "Kuru",
-                          "stageRank":  1,
-                          "agent":  "BRAIN",
-                          "cause":  "BRAIN agent from cannibalism.",
-                          "symptoms":  [
-                                           "laughter",
-                                           "tremors"
-                                       ],
-                          "exclusiveSymptoms":  [
-                                                    "laughter"
-                                                ],
-                          "treatment":  [
-                                            "No direct medicinal cure",
-                                            "F11"
-                                        ],
-                          "prevention":  "Do not consume human meat/organs."
-                      },
-                      {
-                          "id":  "contamination_stage1",
-                          "name":  "PO-X Poisoning Stage 1",
-                          "chain":  "PO-X Poisoning",
-                          "stageRank":  1,
-                          "agent":  "CHEMICAL_POISON",
-                          "cause":  "CHEMICAL_POISON low stage.",
-                          "symptoms":  [
-                                           "coughing",
-                                           "bleeding_indicator"
-                                       ],
-                          "treatment":  [
-                                            "Leave source",
-                                            "Gas mask/filter prevention"
-                                        ],
-                          "prevention":  "Use NBC protection in contaminated zones."
-                      },
-                      {
-                          "id":  "contamination_stage2",
-                          "name":  "PO-X Poisoning Stage 2",
-                          "chain":  "PO-X Poisoning",
-                          "stageRank":  2,
-                          "agent":  "CHEMICAL_POISON",
-                          "cause":  "CHEMICAL_POISON mid stage.",
-                          "symptoms":  [
-                                           "coughing",
-                                           "vomiting",
-                                           "bleeding_indicator"
-                                       ],
-                          "treatment":  [
-                                            "Leave source",
-                                            "Gas mask/filter prevention"
-                                        ],
-                          "prevention":  "Use NBC protection in contaminated zones."
-                      },
-                      {
-                          "id":  "contamination_stage3",
-                          "name":  "PO-X Poisoning Stage 3",
-                          "chain":  "PO-X Poisoning",
-                          "stageRank":  3,
-                          "agent":  "CHEMICAL_POISON",
-                          "cause":  "CHEMICAL_POISON severe stage.",
-                          "symptoms":  [
-                                           "vomiting",
-                                           "unconsciousness",
-                                           "health_loss",
-                                           "bleeding_indicator"
-                                       ],
-                          "treatment":  [
-                                            "Leave source immediately",
-                                            "Protective gear"
-                                        ],
-                          "prevention":  "Use NBC protection in contaminated zones."
-                      },
-                      {
-                          "id":  "heavy_metal_phase1",
-                          "name":  "Heavy Metal Poisoning Stage 1",
-                          "chain":  "Heavy Metal Poisoning",
-                          "stageRank":  1,
-                          "agent":  "HEAVYMETAL",
-                          "cause":  "HEAVYMETAL low stage.",
-                          "symptomDisplayOverrides":  {
-                                                          "dehydration":  "Water loss",
-                                                          "hands_shake":  "Frequent shivers"
-                                                      },
-                          "symptoms":  [
-                                           "hands_shake",
-                                           "dehydration"
-                                       ],
-                          "treatment":  [
-                                            "Chelating Tablets",
-                                            "Chelated/filtered water"
-                                        ],
-                          "prevention":  "Avoid polluted water/snow/hot springs."
-                      },
-                      {
-                          "id":  "heavy_metal_phase2",
-                          "name":  "Heavy Metal Poisoning Stage 2",
-                          "chain":  "Heavy Metal Poisoning",
-                          "stageRank":  2,
-                          "agent":  "HEAVYMETAL",
-                          "cause":  "HEAVYMETAL mid stage.",
-                          "symptomDisplayOverrides":  {
-                                                          "dehydration":  "Water loss",
-                                                          "deafness":  "Random impaired hearing"
-                                                      },
-                          "symptoms":  [
-                                           "dehydration",
-                                           "deafness",
-                                           "light_pain"
-                                       ],
-                          "treatment":  [
-                                            "Chelating Tablets",
-                                            "Chelated/filtered water"
-                                        ],
-                          "prevention":  "Avoid polluted water/snow/hot springs."
-                      },
-                      {
-                          "id":  "heavy_metal_phase3",
-                          "name":  "Heavy Metal Poisoning Stage 3",
-                          "chain":  "Heavy Metal Poisoning",
-                          "stageRank":  3,
-                          "agent":  "HEAVYMETAL",
-                          "cause":  "HEAVYMETAL severe stage.",
-                          "symptomDisplayOverrides":  {
-                                                          "health_loss":  "Health drain",
-                                                          "deafness":  "Constantly lowered hearing",
-                                                          "vomiting":  "Periodic vomiting"
-                                                      },
-                          "symptoms":  [
-                                           "health_loss",
-                                           "deafness",
-                                           "vomiting"
-                                       ],
-                          "treatment":  [
-                                            "Chelating Tablets",
-                                            "Chelated/filtered water"
-                                        ],
-                          "prevention":  "Avoid polluted water/snow/hot springs."
-                      },
-                      {
-                          "id":  "hemolytic_reaction",
-                          "name":  "Hemolytic Reaction",
-                          "chain":  "Hemolytic Reaction",
-                          "stageRank":  1,
-                          "agent":  "HEMOLYTIC_REACTION",
-                          "cause":  "Wrong blood type transfusion reaction.",
-                          "symptoms":  [
-                                           "blood_depletes",
-                                           "unconsciousness"
-                                       ],
-                          "treatment":  [
-                                            "No medicinal cure",
-                                            "Reaction is temporary"
-                                        ],
-                          "prevention":  "Only inject your correct blood type."
-                      },
-                      {
-                          "id":  "active_bleeding",
-                          "name":  "Blood Loss",
-                          "chain":  "Blood Loss",
-                          "stageRank":  1,
-                          "agent":  "BLEEDING_SOURCE",
-                          "cause":  "One or more active bleeding sources.",
-                          "symptoms":  [
-                                           "bleeding_indicator",
-                                           "blood_depletes",
-                                           "blood_loss_vision",
-                                           "unconsciousness"
-                                       ],
-                          "treatment":  [
-                                            "Bandage or sew bleeding source",
-                                            "Blood/saline restoration"
-                                        ],
-                          "prevention":  "Bandage wounds quickly and avoid repeated cuts or impacts."
-                      }
-                  ]
+    "symptoms": [
+        {
+            "id": "sneezing",
+            "label": "Sneezing",
+            "icon": "nose"
+        },
+        {
+            "id": "coughing",
+            "label": "Coughing",
+            "icon": "lungs"
+        },
+        {
+            "id": "gasping",
+            "label": "Gasping",
+            "icon": "lungs"
+        },
+        {
+            "id": "vomiting",
+            "label": "Vomiting",
+            "icon": "stomach"
+        },
+        {
+            "id": "dehydration",
+            "label": "Water Loss",
+            "icon": "water"
+        },
+        {
+            "id": "stamina_exhaustion",
+            "label": "Stamina Loss",
+            "icon": "bolt"
+        },
+        {
+            "id": "light_pain",
+            "label": "Mild Pain Grunts",
+            "icon": "wave"
+        },
+        {
+            "id": "heavy_pain",
+            "label": "Severe Pain Grunts",
+            "icon": "wave"
+        },
+        {
+            "id": "hands_shake",
+            "label": "Shaky Hands",
+            "icon": "wave"
+        },
+        {
+            "id": "laughter",
+            "label": "Laughing",
+            "icon": "smile"
+        },
+        {
+            "id": "health_loss",
+            "label": "Health loss",
+            "icon": "heart"
+        },
+        {
+            "id": "blood_depletes",
+            "label": "Lower Blood Level",
+            "icon": "heart"
+        },
+        {
+            "id": "unconsciousness",
+            "label": "Uncon",
+            "icon": "moon"
+        },
+        {
+            "id": "deafness",
+            "label": "Deafness",
+            "icon": "wave"
+        },
+        {
+            "id": "fever_blur",
+            "label": "Blurry Vision",
+            "icon": "eye"
+        },
+        {
+            "id": "hot_symptom",
+            "label": "Fever",
+            "icon": "thermo"
+        },
+        {
+            "id": "bleeding_indicator",
+            "label": "Cuts",
+            "icon": "drop"
+        },
+        {
+            "id": "blood_loss_vision",
+            "label": "Grey Vision",
+            "icon": "eye"
+        }
+    ],
+    "differential": {
+        "exclusiveRules": [
+            {
+                "id": "kuru_lock",
+                "ifAnySymptoms": [
+                    "laughter"
+                ],
+                "candidateIllnesses": [
+                    "kuru_brain_disease"
+                ],
+                "certainty": 1
+            },
+            {
+                "id": "contam_stage3_lock",
+                "ifAllSymptoms": [
+                    "vomiting",
+                    "unconsciousness"
+                ],
+                "candidateIllnesses": [
+                    "contamination_stage3"
+                ],
+                "certainty": 1
+            },
+            {
+                "id": "heavy3_lock",
+                "ifAllSymptoms": [
+                    "deafness",
+                    "health_loss",
+                    "stamina_exhaustion"
+                ],
+                "candidateIllnesses": [
+                    "heavy_metal_phase3"
+                ],
+                "certainty": 1
+            },
+            {
+                "id": "hemolytic_lock",
+                "ifAllSymptoms": [
+                    "unconsciousness",
+                    "blood_depletes"
+                ],
+                "ifNoSymptoms": [
+                    "bleeding_indicator"
+                ],
+                "candidateIllnesses": [
+                    "hemolytic_reaction"
+                ],
+                "certainty": 1
+            }
+        ],
+        "branchRules": [
+            {
+                "id": "wound_branch",
+                "priority": 90,
+                "ifAnySymptoms": [
+                    "light_pain",
+                    "heavy_pain"
+                ],
+                "ifNoSymptoms": [
+                    "vomiting",
+                    "laughter"
+                ],
+                "candidateIllnesses": [
+                    "wound_infection_stage1",
+                    "wound_infection_stage2",
+                    "broken_leg"
+                ]
+            },
+            {
+                "id": "broken_leg_branch",
+                "priority": 88,
+                "ifAnySymptoms": [
+                    "unconsciousness"
+                ],
+                "ifNoSymptoms": [
+                    "vomiting",
+                    "laughter"
+                ],
+                "candidateIllnesses": [
+                    "broken_leg"
+                ]
+            },
+            {
+                "id": "resp_chain_branch",
+                "priority": 85,
+                "ifAnySymptoms": [
+                    "sneezing",
+                    "coughing",
+                    "gasping"
+                ],
+                "ifNoSymptoms": [
+                    "vomiting",
+                    "laughter"
+                ],
+                "candidateIllnesses": [
+                    "influenza_common_cold",
+                    "influenza_stage",
+                    "pneumonia_stage"
+                ]
+            },
+            {
+                "id": "contamination_branch",
+                "priority": 84,
+                "ifAllSymptoms": [
+                    "coughing",
+                    "vomiting"
+                ],
+                "candidateIllnesses": [
+                    "contamination_stage1",
+                    "contamination_stage2",
+                    "contamination_stage3"
+                ]
+            },
+            {
+                "id": "heavy_metal_branch",
+                "priority": 82,
+                "ifAnySymptoms": [
+                    "deafness"
+                ],
+                "candidateIllnesses": [
+                    "heavy_metal_phase1",
+                    "heavy_metal_phase2",
+                    "heavy_metal_phase3"
+                ]
+            },
+            {
+                "id": "hemolytic_branch",
+                "priority": 81,
+                "ifAnySymptoms": [
+                    "unconsciousness",
+                    "blood_depletes"
+                ],
+                "candidateIllnesses": [
+                    "hemolytic_reaction"
+                ]
+            },
+            {
+                "id": "gi_branch",
+                "priority": 70,
+                "ifAnySymptoms": [
+                    "vomiting",
+                    "dehydration"
+                ],
+                "candidateIllnesses": [
+                    "cholera",
+                    "salmonella",
+                    "food_poisoning",
+                    "heavy_metal_phase1",
+                    "heavy_metal_phase2",
+                    "heavy_metal_phase3",
+                    "contamination_stage2",
+                    "contamination_stage3"
+                ]
+            },
+            {
+                "id": "bleeding_branch",
+                "priority": 89,
+                "ifAnySymptoms": [
+                    "bleeding_indicator",
+                    "blood_loss_vision",
+                    "blood_depletes"
+                ],
+                "ifNoSymptoms": [
+                    "vomiting",
+                    "laughter"
+                ],
+                "candidateIllnesses": [
+                    "active_bleeding",
+                    "hemolytic_reaction"
+                ]
+            }
+        ]
+    },
+    "illnesses": [
+        {
+            "id": "influenza_common_cold",
+            "name": "Common Cold",
+            "chain": "Influenza",
+            "stageRank": 1,
+            "agent": "INFLUENZA",
+            "cause": "",
+            "symptoms": [
+                "sneezing"
+            ],
+            "treatment": [
+                "Tetracycline",
+                "Multivitamins",
+                "Keep warm and fed"
+            ],
+            "prevention": "Avoid prolonged cold exposure and contact with infected players, food or drink."
+        },
+        {
+            "id": "influenza_stage",
+            "name": "Influenza",
+            "chain": "Influenza",
+            "stageRank": 2,
+            "agent": "INFLUENZA",
+            "cause": "INFLUENZA agent mid stage.",
+            "symptoms": [
+                "sneezing",
+                "coughing",
+                "fever_blur",
+                "hot_symptom"
+            ],
+            "symptomDisplayOverrides": {
+                "sneezing": "Frequent sneezing"
+            },
+            "treatment": [
+                "Tetracycline",
+                "Multivitamins",
+                "Keep warm and fed"
+            ],
+            "prevention": "Limit spread via coughing/sneezing isolation practices."
+        },
+        {
+            "id": "pneumonia_stage",
+            "name": "Pneumonia",
+            "chain": "Influenza",
+            "stageRank": 3,
+            "agent": "INFLUENZA",
+            "cause": "INFLUENZA severe stage.",
+            "symptoms": [
+                "sneezing",
+                "coughing",
+                "gasping",
+                "stamina_exhaustion",
+                "health_loss",
+                "fever_blur",
+                "hot_symptom"
+            ],
+            "treatment": [
+                "Tetracycline",
+                "Multivitamins",
+                "Keep warm and fed"
+            ],
+            "prevention": "Treat earlier influenza stages quickly."
+        },
+        {
+            "id": "cholera",
+            "name": "Cholera",
+            "chain": "Cholera",
+            "stageRank": 1,
+            "agent": "CHOLERA",
+            "cause": "CHOLERA activation from contaminated water.",
+            "symptoms": [
+                "vomiting",
+                "dehydration",
+                "stamina_exhaustion",
+                "fever_blur",
+                "hot_symptom"
+            ],
+            "treatment": [
+                "Tetracycline",
+                "Multivitamins"
+            ],
+            "prevention": "Avoid unpurified water sources and dirty containers. Use chlorine tablets, Chelating Tablets or boil water."
+        },
+        {
+            "id": "salmonella",
+            "name": "Salmonella",
+            "chain": "Salmonella",
+            "stageRank": 1,
+            "agent": "SALMONELLA",
+            "cause": "SALMONELLA from contaminated food/bloody hands.",
+            "symptoms": [
+                "vomiting",
+                "light_pain",
+                "stamina_exhaustion"
+            ],
+            "treatment": [
+                "Charcoal",
+                "Multivitamin",
+                "Keep warm and fed"
+            ],
+            "prevention": "Wash bloody hands or wear gloves. Avoid raw or contaminated food."
+        },
+        {
+            "id": "food_poisoning",
+            "name": "Food Poisoning",
+            "chain": "Food Poisoning",
+            "stageRank": 1,
+            "agent": "FOOD_POISON",
+            "cause": "FOOD_POISON from spoiled food.",
+            "symptoms": [
+                "vomiting",
+                "stamina_exhaustion"
+            ],
+            "treatment": [
+                "Charcoal tablets"
+            ],
+            "prevention": "Avoid rotten, burnt and unknown food - don't drink gasoline."
+        },
+        {
+            "id": "wound_infection_stage1",
+            "name": "Wound Infection Stage 1",
+            "chain": "Wound Infection",
+            "stageRank": 1,
+            "agent": "WOUND_AGENT",
+            "cause": "WOUND_AGENT low stage.",
+            "symptoms": [
+                "light_pain",
+                "stamina_exhaustion"
+            ],
+            "treatment": [
+                "Disinfectant Spray",
+                "Alcohol Tincture",
+                "Iodine",
+                "Tetracycline"
+            ],
+            "prevention": "Use sterilised bandages."
+        },
+        {
+            "id": "wound_infection_stage2",
+            "name": "Wound Infection Stage 2",
+            "chain": "Wound Infection",
+            "stageRank": 2,
+            "agent": "WOUND_AGENT",
+            "cause": "WOUND_AGENT severe stage.",
+            "symptoms": [
+                "light_pain",
+                "heavy_pain",
+                "hands_shake",
+                "health_loss",
+                "fever_blur",
+                "hot_symptom",
+                "stamina_exhaustion",
+                "dehydration"
+            ],
+            "treatment": [
+                "Tetracycline"
+            ],
+            "prevention": "Treat stage 1 properly."
+        },
+        {
+            "id": "broken_leg",
+            "name": "Broken Leg",
+            "chain": "Broken Leg",
+            "stageRank": 1,
+            "agent": "MDF_BROKEN_LEGS",
+            "cause": "Broken legs modifier active from fractured leg state.",
+            "symptoms": [
+                "unconsciousness"
+            ],
+            "treatment": [
+                "Apply Splint",
+                "Limit movement until healed"
+            ],
+            "prevention": "Avoid high falls and risky impacts."
+        },
+        {
+            "id": "kuru_brain_disease",
+            "name": "Kuru (Brain Disease)",
+            "chain": "Kuru",
+            "stageRank": 1,
+            "agent": "BRAIN",
+            "cause": "BRAIN agent from cannibalism.",
+            "symptomDisplayOverrides": {
+                "tremors": "Severe Shaky Hands"
+            },
+            "symptoms": [
+                "laughter",
+                "tremors"
+            ],
+            "exclusiveSymptoms": [
+                "laughter"
+            ],
+            "treatment": [
+                "No direct medicinal cure",
+                "F11"
+            ],
+            "prevention": "Do not consume human meat/organs."
+        },
+        {
+            "id": "contamination_stage1",
+            "name": "PO-X Poisoning Stage 1",
+            "chain": "PO-X Poisoning",
+            "stageRank": 1,
+            "agent": "CHEMICAL_POISON",
+            "cause": "CHEMICAL_POISON low stage.",
+            "symptoms": [
+                "coughing",
+                "bleeding_indicator"
+            ],
+            "treatment": [
+                "Anti-Chem Injector",
+                "Leave source"
+            ],
+            "prevention": "Use NBC gear or leave gas cloud to prevent exposure from worsening."
+        },
+        {
+            "id": "contamination_stage2",
+            "name": "PO-X Poisoning Stage 2",
+            "chain": "PO-X Poisoning",
+            "stageRank": 2,
+            "agent": "CHEMICAL_POISON",
+            "cause": "CHEMICAL_POISON mid stage.",
+            "symptoms": [
+                "coughing",
+                "vomiting"
+            ],
+            "treatment": [
+                "Anti-Chem Injector"
+            ],
+            "prevention": "Use NBC gear or leave gas cloud to prevent exposure from worsening."
+        },
+        {
+            "id": "contamination_stage3",
+            "name": "PO-X Poisoning Stage 3",
+            "chain": "PO-X Poisoning",
+            "stageRank": 3,
+            "agent": "CHEMICAL_POISON",
+            "cause": "CHEMICAL_POISON severe stage.",
+            "symptoms": [
+                "vomiting",
+                "unconsciousness",
+                "health_loss"
+            ],
+            "treatment": [
+                "Anti-Chem Injector"
+            ],
+            "prevention": "Use NBC gear or leave gas cloud to prevent exposure from worsening."
+        },
+        {
+            "id": "heavy_metal_phase1",
+            "name": "Heavy Metal Poisoning Stage 1",
+            "chain": "Heavy Metal Poisoning",
+            "stageRank": 1,
+            "agent": "HEAVYMETAL",
+            "cause": "HEAVYMETAL low stage.",
+            "symptomDisplayOverrides": {
+                "dehydration": "Water loss",
+                "hands_shake": "Frequent shivers"
+            },
+            "symptoms": [
+                "hands_shake",
+                "dehydration"
+            ],
+            "treatment": [
+                "Chelating Tablets"
+            ],
+            "prevention": "Avoid Polluted Water/Snow/Hot Springs. Use filtering bottle or chelating tablets on water."
+        },
+        {
+            "id": "heavy_metal_phase2",
+            "name": "Heavy Metal Poisoning Stage 2",
+            "chain": "Heavy Metal Poisoning",
+            "stageRank": 2,
+            "agent": "HEAVYMETAL",
+            "cause": "HEAVYMETAL mid stage.",
+            "symptomDisplayOverrides": {
+                "dehydration": "Water loss",
+                "deafness": "Random impaired hearing"
+            },
+            "symptoms": [
+                "dehydration",
+                "deafness",
+                "light_pain"
+            ],
+            "treatment": [
+                "Chelating Tablets"
+            ],
+            "prevention": "Avoid Polluted Water/Snow/Hot Springs. Use filtering bottle or chelating tablets on water."
+        },
+        {
+            "id": "heavy_metal_phase3",
+            "name": "Heavy Metal Poisoning Stage 3",
+            "chain": "Heavy Metal Poisoning",
+            "stageRank": 3,
+            "agent": "HEAVYMETAL",
+            "cause": "HEAVYMETAL severe stage.",
+            "symptomDisplayOverrides": {
+                "deafness": "Constantly lowered hearing",
+                "vomiting": "Periodic vomiting"
+            },
+            "symptoms": [
+                "health_loss",
+                "deafness",
+                "vomiting"
+            ],
+            "treatment": [
+                "Chelating Tablets"
+            ],
+            "prevention": "Avoid Polluted Water/Snow/Hot Springs. Use filtering bottle or chelating tablets on water."
+        },
+        {
+            "id": "hemolytic_reaction",
+            "name": "Hemolytic Reaction",
+            "chain": "Hemolytic Reaction",
+            "stageRank": 1,
+            "agent": "HEMOLYTIC_REACTION",
+            "cause": "Wrong blood type transfusion reaction.",
+            "symptoms": [
+                "blood_depletes",
+                "unconsciousness"
+            ],
+            "treatment": [
+                "Saline Slows Effects",
+                "Correct Blood Types Slows Effect",
+                "Reaction is temporary"
+            ],
+            "prevention": "Only inject your correct blood type."
+        },
+        {
+            "id": "active_bleeding",
+            "name": "Blood Loss",
+            "chain": "Blood Loss",
+            "stageRank": 1,
+            "agent": "BLEEDING_SOURCE",
+            "cause": "One or more active bleeding sources.",
+            "symptoms": [
+                "bleeding_indicator",
+                "blood_depletes",
+                "blood_loss_vision",
+                "unconsciousness"
+            ],
+            "treatment": [
+                "Bandage or sew bleeding source",
+                "Blood/saline restoration"
+            ],
+            "prevention": "Bandage wounds quickly and avoid repeated cuts or impacts."
+        }
+    ]
 }
