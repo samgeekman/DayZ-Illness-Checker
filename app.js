@@ -43,7 +43,9 @@ const symptomImageMap = {
   dehydration: "./icons/status/Water Loss.png",
   health_loss: "./icons/status/Health Loss.png",
   blood_depletes: "./icons/status/Blood Loss.png",
-  hot_symptom: "./icons/status/Fever.png"
+  hot_symptom: "./icons/status/Fever.png",
+  bleeding_indicator: "./icons/status/Bleeding.png",
+  blood_loss_vision: "./icons/status/Greyed Vision.png"
 };
 
 const normalize = (str) =>
@@ -253,13 +255,23 @@ function illnessSupportsSymptomSet(illness, symptomSet) {
 
 function updateSymptomAvailability(data) {
   const cards = symptomGrid.querySelectorAll(".symptom-card");
+  const compatible = getCandidateIllnesses(data, selectedSymptoms).filter((illness) =>
+    illnessSupportsSymptomSet(illness, selectedSymptoms)
+  );
+  const isDefinitive = selectedSymptoms.size > 0 && compatible.length === 1;
+  const definitiveSymptoms = isDefinitive ? new Set(compatible[0].symptoms) : new Set();
 
   cards.forEach((card) => {
     const symptomId = card.dataset.id;
+    card.classList.remove("confirmed-hint");
+
     if (selectedSymptoms.has(symptomId)) {
       card.disabled = false;
       card.classList.remove("incompatible");
       card.classList.remove("excluded");
+      if (isDefinitive && definitiveSymptoms.has(symptomId)) {
+        card.classList.add("confirmed-hint");
+      }
       return;
     }
     if (excludedSymptoms.has(symptomId)) {
@@ -276,6 +288,10 @@ function updateSymptomAvailability(data) {
 
     card.disabled = !isCompatible;
     card.classList.toggle("incompatible", !isCompatible);
+
+    if (isDefinitive && isCompatible && definitiveSymptoms.has(symptomId)) {
+      card.classList.add("confirmed-hint");
+    }
   });
 }
 
@@ -827,3 +843,6 @@ async function init() {
 }
 
 init();
+
+
+

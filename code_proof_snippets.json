@@ -24,6 +24,14 @@
         "snippets": [
           "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Contamination3.c\r\nLINE: 54\r\n48\t\t\t{\r\n49\t\t\t\tplayer.AddHealth(\"\",\"Shock\", -100);\r\n50\t\t\t}\r\n51\t\t\t\r\n52\t\t\tif (player.IsUnconscious())\r\n53\t\t\t{\r\n54\t\t\t\tplayer.AddHealth(\"\",\"\",DAMAGE_PER_SEC * deltaT);\r\n55\t\t\t}\r\n56\t\r\n57\t\t}\r\n58\t};"
         ]
+      },
+      {
+        "symptom_id": "bleeding_indicator",
+        "symptom_label": "Bleeding",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: P:\\\\scripts\\\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\\\conditions\\\\AreaExposure.c\nLINE: 98\n96\\tif ( m_Time2 >= m_NextEvent2 )\n97\\t{\n98\\t\\tBleedingSourceCreateCheck(player);\n99\\t\\tm_Time2 = 0;\n100\\t\\tm_NextEvent2 = Math.RandomFloatInclusive( EVENT_2_INTERVAL_MIN, EVENT_2_INTERVAL_MAX );\n101\\t}\n...\n133\\tif ( num_of_free_bs > 0 )\n134\\t{\n137\\t\\tplayer.GetBleedingManagerServer().AttemptAddBleedingSourceDirectly(random_bs_bit, eBleedingSourceType.CONTAMINATED);\n138\\t}"
+        ]
       }
     ],
     "pneumonia_stage": [
@@ -258,6 +266,14 @@
         "snippets": [
           "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Contamination2.c\r\nLINE: 70\r\n64\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_COUGH);\r\n65\t\t\t\tm_Time1 = 0;\r\n66\t\t\t\tm_NextEvent1 = Math.RandomFloatInclusive( EVENT_1_INTERVAL_MIN, EVENT_1_INTERVAL_MAX );\r\n67\t\t\t}\r\n68\t\t\tif ( m_Time2 >= m_NextEvent2 )\r\n69\t\t\t{\r\n70\t\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);\r\n71\t\t\t\tm_Time2 = 0;\r\n72\t\t\t\tm_NextEvent2 = Math.RandomFloatInclusive( EVENT_2_INTERVAL_MIN, EVENT_2_INTERVAL_MAX );\r\n73\t\t\t}\r\n74\t\r\n75\t\t}\r\n76\t};"
         ]
+      },
+      {
+        "symptom_id": "bleeding_indicator",
+        "symptom_label": "Bleeding",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: P:\\\\scripts\\\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\\\conditions\\\\AreaExposure.c\nLINE: 98\n96\\tif ( m_Time2 >= m_NextEvent2 )\n97\\t{\n98\\t\\tBleedingSourceCreateCheck(player);\n99\\t\\tm_Time2 = 0;\n100\\t\\tm_NextEvent2 = Math.RandomFloatInclusive( EVENT_2_INTERVAL_MIN, EVENT_2_INTERVAL_MAX );\n101\\t}\n...\n133\\tif ( num_of_free_bs > 0 )\n134\\t{\n137\\t\\tplayer.GetBleedingManagerServer().AttemptAddBleedingSourceDirectly(random_bs_bit, eBleedingSourceType.CONTAMINATED);\n138\\t}"
+        ]
       }
     ],
     "food_poisoning": [
@@ -380,6 +396,14 @@
         "snippets": [
           "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\diseases\\Contamination.c\r\nLINE: 33\r\n27\t\t{\r\n28\t\t\treturn ( player.GetSingleAgentCount(eAgents.CHEMICAL_POISON) >= AGENT_THRESHOLD_ACTIVATE && player.GetSingleAgentCount(eAgents.CHEMICAL_POISON) < AGENT_THRESHOLD_DEACTIVATE );\r\n29\t\t}\r\n30\t\r\n31\t\toverride protected void OnActivate(PlayerBase player)\r\n32\t\t{\r\n33\t\t\tplayer.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_COUGH);\t\r\n34\t\t}\r\n35\t\r\n36\t\toverride protected bool DeactivateCondition(PlayerBase player)\r\n37\t\t{\r\n38\t\t\treturn !ActivateCondition(player);\r\n39\t\t}"
         ]
+      },
+      {
+        "symptom_id": "bleeding_indicator",
+        "symptom_label": "Bleeding",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: P:\\\\scripts\\\\4_World\\\\Classes\\\\PlayerModifiers\\\\Modifiers\\\\conditions\\\\AreaExposure.c\nLINE: 98\n96\\tif ( m_Time2 >= m_NextEvent2 )\n97\\t{\n98\\t\\tBleedingSourceCreateCheck(player);\n99\\t\\tm_Time2 = 0;\n100\\t\\tm_NextEvent2 = Math.RandomFloatInclusive( EVENT_2_INTERVAL_MIN, EVENT_2_INTERVAL_MAX );\n101\\t}\n...\n133\\tif ( num_of_free_bs > 0 )\n134\\t{\n137\\t\\tplayer.GetBleedingManagerServer().AttemptAddBleedingSourceDirectly(random_bs_bit, eBleedingSourceType.CONTAMINATED);\n138\\t}"
+        ]
       }
     ],
     "influenza_common_cold": [
@@ -457,6 +481,41 @@
         "experience_type": "co_occurring",
         "snippets": [
           "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\3_Game\\PlayerConstants.c\n216\tstatic const float UNCONSCIOUS_THRESHOLD = 25.0;\n304\tstatic const float BROKEN_LEGS_INITIAL_SHOCK = 20;\n305\tstatic const float BROKEN_LEGS_LOW_SHOCK_WALK = 4;\n306\tstatic const float BROKEN_LEGS_MID_SHOCK_WALK = 6;\n307\tstatic const float BROKEN_LEGS_HIGH_SHOCK_WALK = 8;\nFILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Entities\\ManBase\\PlayerBase.c\n3651\t\t\t\tm_ShockHandler.SetShock(PlayerConstants.BROKEN_LEGS_INITIAL_SHOCK);"
+        ]
+      }
+    ],
+    "active_bleeding": [
+      {
+        "symptom_id": "bleeding_indicator",
+        "symptom_label": "Bleeding Indicator",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: P:\\\\scripts\\\\4_World\\\\Classes\\\\PlayerNotifiers\\\\Notifiers\\\\BleedingNotfr.c\nLINE: 11\n9\\toverride int GetNotifierType()\n10\\t{\n11\\t\\treturn eNotifiers.NTF_BLEEDISH;\n12\\t}\n13\\n14\\toverride void DisplayBadge()\n15\\t{\n16\\t\\tDisplayElementBadge dis_elm = DisplayElementBadge.Cast(GetVirtualHud().GetElement(eDisplayElements.DELM_BADGE_BLEEDING));"
+        ]
+      },
+      {
+        "symptom_id": "blood_loss_vision",
+        "symptom_label": "Blood-Loss Vision",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: P:\\\\scripts\\\\4_World\\\\Classes\\\\PlayerSymptoms\\\\StateManager.c\nLINE: 108\n102\\tvoid AutoactivateSymptoms()\n103\\t{\n104\\t\\tif ( GetGame().IsClient() )\n105\\t\\t{\n106\\t\\t\\treturn;\n107\\t\\t}\n108\\t\\tQueueUpSecondarySymptom(SymptomIDs.SYMPTOM_BLOODLOSS);\n109\\t}",
+          "FILE: P:\\\\scripts\\\\4_World\\\\Classes\\\\PlayerSymptoms\\\\States\\\\Secondary\\\\BloodLoss.c\nLINE: 33\n29\\tif ( player.IsPlayerSelected() && player.GetTransferValues() && player.GetTransferValues().GetBlood() != m_BloodSet )\n30\\t{\n31\\t\\tm_BloodSet = player.GetTransferValues().GetBlood();\n32\\t\\tif (m_BloodSet < 1.0)\n33\\t\\t{\n34\\t\\t\\tm_RequesterBloodLoss.SetBloodLossLevel(m_BloodSet);\n35\\t\\t}"
+        ]
+      },
+      {
+        "symptom_id": "blood_depletes",
+        "symptom_label": "Blood Depletes",
+        "experience_type": "direct",
+        "snippets": [
+          "FILE: P:\\\\scripts\\\\4_World\\\\Classes\\\\BleedingSources\\\\BleedingSource.c\nLINE: 145\n141\\tfloat blood_per_sec = m_BloodLoss*GetBloodLossMultiplier();\n142\\tbleedingSourceZoneAvg += m_BloodFlowModifier;\n143\\tblood_per_sec = blood_per_sec * m_BloodFlowModifier;\n144\\tblood_per_sec *= GetGame().GetMission().GetWorldData().GetBloodLossMultiplier();\n145\\tplayer.AddHealth(\"\",\"Blood\", blood_per_sec * deltaT);"
+        ]
+      },
+      {
+        "symptom_id": "unconsciousness",
+        "symptom_label": "Uncon",
+        "experience_type": "co_occurring",
+        "snippets": [
+          "FILE: P:\\\\scripts\\\\3_Game\\\\PlayerConstants.c\nLINE: 154\n154\\tstatic const float UNCONSCIOUS_THRESHOLD\\t\\t\\t\\t= 25.0;\\t\\t//player goes unconscious when we get under this threshold\n161\\tstatic const float SHOCK_DAMAGE_BLOOD_THRESHOLD_HIGH\\t= 3000;\\t\\t// shock damage starts at or below this blood level\n162\\tstatic const float SHOCK_DAMAGE_BLOOD_THRESHOLD_LOW\\t\\t= 2500;"
         ]
       }
     ]
@@ -537,6 +596,10 @@
       "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\UserActionsComponent\\Actions\\Continuous\\Medical\\ActionSplintSelf.c\n29\toverride void OnFinishProgressServer( ActionData action_data )\n32\t\taction_data.m_Player.ApplySplint();\n35\t\tif (action_data.m_Player.GetBrokenLegs() == eBrokenLegs.BROKEN_LEGS)\n37\t\t\taction_data.m_Player.SetBrokenLegs(eBrokenLegs.BROKEN_LEGS_SPLINT);",
       "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\UserActionsComponent\\Actions\\Continuous\\Medical\\ActionSplintTarget.c\n22\toverride void OnFinishProgressServer( ActionData action_data )\n29\t\tntarget.ApplySplint();\n39\t\tntarget.SetBrokenLegs(eBrokenLegs.BROKEN_LEGS_SPLINT);",
       "FILE: C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\4_World\\Classes\\PlayerModifiers\\Modifiers\\conditions\\BrokenLegs.c\n32\toverride void OnDeactivate(PlayerBase player)\n35\t\tif ( player.IsWearingSplint() )\n37\t\t\tMiscGameplayFunctions.RemoveSplint(player); //Remove splint when leg is healed"
+    ],
+    "active_bleeding": [
+      "FILE: P:\\\\scripts\\\\4_World\\\\Classes\\\\UserActionsComponent\\\\Actions\\\\Continuous\\\\Medical\\\\ActionBandageSelf.c\nLINE: 73\n69\\tif (action_data.m_Player.GetBleedingManagerServer())\n70\\t{\n71\\t\\tarray<int> bleedingSources = new array<int>;\n72\\t\\taction_data.m_Player.GetBleedingManagerServer().GetMostSignificantBleedingSourceEx(bleedingSources);\n73\\t\\taction_data.m_Player.GetBleedingManagerServer().RemoveMostSignificantBleedingSourceEx(bleedingSources);",
+      "MODEL_NOTES: Stopping active bleeding sources is the direct mitigation; blood/saline restoration supports recovery after source control."
     ]
   },
   "effects": {

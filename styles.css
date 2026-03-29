@@ -10,7 +10,7 @@
   --shadow: 0 18px 34px rgba(15, 23, 42, 0.12);
 }
 
-@media (prefers-color-scheme: dark) {
+@media all {
   :root {
     --bg: #0f1418;
     --panel: #141d23;
@@ -179,15 +179,31 @@ h2 {
   pointer-events: auto;
 }
 
-.symptom-grid.lock-exclude .symptom-exclude {
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
 .symptom-exclude:hover,
 .symptom-exclude:focus-visible {
   background: #f9dbe0;
   outline: none;
+}
+
+.symptom-card.confirmed-hint .symptom-exclude {
+  opacity: 1;
+  pointer-events: none;
+  color: transparent;
+  background: #1f6b3f;
+  border: 1px solid #4bc47a;
+  position: absolute;
+}
+
+.symptom-card.confirmed-hint .symptom-exclude::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.36rem;
+  height: 0.2rem;
+  border-left: 2px solid #e7ffef;
+  border-bottom: 2px solid #e7ffef;
+  transform: translate(-50%, -58%) rotate(-45deg);
 }
 
 .symptom-card:hover {
@@ -673,7 +689,7 @@ h3 {
   padding: 0.75rem;
 }
 
-@media (prefers-color-scheme: dark) {
+@media all {
   .panel,
   .result-card,
   .disease-card {
@@ -711,6 +727,11 @@ h3 {
   .symptom-exclude:hover,
   .symptom-exclude:focus-visible {
     background: #4a2a31;
+  }
+
+  .symptom-card.confirmed-hint .symptom-exclude {
+    background: #1d5a39;
+    border-color: #48bf78;
   }
 
   .symptom-card.incompatible,
@@ -869,3 +890,6 @@ h3 {
     grid-template-columns: 1fr;
   }
 }
+
+
+
