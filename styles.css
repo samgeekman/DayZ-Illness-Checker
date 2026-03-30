@@ -860,6 +860,54 @@ h3 {
   }
 }
 
+@media (max-width: 414px) {
+  .panel-title-row {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .panel-title-main {
+    flex: 1 1 auto;
+    gap: 0.45rem;
+  }
+
+  .panel-logo {
+    width: 34px;
+  }
+
+  .panel-title {
+    font-size: 1.08rem;
+    line-height: 1.15;
+  }
+
+  .panel-title-side {
+    flex: 0 0 auto;
+    max-width: 45%;
+    align-items: flex-end;
+  }
+
+  .panel-byline {
+    font-size: 0.67rem;
+    line-height: 1.2;
+    text-align: right;
+  }
+}
+
+@media (max-width: 375px) {
+  .panel-logo {
+    width: 30px;
+  }
+
+  .panel-title {
+    font-size: 1.01rem;
+  }
+
+  .panel-byline {
+    font-size: 0.62rem;
+  }
+}
+
 @media all {
   .panel,
   .result-card,
@@ -1051,14 +1099,6 @@ h3 {
 @media (max-width: 680px) {
   .symptom-brand {
     align-items: center;
-  }
-
-  .panel-logo {
-    width: 40px;
-  }
-
-  .panel-byline {
-    font-size: 0.74rem;
   }
 
   .app-shell {
