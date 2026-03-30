@@ -278,6 +278,7 @@
             "treatment": [
                 "Tetracycline",
                 "Multivitamins",
+                "Painkillers/Morphine (symptom suppression)",
                 "Keep warm and fed"
             ],
             "prevention": "Avoid prolonged cold exposure and contact with infected players, food or drink."
@@ -301,6 +302,7 @@
             "treatment": [
                 "Tetracycline",
                 "Multivitamins",
+                "Painkillers/Morphine (symptom suppression)",
                 "Keep warm and fed"
             ],
             "prevention": "Limit spread via coughing/sneezing isolation practices."
@@ -346,7 +348,7 @@
                 "Tetracycline",
                 "Multivitamins"
             ],
-            "prevention": "Avoid unpurified water sources and dirty containers. Use chlorine tablets, Chelating Tablets or boil water."
+            "prevention": "Avoid unpurified water sources and dirty containers. Use chlorine tablets, chelating tablets or boil water."
         },
         {
             "id": "salmonella",
@@ -436,6 +438,7 @@
             ],
             "treatment": [
                 "Apply Splint",
+                "Morphine or Painkillers (temporary pain/shock relief)",
                 "Limit movement until healed"
             ],
             "prevention": "Avoid high falls and risky impacts."
@@ -531,7 +534,7 @@
             "treatment": [
                 "Chelating Tablets"
             ],
-            "prevention": "Avoid Polluted Water/Snow/Hot Springs. Use filtering bottle or chelating tablets on water."
+            "prevention": "Avoid polluted water/snow/hot springs. Use filtering bottle or chelating tablets on water."
         },
         {
             "id": "heavy_metal_phase2",
@@ -552,7 +555,7 @@
             "treatment": [
                 "Chelating Tablets"
             ],
-            "prevention": "Avoid Polluted Water/Snow/Hot Springs. Use filtering bottle or chelating tablets on water."
+            "prevention": "Avoid polluted water/snow/hot springs. Use filtering bottle or chelating tablets on water."
         },
         {
             "id": "heavy_metal_phase3",
@@ -573,7 +576,7 @@
             "treatment": [
                 "Chelating Tablets"
             ],
-            "prevention": "Avoid Polluted Water/Snow/Hot Springs. Use filtering bottle or chelating tablets on water."
+            "prevention": "Avoid polluted water/snow/hot springs. Use filtering bottle or chelating tablets on water."
         },
         {
             "id": "hemolytic_reaction",

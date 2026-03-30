@@ -9,6 +9,8 @@ const resultCardTemplate = document.getElementById("resultCardTemplate");
 const codeModal = document.getElementById("codeModal");
 const codeModalBody = document.getElementById("codeModalBody");
 const closeCodeModal = document.getElementById("closeCodeModal");
+const codeModalTitle = document.getElementById("codeModalTitle");
+let bodyOverflowBeforeCodeModal = "";
 
 const selectedSymptoms = new Set();
 const excludedSymptoms = new Set();
@@ -703,6 +705,9 @@ function openCodeModal(illness) {
   });
   const treatmentMitigationRefs = visibleTreatmentRefs.filter((txt) => !treatmentImpactRefs.includes(txt));
 
+  if (codeModalTitle) {
+    codeModalTitle.textContent = `Code Evidence - ${illness.name || "Unknown Illness"}`;
+  }
   codeModalBody.innerHTML = "";
   codeModalBody.appendChild(makeCodeSection("Symptoms", symptomBlocks));
   const hideTreatmentSections = illness.id === "kuru_brain_disease";
@@ -714,7 +719,14 @@ function openCodeModal(illness) {
       codeModalBody.appendChild(makeCodeSection("Treatment Impact", treatmentImpactRefs));
     }
   }
+  bodyOverflowBeforeCodeModal = document.body.style.overflow;
+  document.body.style.overflow = "hidden";
   codeModal.classList.remove("hidden");
+}
+
+function closeCodeModalView() {
+  codeModal.classList.add("hidden");
+  document.body.style.overflow = bodyOverflowBeforeCodeModal;
 }
 
 function makeCodeSection(title, blocks) {
@@ -742,7 +754,7 @@ function makeCodeSection(title, blocks) {
 }
 
 function highlightCode(text) {
-  const DAYZ_ROOT = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\DayZ\\scripts\\";
+  const STEAM_COMMON_ROOT = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\";
   const esc = (s) =>
     s
       .replace(/&/g, "&amp;")
@@ -818,18 +830,21 @@ function highlightCode(text) {
     .split("\n")
     .map((line) => {
       if (line.startsWith("FILE: ")) {
-        const abs = line.slice(6);
-        const rel = abs.startsWith(DAYZ_ROOT) ? abs.slice(DAYZ_ROOT.length) : abs;
+        const abs = line.slice(6).replace(/\\\\/g, "\\");
+        const rel = abs.startsWith(STEAM_COMMON_ROOT) ? abs.slice(STEAM_COMMON_ROOT.length) : abs;
         return `<div class="code-meta code-file-tag">FILE: ${esc(rel)}</div>`;
       }
       if (line.startsWith("LINE: ")) {
         return "";
       }
-      const m = line.match(/^(\d+)\t(.*)$/);
+      const m = line.match(/^\s*(\d{1,5})(?:\t|\\t| {2,})(.*)$/);
       if (m) {
         return `<div class="code-row"><span class="code-line-no">${m[1]}</span><span class="code-line-text">${colorize(
           m[2]
         )}</span></div>`;
+      }
+      if (/^\s*\d+\s*$/.test(line)) {
+        return "";
       }
       return `<div class="code-row"><span class="code-line-no"></span><span class="code-line-text">${colorize(
         line
@@ -868,10 +883,10 @@ async function init() {
     updateSymptomAvailability(data);
     updateExcludeVisibility();
 
-    closeCodeModal.addEventListener("click", () => codeModal.classList.add("hidden"));
+    closeCodeModal.addEventListener("click", closeCodeModalView);
     codeModal.addEventListener("click", (e) => {
       if (e.target && e.target.dataset && e.target.dataset.closeModal === "true") {
-        codeModal.classList.add("hidden");
+        closeCodeModalView();
       }
     });
 

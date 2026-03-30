@@ -33,7 +33,6 @@ body {
   font-family: "Space Grotesk", sans-serif;
   color: var(--ink);
   background: var(--bg);
-  min-height: 100vh;
 }
 
 .app-shell {
@@ -417,6 +416,7 @@ h3 {
 }
 
 .code-proof-btn {
+  position: relative;
   border: 1px solid #9cb8dd;
   background: #eaf2ff;
   color: #1f3f66;
@@ -429,8 +429,48 @@ h3 {
   cursor: pointer;
 }
 
+.code-proof-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1f6b3f;
+  color: #e7ffef;
+  border: 1px solid #4bc47a;
+  border-radius: 6px;
+  padding: 0.24rem 0.42rem;
+  font-size: 0.72rem;
+  line-height: 1.1;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 80ms linear;
+}
+
+.code-proof-btn::before {
+  content: "";
+  position: absolute;
+  right: calc(100% + 2px);
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 5px 0 5px 6px;
+  border-style: solid;
+  border-color: transparent transparent transparent #1f6b3f;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 80ms linear;
+}
+
 .code-proof-btn:hover {
   transform: translateY(-1px);
+}
+
+.code-proof-btn:hover::after,
+.code-proof-btn:hover::before,
+.code-proof-btn:focus-visible::after,
+.code-proof-btn:focus-visible::before {
+  opacity: 1;
 }
 
 .code-proof-btn svg {
