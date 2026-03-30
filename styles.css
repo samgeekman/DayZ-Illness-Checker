@@ -119,6 +119,12 @@ h2 {
   font-size: 1.18rem;
 }
 
+.diagnosis-data-source {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
 .ghost-btn {
   border: 1px solid #b9b2a4;
   border-radius: 6px;
@@ -298,7 +304,8 @@ h2 {
 .result-title {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 0.38rem;
+  flex-wrap: wrap;
 }
 
 .disease-icon {
@@ -313,6 +320,62 @@ h2 {
 
 h3 {
   margin: 0;
+}
+
+.illness-link-btn,
+.code-proof-btn {
+  position: relative;
+  border: 1px solid #9cb8dd;
+  background: #eaf2ff;
+  color: #1f3f66;
+  border-radius: 6px;
+  width: 1.9rem;
+  height: 1.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.illness-link-btn:hover,
+.code-proof-btn:hover {
+  transform: translateY(-1px);
+}
+
+.illness-link-btn svg,
+.code-proof-btn svg {
+  width: 1rem;
+  height: 1rem;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.illness-link-glyph {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask: url("./icons/status/link.svg") no-repeat center / contain;
+  mask: url("./icons/status/link.svg") no-repeat center / contain;
+}
+
+.code-proof-glyph {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask: url("./icons/status/code.svg") no-repeat center / contain;
+  mask: url("./icons/status/code.svg") no-repeat center / contain;
+}
+
+.illness-link-btn.copied {
+  border-color: #9cb8dd;
+  background: #eaf2ff;
+  color: #1f3f66;
 }
 
 .score-pill {
@@ -413,23 +476,11 @@ h3 {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
+  gap: 0.45rem;
 }
 
-.code-proof-btn {
-  position: relative;
-  border: 1px solid #9cb8dd;
-  background: #eaf2ff;
-  color: #1f3f66;
-  border-radius: 6px;
-  width: 1.9rem;
-  height: 1.9rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.code-proof-btn::after {
+.code-proof-btn::after,
+.illness-link-btn::after {
   content: attr(data-tooltip);
   position: absolute;
   right: calc(100% + 8px);
@@ -448,7 +499,8 @@ h3 {
   transition: opacity 80ms linear;
 }
 
-.code-proof-btn::before {
+.code-proof-btn::before,
+.illness-link-btn::before {
   content: "";
   position: absolute;
   right: calc(100% + 2px);
@@ -462,23 +514,15 @@ h3 {
   transition: opacity 80ms linear;
 }
 
-.code-proof-btn:hover {
-  transform: translateY(-1px);
-}
-
 .code-proof-btn:hover::after,
 .code-proof-btn:hover::before,
+.illness-link-btn:hover::after,
+.illness-link-btn:hover::before,
 .code-proof-btn:focus-visible::after,
-.code-proof-btn:focus-visible::before {
+.code-proof-btn:focus-visible::before,
+.illness-link-btn:focus-visible::after,
+.illness-link-btn:focus-visible::before {
   opacity: 1;
-}
-
-.code-proof-btn svg {
-  width: 1rem;
-  height: 1rem;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2;
 }
 
 .modal.hidden {
@@ -848,7 +892,9 @@ h3 {
     color: #cde0ff;
   }
 
-  .code-proof-btn {
+  .code-proof-btn,
+  .illness-link-btn,
+  .illness-link-btn.copied {
     border-color: #3c587f;
     background: #1a2738;
     color: #cde0ff;

@@ -5,12 +5,15 @@ const allIllnessesGrid = document.getElementById("allIllnessesGrid");
 const allIllnessesWrap = document.getElementById("allIllnessesWrap");
 const allIllnessesToggle = document.getElementById("allIllnessesToggle");
 const clearBtn = document.getElementById("clearBtn");
+const diagnosisDataSource = document.getElementById("diagnosisDataSource");
 const resultCardTemplate = document.getElementById("resultCardTemplate");
 const codeModal = document.getElementById("codeModal");
 const codeModalBody = document.getElementById("codeModalBody");
 const closeCodeModal = document.getElementById("closeCodeModal");
 const codeModalTitle = document.getElementById("codeModalTitle");
 let bodyOverflowBeforeCodeModal = "";
+let linkedIllnessId = null;
+const linkCopyResetTimers = new WeakMap();
 
 const selectedSymptoms = new Set();
 const excludedSymptoms = new Set();
@@ -134,6 +137,7 @@ function renderSymptomCard(symptom) {
   const toggleExclude = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    clearLinkedIllnessFilter();
     if (excludedSymptoms.has(symptom.id)) {
       excludedSymptoms.delete(symptom.id);
     } else {
@@ -153,6 +157,7 @@ function renderSymptomCard(symptom) {
 
   button.append(exclude, iconEl, label);
   button.addEventListener("click", () => {
+    clearLinkedIllnessFilter();
     if (excludedSymptoms.has(symptom.id)) excludedSymptoms.delete(symptom.id);
     if (selectedSymptoms.has(symptom.id)) {
       selectedSymptoms.delete(symptom.id);
@@ -289,7 +294,7 @@ function updateSymptomAvailability(data) {
       card.disabled = false;
       card.classList.remove("incompatible");
       card.classList.remove("excluded");
-      if (isDefinitive && definitiveSymptoms.has(symptomId)) {
+      if (isDefinitive && symptomSetHasEquivalent(definitiveSymptoms, symptomId)) {
         card.classList.add("confirmed-hint");
       }
       return;
@@ -301,15 +306,20 @@ function updateSymptomAvailability(data) {
       return;
     }
 
-    const probeSelection = new Set(selectedSymptoms);
-    probeSelection.add(symptomId);
-    const candidates = getCandidateIllnesses(data, probeSelection);
-    const isCompatible = candidates.some((illness) => illnessSupportsSymptomSet(illness, probeSelection));
+    let isCompatible;
+    if (isDefinitive) {
+      isCompatible = symptomSetHasEquivalent(definitiveSymptoms, symptomId);
+    } else {
+      const probeSelection = new Set(selectedSymptoms);
+      probeSelection.add(symptomId);
+      const candidates = getCandidateIllnesses(data, probeSelection);
+      isCompatible = candidates.some((illness) => illnessSupportsSymptomSet(illness, probeSelection));
+    }
 
     card.disabled = !isCompatible;
     card.classList.toggle("incompatible", !isCompatible);
 
-    if (isDefinitive && isCompatible && definitiveSymptoms.has(symptomId)) {
+    if (isDefinitive && isCompatible && symptomSetHasEquivalent(definitiveSymptoms, symptomId)) {
       card.classList.add("confirmed-hint");
     }
   });
@@ -318,6 +328,83 @@ function updateSymptomAvailability(data) {
 function renderNoMatch() {
   results.innerHTML =
     '<div class="no-match">No strong illness match yet. Add more symptoms for a better diagnosis.</div>';
+}
+
+function updateDiagnosisHeaderState() {
+  if (!diagnosisDataSource) return;
+  diagnosisDataSource.hidden = selectedSymptoms.size === 0;
+}
+
+function clearLinkedIllnessFilter() {
+  if (!linkedIllnessId) return;
+  linkedIllnessId = null;
+  const url = new URL(window.location.href);
+  if (url.searchParams.has("illness")) {
+    url.searchParams.delete("illness");
+    const next = `${url.pathname}${url.search ? url.search : ""}${url.hash}`;
+    window.history.replaceState({}, "", next);
+  }
+}
+
+function illnessShareUrl(illnessId) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("illness", illnessId);
+  return url.toString();
+}
+
+async function copyToClipboard(text) {
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch (_) {}
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch (_) {
+    return false;
+  }
+}
+
+function setLinkButtonCopied(btn, copied) {
+  btn.classList.toggle("copied", copied);
+  btn.setAttribute("aria-pressed", copied ? "true" : "false");
+  btn.innerHTML = copied
+    ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>'
+    : '<span class="illness-link-glyph" aria-hidden="true"></span>';
+}
+
+function attachIllnessLinkButton(fragmentOrNode, illness) {
+  const codeCol = fragmentOrNode.querySelector(".code-col");
+  if (!codeCol) return;
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "illness-link-btn";
+  btn.setAttribute("aria-label", `Copy link to ${illness.name}`);
+  btn.setAttribute("data-tooltip", "Copy link");
+  setLinkButtonCopied(btn, false);
+  btn.addEventListener("click", async () => {
+    const ok = await copyToClipboard(illnessShareUrl(illness.id));
+    if (!ok) return;
+    const existing = linkCopyResetTimers.get(btn);
+    if (existing) window.clearTimeout(existing);
+    setLinkButtonCopied(btn, true);
+    const timer = window.setTimeout(() => {
+      setLinkButtonCopied(btn, false);
+      linkCopyResetTimers.delete(btn);
+    }, 1600);
+    linkCopyResetTimers.set(btn, timer);
+  });
+  codeCol.appendChild(btn);
 }
 
 function addChips(listEl, values, symptomLabels) {
@@ -421,7 +508,9 @@ function buildStageRail(stages, activeStageRank) {
 }
 
 function renderResults(data) {
+  updateDiagnosisHeaderState();
   const matches = matchIllnesses(data);
+  const visibleMatches = linkedIllnessId ? matches.filter((m) => m.id === linkedIllnessId) : matches;
   results.innerHTML = "";
 
   if (selectedSymptoms.size === 0) {
@@ -429,7 +518,7 @@ function renderResults(data) {
     return;
   }
 
-  if (matches.length === 0) {
+  if (visibleMatches.length === 0) {
     renderNoMatch();
     return;
   }
@@ -439,7 +528,7 @@ function renderResults(data) {
   );
   const chainStages = getChainStages(data);
 
-  matches.forEach((item) => {
+  visibleMatches.forEach((item) => {
     const node = resultCardTemplate.content.cloneNode(true);
     const stagesForChain = item.chain ? chainStages.get(item.chain) : null;
     const hasStages = Array.isArray(stagesForChain) && stagesForChain.length > 1;
@@ -456,6 +545,7 @@ function renderResults(data) {
     }
     const diseaseIcon = node.querySelector(".disease-icon");
     if (diseaseIcon) diseaseIcon.remove();
+    attachIllnessLinkButton(node, item);
     const stageWrapSlot = node.querySelector(".stage-wrap");
     if (hasStages) {
       const rail = buildStageRail(stagesForChain, item.stageRank ?? 0);
@@ -509,6 +599,7 @@ function renderAllIllnessCards(data) {
 
     const diseaseIcon = node.querySelector(".disease-icon");
     if (diseaseIcon) diseaseIcon.remove();
+    attachIllnessLinkButton(node, item);
 
     const stageWrapSlot = node.querySelector(".stage-wrap");
     if (hasStages) {
@@ -573,6 +664,27 @@ function renderDiseaseDirectory(data) {
       card.append(title, label, symptomList);
     }
     reverseGrid.appendChild(card);
+  });
+}
+
+function applyIllnessFromUrl(data) {
+  const params = new URLSearchParams(window.location.search);
+  const illnessId = params.get("illness");
+  if (!illnessId) return;
+
+  const illness = data.illnesses.find((entry) => entry.id === illnessId);
+  if (!illness) return;
+
+  linkedIllnessId = illness.id;
+  selectedSymptoms.clear();
+  excludedSymptoms.clear();
+  illness.symptoms.forEach((symptomId) => selectedSymptoms.add(symptomId));
+
+  symptomGrid.querySelectorAll(".symptom-card").forEach((el) => {
+    const symptomId = el.dataset.id;
+    el.classList.toggle("active", symptomSetHasEquivalent(selectedSymptoms, symptomId));
+    el.classList.remove("excluded", "incompatible");
+    el.disabled = false;
   });
 }
 
@@ -868,6 +980,7 @@ async function init() {
     renderAllIllnessCards(data);
 
     clearBtn.addEventListener("click", () => {
+      clearLinkedIllnessFilter();
       selectedSymptoms.clear();
       excludedSymptoms.clear();
       symptomGrid.querySelectorAll(".symptom-card").forEach((el) => {
@@ -879,6 +992,7 @@ async function init() {
       updateExcludeVisibility();
     });
 
+    applyIllnessFromUrl(data);
     renderResults(data);
     updateSymptomAvailability(data);
     updateExcludeVisibility();

@@ -42,6 +42,7 @@
       <section class="panel" aria-labelledby="diagnosis-heading">
         <div class="section-head">
           <h2 id="diagnosis-heading">Diagnosis</h2>
+          <p id="diagnosisDataSource" class="diagnosis-data-source" hidden>Data from game scripts.</p>
         </div>
         <div id="results" class="results">
           <p class="placeholder">Pick at least one symptom to start.</p>
@@ -94,11 +95,7 @@
             <ul class="chip-list prevention-list"></ul>
             <div class="code-col">
               <button class="code-proof-btn" type="button" aria-label="View the code" data-tooltip="View the code">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m8 9-4 3 4 3" />
-                  <path d="m16 9 4 3-4 3" />
-                  <path d="m14 5-4 14" />
-                </svg>
+                <span class="code-proof-glyph" aria-hidden="true"></span>
               </button>
             </div>
           </div>
