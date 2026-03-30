@@ -6,13 +6,17 @@ const allIllnessesWrap = document.getElementById("allIllnessesWrap");
 const allIllnessesToggle = document.getElementById("allIllnessesToggle");
 const clearBtn = document.getElementById("clearBtn");
 const diagnosisDataSource = document.getElementById("diagnosisDataSource");
+const diagnosisHeading = document.getElementById("diagnosis-heading");
+const symptomHeading = document.getElementById("symptom-heading");
 const resultCardTemplate = document.getElementById("resultCardTemplate");
 const codeModal = document.getElementById("codeModal");
 const codeModalBody = document.getElementById("codeModalBody");
 const closeCodeModal = document.getElementById("closeCodeModal");
 const codeModalTitle = document.getElementById("codeModalTitle");
+const definitiveJump = document.getElementById("definitiveJump");
 let bodyOverflowBeforeCodeModal = "";
 let linkedIllnessId = null;
+let definitiveJumpEligible = false;
 const linkCopyResetTimers = new WeakMap();
 
 const selectedSymptoms = new Set();
@@ -330,6 +334,61 @@ function renderNoMatch() {
     '<div class="no-match">No strong illness match yet. Add more symptoms for a better diagnosis.</div>';
 }
 
+function setDefinitiveJumpVisible(visible) {
+  if (!definitiveJump) return;
+  const mobileViewport = window.matchMedia("(max-width: 760px)").matches;
+  if (!mobileViewport) {
+    definitiveJump.classList.remove("is-visible");
+    definitiveJump.hidden = true;
+    return;
+  }
+  if (visible) {
+    definitiveJump.hidden = false;
+    requestAnimationFrame(() => definitiveJump.classList.add("is-visible"));
+  } else {
+    if (definitiveJump.hidden) return;
+    definitiveJump.classList.remove("is-visible");
+    const onDone = () => {
+      definitiveJump.hidden = true;
+      definitiveJump.removeEventListener("transitionend", onDone);
+    };
+    definitiveJump.addEventListener("transitionend", onDone, { once: true });
+  }
+}
+
+function isElementInViewport(el, threshold = 0.35) {
+  if (!el) return false;
+  const rect = el.getBoundingClientRect();
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  const topBound = vh * threshold;
+  const bottomBound = vh * (1 - threshold);
+  return rect.bottom > topBound && rect.top < bottomBound;
+}
+
+function syncDefinitiveJumpByViewport() {
+  if (!definitiveJumpEligible) {
+    setDefinitiveJumpVisible(false);
+    return;
+  }
+  const diagnosisTarget = results.querySelector(".result-card") || diagnosisHeading;
+  const symptomsTarget = symptomGrid || symptomHeading;
+  const diagnosisInView = isElementInViewport(diagnosisTarget, 0.28);
+  const symptomsInView = isElementInViewport(symptomsTarget, 0.2);
+  if (diagnosisInView) {
+    setDefinitiveJumpVisible(false);
+  } else if (symptomsInView) {
+    setDefinitiveJumpVisible(true);
+  }
+}
+
+function scrollToDiagnosisCard() {
+  const card = results.querySelector(".result-card");
+  const fallback = document.getElementById("diagnosis-heading");
+  const target = card || fallback;
+  if (!target) return;
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function updateDiagnosisHeaderState() {
   if (!diagnosisDataSource) return;
   diagnosisDataSource.hidden = selectedSymptoms.size === 0;
@@ -512,6 +571,8 @@ function renderResults(data) {
   const matches = matchIllnesses(data);
   const visibleMatches = linkedIllnessId ? matches.filter((m) => m.id === linkedIllnessId) : matches;
   results.innerHTML = "";
+  definitiveJumpEligible = false;
+  setDefinitiveJumpVisible(false);
 
   if (selectedSymptoms.size === 0) {
     results.innerHTML = '<p class="placeholder">Pick at least one symptom to start.</p>';
@@ -578,6 +639,9 @@ function renderResults(data) {
 
     results.appendChild(node);
   });
+
+  definitiveJumpEligible = visibleMatches.length === 1 && visibleMatches[0].definitive;
+  syncDefinitiveJumpByViewport();
 }
 
 function renderAllIllnessCards(data) {
@@ -1016,6 +1080,12 @@ async function init() {
         syncToggleLabel();
       });
     }
+
+    if (definitiveJump) {
+      definitiveJump.addEventListener("click", scrollToDiagnosisCard);
+    }
+    window.addEventListener("scroll", syncDefinitiveJumpByViewport, { passive: true });
+    window.addEventListener("resize", syncDefinitiveJumpByViewport);
   } catch (err) {
     results.innerHTML = `<div class="no-match">Failed to load symptom data: ${err.message}</div>`;
   }

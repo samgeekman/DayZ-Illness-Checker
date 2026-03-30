@@ -17,23 +17,23 @@
     <main class="app-shell">
       <section class="panel symptom-panel" aria-labelledby="symptom-heading">
         <div class="panel-title-row">
-          <h1 class="panel-title">Which DayZ illness do you have?</h1>
-          <img class="panel-logo" src="icon.webp" alt="DayZ illness logo" />
+          <div class="panel-title-main">
+            <img class="panel-logo" src="icon.webp" alt="DayZ illness logo" />
+            <h1 class="panel-title">Which DayZ illness do you have?</h1>
+          </div>
+          <div class="panel-title-side">
+            <p class="panel-byline">
+              By
+              <a href="https://samsobjectfinder.com/" target="_blank" rel="noopener noreferrer">samgeekman</a>, credit
+              <a href="https://x.com/ItsCueps/status/1668798127946727424" target="_blank" rel="noopener noreferrer"
+                >Uncuepa</a> for the icons.
+            </p>
+          </div>
         </div>
         <div class="section-head">
           <div class="symptom-headline">
             <h2 id="symptom-heading">Select your symptoms</h2>
-            <button id="clearBtn" class="clear-link" type="button">Clear</button>
-          </div>
-          <div class="symptom-brand">
-            <p class="panel-byline">
-              By
-              <a href="https://samsobjectfinder.com/" target="_blank" rel="noopener noreferrer">samgeekman</a>, credit
-           
-            <a href="https://x.com/ItsCueps/status/1668798127946727424" target="_blank" rel="noopener noreferrer"
-                >Uncuepa</a> for the icons.
-              
-            </p>
+            <button id="clearBtn" class="ghost-btn" type="button">Clear</button>
           </div>
         </div>
         <div id="symptomGrid" class="symptom-grid" role="list"></div>
@@ -113,6 +113,10 @@
         <div id="codeModalBody" class="modal-body"></div>
       </div>
     </div>
+
+    <button id="definitiveJump" class="definitive-jump" type="button" aria-label="Jump to diagnosis" hidden>
+      <img src="./icons/status/scroll.png" alt="" aria-hidden="true" />
+    </button>
 
     <script type="module" src="app.js"></script>
   </body>
